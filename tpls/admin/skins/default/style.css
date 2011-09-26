@@ -1,0 +1,100 @@
+@import url(global.css);
+@import url(jquery-datepick.css);
+@import url(jquery-datepick_ui.css);
+@import url(jquery-dialog.css);
+@import url(jquery-window.css);
+@import url(jquery-validate.css);
+
+#loginForm{float:left;padding:0px 20px;overflow:hidden;border:1px #d3d3d3 solid;}
+#loginForm ul{float:left;width:370px;overflow:hidden;padding-right:30px;background:url(images/bg_login.gif) right center no-repeat;}
+#loginForm h1{height:50px;background:url(images/login_title.gif) left bottom no-repeat;text-indent:-1000em;}
+#loginForm li{padding-top:10px;padding-bottom:30px;line-height:20px;text-indent:2em;}
+#loginForm dl{float:left;overflow:hidden;padding:30px 0px;font-size:14px;}
+#loginForm dd{line-height:30px;height:30px;overflow:hidden;margin:5px 0px;}
+
+#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;}
+#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;}
+#message h2{clear:right;padding:30px 20px;font-weight:normal;}
+#message p{clear:both;text-align:right;padding-bottom:5px;}
+#message em.icon{float:left;width:90px;height:90px;overflow:hidden;}
+#message.success h1{color:#0c0;}
+#message.success em.icon{background:url(images/message-icons.gif) no-repeat;}
+#message.error h1{color:#c00;}
+#message.error em.icon{background:url(images/message-icons.gif) left -90px no-repeat;}
+
+#hd,#wp{width:100%;overflow:hidden;}
+#hd{position:relative;height:100px;overflow:hidden;background:url(images/backgrounds.gif);}
+#hd h1{position:absolute;left:30px;;top:16px;}
+#hd p{position:absolute;right:22px;top:14px;color:#369;}
+#hd ul{position:absolute;left:170px;bottom:3px;overflow:hidden;}
+#hd ul *{float:left;height:33px;line-height:33px;overflow:hidden;}
+#hd li{margin:0px 2px 0px -2px;}
+#hd li b{padding:0px 20px 0px 22px;;font-size:14px;background:url(images/backgrounds.gif) left -100px no-repeat;cursor:pointer;}
+#hd li.active,#hd li.active *{background:url(images/icons.gif) no-repeat;}
+#hd li.active{position:relative;z-index:1;background-position:2px top;margin:0px;padding-left:2px;}
+#hd li.active a{background-position:right -66px;padding-left:33px;padding-right:20px;}
+#hd li.active b{width:64px;padding:0px;background-position:left -33px;text-align:center;color:#fff;}
+
+#nv{float:left;overflow:hidden;background:#ecf5ff;border-right:2px #b0d3ee solid;}
+#nv h3{height:30px;line-height:30px;background:url(images/backgrounds.gif) left -135px repeat-x;color:#369;font-size:14px;}
+#nv h3 span{display:block;text-indent:30px;background:url(images/icons.gif) 10px -150px no-repeat;}
+#nv h3 span.recent{background:url(images/icons.gif) 10px -175px no-repeat;}
+#nv li{height:25px;overflow:hidden;border-bottom:1px #d8ecff solid;background:#f4f9ff url(images/icons.gif) 15px -200px no-repeat;line-height:25px;text-indent:28px;}
+#nv li a{display:block;}
+#nv li em{position:relative;z-index:1;float:right;margin:8px;width:9px;height:9px;overflow:hidden;}
+#nv li em a{text-indent:-10em;background:url(images/icons.gif) left -225px no-repeat;}
+#nv li em a.drop{background-position:left -235px;}
+#nv li.active{background-color:white;}
+#nv li.active a{color:#333;}
+
+#bd{float:right;overflow:hidden;overflow-y:scroll;}
+
+.head{padding:15px 20px;background:#f0f7ff;border-bottom:1px #b0d3ee solid;color:#444;overflow:hidden;}
+h1.head{padding:10px 15px;font-size:14px;color:#369;}
+h1.head a{float:right;}
+
+.tabs{width:100%;height:31px;overflow:hidden;margin-bottom:5px;background:transparent url(images/tabs_main.gif) left bottom repeat-x;}
+.tabs ul{display:block;float:left;padding:0px 10px;height:31px;overflow:hidden;background-color:transparent;}
+.tabs ul *{display:inline;float:left;height:27px;line-height:27px;overflow:hidden;background-color:transparent;background-image:url(images/tabs_main.gif);}
+.tabs ul li{margin-right:5px;padding-left:5px;background-position:left -95px;background-repeat:no-repeat;}
+.tabs ul li a{padding-right:5px;background-position:right -125px;background-repeat:no-repeat;}
+.tabs ul li span{padding:0px 5px;background-position:left -155px;background-repeat:repeat-x;font-size:12px;cursor:pointer;}
+.tabs ul li.active{height:31px;background-position:left top;background-repeat:no-repeat;}
+.tabs ul li.active a{height:31px;background-position:right -31px;background-repeat:no-repeat;}
+.tabs ul li.active span{height:31px;background-position:center -62px;background-repeat:no-repeat;font-weight:800;}
+.tabs .more{display:block;float:right;}
+
+dl.base{overflow:hidden;}
+dl.base a{color:blue;}
+dl.base dt{clear:both;padding:0px 20px;line-height:30px;color:#09f;font-size:14px;font-weight:bold;border-bottom:1px #b0d3ee dotted;}
+dl.base dd{clear:both;overflow:hidden;padding:5px 20px;line-height:25px;border-bottom:1px #b0d3ee solid;}
+dl.base dd p{float:left;width:50%;overflow:hidden;}
+dl.base dd.info{padding:5px 0px;}
+dl.base dd.info p{padding:0px 20px;float:none;width:auto;border-bottom:1px #e7e7e7 dotted}
+
+.formtable{clear:both;overflow:hidden;padding:10px;}
+.formtable table{width:100%;border:1px #e7e7e7 solid;border-collapse:collapse;margin-bottom:5px;}
+.formtable th,.formtable td{padding:8px;border:1px #d8ecff solid;border-collapse:collapse;}
+.formtable caption{margin-bottom:5px;height:30px;overflow:hidden;border:1px #acce8e solid;background:url(images/backgrounds.gif) left -170px repeat-x;line-height:30px;text-indent:10px;text-align:left;color:#acce8e;}
+.formtable th{color:#444;white-space:nowrap;}
+.formtable tbody th{width:80px;text-align:right;vertical-align:top;line-height:24px;white-space:nowrap;}
+.formtable .hide{border-right:1px #fff solid;}
+.formtable td.active{font-size:14px;font-weight:bold;background:#ecf5ff;}
+.formtable td.active a{color:#F60;}
+.formtable input{margin:0px;}
+.formtable textarea{margin:0px;}
+
+.formtable table.list th,.formtable table.list td{text-align:center;white-space:nowrap;}
+.formtable table.list thead{background:url(images/backgrounds.gif) left -135px repeat-x;}
+.formtable table.list tbody{background:#f4f9ff;}
+.formtable table.list tfoot{background:#ecf5ff;}
+.formtable table.list tr.even{}
+.formtable table.list tr.odd{background:#fff;}
+.formtable table.list .hide{border-right-color:#ecf5ff;}
+
+.formtable .l{text-align:left!important;}
+.formtable .c{text-align:center!important;}
+.formtable .r{text-align:right!important;}
+.formtable .t{vertical-align:top!important;}
+.formtable .m{vertical-align:middle!important;}
+.formtable .b{vertical-align:bottom!important;}

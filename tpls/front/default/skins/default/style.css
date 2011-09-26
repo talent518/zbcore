@@ -1,0 +1,29 @@
+@import url(global.css);
+
+#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;}
+#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;}
+#message h2{clear:right;padding:30px 20px;font-weight:normal;}
+#message p{clear:both;text-align:right;padding-bottom:5px;}
+#message em.icon{float:left;width:90px;height:90px;overflow:hidden;}
+#message.success h1{color:#0c0;}
+#message.success em.icon{background:url(images/message-icons.gif) no-repeat;}
+#message.error h1{color:#c00;}
+#message.error em.icon{background:url(images/message-icons.gif) left -90px no-repeat;}
+
+.wp{margin:0px auto;width:912px;overflow:hidden;}
+
+#hd{padding:10px 0px;border-bottom:1px #efefef solid;}
+#hd .fl *{display:inline;font-size:50px;}
+#hd .fr{margin-top:30px;}
+
+#wp{margin:10px auto;}
+#wp h1{font-size:50px;text-align:center;margin-bottom:10px;border:1px #efefef solid;padding:10px;}
+
+#ft{font-size:14px;text-indent:10px;text-align:center;padding-top:10px;border-top:1px #efefef solid;}
+
+.partner{border:1px #efefef solid;}
+.partner dt{line-height:30px;border-bottom:1px #efefef solid;padding:0px 10px;font-size:14px;font-weight:bold;}
+.partner dd{padding:10px;overflow:hidden;}
+.partner p{float:left;width:20%;overflow:hidden;text-align:center;}
+.partner img{max-width:100%;max-height:40px;}
+.partner span{display:block;font-size:14px;}

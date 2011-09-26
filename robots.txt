@@ -1,0 +1,7 @@
+User-agent: * 
+Disallow: /cache/
+Disallow: /install/
+Disallow: /resource/
+Disallow: /rewrite/
+Disallow: /source/
+Disallow: /tpls/

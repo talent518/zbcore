@@ -1,0 +1,47 @@
+*{word-wrap:break-word;word-break:break-all;}
+
+body,form,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dd{margin:0px;padding:0px;}
+
+ul,ol,li{list-style-type:none;}
+html,body{overflow:hidden;}
+body{font-size:12px;color:#333;}
+
+h1,h2{font-size:14px;}
+h3,h4{font-size:12px;}
+h5,h6{font-size:12px;font-weight:normal;}
+
+select,textarea,input,button{vertical-align:middle;margin:0px 5px;padding:0px;}
+
+img{vertical-align:middle;border:none;}
+a{color:#08509a;text-decoration:none;}
+a:hover{color:#ff8900;}
+a:focus{border:none;}
+
+.submit,input[type=submit]{display:-moz-inline-box;display:inline-block;width:60px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left -125px no-repeat;color:#234f8d;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
+
+button,.button,input[type=button]{display:-moz-inline-box;display:inline-block;width:71px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left -100px repeat-x;color:#fff;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
+
+.numeric{font-family:Georgia;font-size:1.4em;color:#F60!important;}
+.split{color:#999;padding:0px 5px;}
+
+.gray{color:#999;}
+
+.cb{clear:both;}
+.cf{display:block;float:none;clear:both;width:100%;height:0px;overflow:hidden;}
+.fl{float:left !important;}
+.fr{float:right !important;}
+
+.sw10{display:block;float:none;clear:both;width:100%;height:10px;overflow:hidden;}
+.sw5{display:block;float:none;clear:both;width:100%;height:5px;overflow:hidden;}
+
+input.radio,input.checkbox{border:none;background:none;}
+input.checkbox{height:14px;}
+
+textarea,input[type=text],input[type=password]{border:1px #b0d3ee solid;background:#f4f9ff;height:22px;line-height:22px;padding:0px 3px;}
+textarea{height:auto;}
+button,input.button,input[type=submit],input[type=button]{cursor:pointer;border:medium none;}
+
+.focus{color:#000;}
+.blur{color:#999;}
+
+#loading{position:fixed;_position:absolute;z-index:9999;height:58px;line-height:58px;overflow:hidden;padding:0px 0px 0px 40px;background:url(images/loading.gif) left center no-repeat;font-size:20px;font-weight:bold;color:#419639;}
