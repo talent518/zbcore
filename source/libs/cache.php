@@ -11,7 +11,6 @@ class LibCache{
     public function set($data){
 		$this->caches[$this->key()]=$data;
 		if(empty($data)){
-			$this->drop();
 			return false;
 		}
 		$data="<?php if(!defined('IN_SITE')) exit('Access Denied');\r\nreturn ".var_export($data,true).";";
