@@ -6,7 +6,7 @@
 		<li><a href="#control"><b>控制台</b></a></li>
 		<li><a href="#setting"><b>设置</b></a></li>
 		<li><a href="#user"><b>用户</b></a></li>
-		<li><a href="#url"><b>内容</b></a></li>
+		<li><a href="#content"><b>内容</b></a></li>
 		<li><a href="#ads"><b>广告</b></a></li>
 	</ul>
 </div>
@@ -97,12 +97,19 @@ $('#nv a:not(.add)').click(function(){
 	return false;
 }).eq(0).click();
 $('#nv a.add').window();
-$('#hd ul a').each(function(i){
+
+var hda=$('#hd ul a').each(function(i){
 	$(this).click(function(){
 		$('#hd li').removeClass('active').eq(i).addClass('active');
 		$('#nv ul').hide().eq(i).show();
 	});
-}).eq(0).click();
+});
+if(hda.is('[href="'+location.hash+'"]')){
+	hda.filter('[href="'+location.hash+'"]').click();
+}else{
+	hda.eq(0).click();
+}
+
 $(window).resize(function(){
 	var size={width:$(window).width(),height:$(window).height()};
 	$('#wp,#nv,#bd').each(function(){
