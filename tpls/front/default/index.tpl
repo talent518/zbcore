@@ -1,5 +1,5 @@
 {template header}
-<h1>{$config.sitetitle}</h1>
+<h1 class="defTitle">{$config.sitetitle}</h1>
 <dl class="wp partner">
 	<dt>友情链接</dt>
 	<dd>

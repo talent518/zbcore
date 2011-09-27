@@ -17,7 +17,7 @@
 #hd .fr{margin-top:30px;}
 
 #wp{margin:10px auto;}
-#wp h1{font-size:50px;text-align:center;margin-bottom:10px;border:1px #efefef solid;padding:10px;}
+#wp h1.defTitle{font-size:50px;text-align:center;margin-bottom:10px;border:1px #efefef solid;padding:10px;}
 
 #ft{font-size:14px;text-indent:10px;text-align:center;padding-top:10px;border-top:1px #efefef solid;}
 
