@@ -27,7 +27,9 @@ class LibDbBase{
 
 	function sdb($name){exit('sdb method no define');}
 
-	function cdb($name){exit('cdb method no define');}
+	function cdb($name){
+		return $this->query('CREATE DATABASE `'.$name.'` DEFAULT CHARACTER SET '.$this->charset,TRUE) && $this->sdb($name);
+	}
 
 	function tname($name){
 		return "`{$this->name}`.`{$this->tablepre}{$name}`";
@@ -158,13 +160,13 @@ class LibDbBase{
 			exit($message);
 		$dberror=$this->error();
 		$dberrno=$this->errno();
-		echo "<div style=\"position:absolute;font-size:11px;font-family:verdana,arial;background:#EBEBEB;padding:0.5em;\">
-				<b>MySQL Error</b><br>
-				<b>Message</b>: $message<br>
-				<b>SQL</b>: $sql<br>
-				<b>Error</b>: $dberror<br>
-				<b>Errno.</b>: $dberrno<br>
-				</div>";
+		echo '<div style="position:absolute;font-size:11px;font-family:verdana,arial;background:#EBEBEB;padding:0.5em;">';
+		echo '	<b>MySQL Error</b><br>';
+		echo "	<b>Message</b>: $message<br>";
+		echo "	<b>SQL</b>: $sql<br>";
+		echo "	<b>Error</b>: $dberror<br>";
+		echo "	<b>Errno.</b>: $dberrno<br>";
+		echo '</div>';
 		exit;
 	}
 

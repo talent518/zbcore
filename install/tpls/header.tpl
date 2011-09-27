@@ -6,7 +6,7 @@
 	<meta name="description" content="{$version.describe}" />
 	<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}style.css" />
-	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="shortcut icon" href="{ROOT_URL}favicon.ico"/>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-global.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-float.js"></script>

@@ -50,6 +50,7 @@
 .formtable td{text-align:center;border:1px #d3d3d3 solid;border-collapse:collapse;border-width:0px 1px;}
 .formtable span.right{padding-left:1em;background:transparent url(images/right.gif) no-repeat;}
 .formtable span.wrong{padding-left:1em;background:transparent url(images/wrong.gif) no-repeat;}
+.formtable span.without{padding-left:1em;background:transparent url(images/without.gif) no-repeat;}
 .formtable .base th{text-align:right;width:120px;}
 .formtable .base td{text-align:left;border-width:1px;padding:5px 0px;}
 

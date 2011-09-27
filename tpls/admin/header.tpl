@@ -8,7 +8,7 @@
 	<meta http-equiv="content-language" content="zh-CN"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}style.css" />
-	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="shortcut icon" href="{ROOT_URL}favicon.ico"/>
 	<!--[if IE]>
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}ie.css" />
 	<![endif]-->

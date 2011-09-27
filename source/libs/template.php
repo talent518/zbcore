@@ -198,7 +198,7 @@ class LibTemplate{
 		}else{
 			$template = str_replace(array('<php>','</php>'),array('',''),$template);
 		}
-		L('io.file')->write($this->getCacheFile(),$this->with($template));
+		L('io.file')->write($this->getCacheFile(),$this->with($template)) or die('Template : Cache file "'.$this->getCacheFile().'" cannot write.');
 		$template=null;
 	}
 

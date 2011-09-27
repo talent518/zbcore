@@ -105,6 +105,10 @@ function &DB(){
 	static $db;
 	if(!$db){
 		$cfg=new DbConfig;
+		if(IN_PROJ!='install' && file_exists(ROOT_DIR.'install.php') && !extension_loaded($cfg->type)){
+			header('Location:'.ROOT_URL.'install.php');
+			exit;
+		}
 		$db=L('db.'.$cfg->type);
 		$db->charset=$cfg->charset;
 		$db->host=$cfg->host;
@@ -113,7 +117,12 @@ function &DB(){
 		$db->name=$cfg->name;
 		$db->pconnect=$cfg->pconnect;
 		$db->tablepre=$cfg->tablepre;
-		$db->connect();
+		if(IN_PROJ!='install' && file_exists(ROOT_DIR.'install.php') && !($db->connect(true) && $db->sdb($cfg->name))){
+			header('Location:'.ROOT_URL.'install.php');
+			exit;
+		}else{
+			$db->connect();
+		}
 	}
 	return $db;
 }

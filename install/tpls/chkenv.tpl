@@ -42,13 +42,13 @@
 				<td>mysql扩展</td>
 				<td>4.0以上</td>
 				<td>5.0以上</td>
-				<td><span class="{if extension_loaded('mysql')}right{else}wrong{/if}">{php echo function_exists('mysql_get_client_info')?mysql_get_client_info():'无';}</span></td>
+				<td><span class="{if extension_loaded('mysql')}right{elseif extension_loaded('mysqli')}without{else}wrong{/if}">{php echo function_exists('mysql_get_client_info')?mysql_get_client_info():'无';}</span></td>
 			</tr>
 			<tr>
 				<td>mysqli扩展</td>
 				<td>4.0以上</td>
 				<td>5.0以上</td>
-				<td><span class="{if extension_loaded('mysqli')}right{else}wrong{/if}">{php echo function_exists('mysqli_get_client_info')?mysqli_get_client_info():'无';}</span></td>
+				<td><span class="{if extension_loaded('mysqli')}right{elseif extension_loaded('mysql')}without{else}wrong{/if}">{php echo function_exists('mysqli_get_client_info')?mysqli_get_client_info():'无';}</span></td>
 			</tr>
 			<tr>
 				<td>GD扩展</td>
@@ -116,6 +116,9 @@
 			</tr>
 		</tbody>
 	</table>
-	<center><button onclick="location.href='{link method=index}'">上一步</button><button onclick="location.href='{link method=cfg}'">下一步</button></center>
+	<center><button onclick="location.href='{link method=index}'">上一步</button><button id="nextStep" onclick="location.href='{link method=cfg}'">下一步</button></center>
+	<script type="text/javascript">
+	$('#nextStep').attr('disabled',$('.formtable span.wrong').size()>0);
+	</script>
 </div>
 {template footer}

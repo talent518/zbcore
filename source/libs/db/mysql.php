@@ -32,10 +32,6 @@ class LibDbMysql extends LibDbBase{
 		return @mysql_select_db($name,$this->link);
 	}
 
-	function cdb($name){
-		return $this->query('CREATE DATABASE `'.$name.'` CHARACTER SET '.$this->charset,TRUE) && $this->sdb($name);
-	}
-
 	function query($sql,$silent=FALSE,$retry=FALSE){
 		if(IS_DEBUG){
 			$stime=smicrotime();

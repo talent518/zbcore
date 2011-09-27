@@ -9,7 +9,7 @@
 	<meta name="google-site-verification" content="pKvlldIyRWGBkDzmGlp8VaerW0AV-7WEU8WtdvD1S_0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}{if $head.style}{$head.style}{else}style{/if}.css" />
-	<link rel="shortcut icon" href="/favicon.ico"/>
+	<link rel="shortcut icon" href="{ROOT_URL}favicon.ico"/>
 	<!--[if IE]>
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}ie.css" />
 	<![endif]-->

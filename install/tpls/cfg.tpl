@@ -23,11 +23,9 @@
 			<tr>
 				<th>连接类型：</th>
 				<td>
-					<select name="db[type]">
-						<option value="">请选择</option>
-						<option value="mysql">mysql</option>
-						<option value="mysqli"} selected{/if}>mysqli</option>
-					</select>
+					<input name="db[type]" type="radio" value="mysql"{if extension_loaded('mysql')} checked{else} disabled="true"{/if}/>mysql
+					<input name="db[type]" type="radio" value="mysqli"{if !extension_loaded('mysqli')} disabled="true"{/if}{if !extension_loaded('mysql') && extension_loaded('mysqli')} checked{/if}/>mysqli
+					&nbsp;<label for="db[type]"/>
 				</td>
 			</tr>
 			<tr>
@@ -40,7 +38,7 @@
 			</tr>
 			<tr>
 				<th>用户名：</th>
-				<td><input name="db[user]" type="text" value="zbcms"/></td>
+				<td><input name="db[user]" type="text" value="zbcore"/></td>
 			</tr>
 			<tr>
 				<th>密　码：</th>
@@ -48,7 +46,7 @@
 			</tr>
 			<tr>
 				<th>数据库名：</th>
-				<td><input name="db[name]" type="text" value="zbcms"/></td>
+				<td><input name="db[name]" type="text" value="zbcore"/></td>
 			</tr>
 			<tr>
 				<th>表前缀：</th>
@@ -99,9 +97,6 @@
 	$.sXML=$.XML;
 	$('#cfgForm').validate({
 		rules:{
-			'db[type]':{
-				required:true
-			},
 			'db[host]':{
 				required:true
 			},

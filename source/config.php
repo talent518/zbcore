@@ -16,18 +16,18 @@ class Config{
 
 	var $charset		= 'utf-8';		//页面字符集(可选 'gbk', 'big5', 'utf-8')
 	var $isGziped 		= TRUE;			//启用gzip
-	var $urlFormat		= 'rewrite';	//url格式化('base','phpinfo','rewrite','html')
+	var $urlFormat		= 'base';	//url格式化('base','phpinfo','rewrite','html')
 
 	var $isCookie		= TRUE;
 }
 
 class DbConfig{
-	var $type		= 'mysqli';
+	var $type		= 'mysql';
 	var $host		= 'localhost';	//数据库服务器(一般为本地localhost)
 	var $user		= 'root';		//数据库用户名
 	var $pwd		= '123456';		//数据库密码
 	var $name		= 'zbcore';	//数据库名
 	var $tablepre	= 'zbc_';		//表名前缀(不能与论坛的表名前缀相同)
-	var $pconnect	= TRUE;		//数据库持久连接 0=关闭, 1=打开
+	var $pconnect	= FALSE;		//数据库持久连接 0=关闭, 1=打开
 	var $charset	= 'utf8';		//数据库字符集
 }

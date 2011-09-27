@@ -5,8 +5,12 @@ exit('Access Denied');
 class LibUrlBase{
 	private $get;
 	function LibUrlBase(){
-		$_GET['ctrl']=$_GET['c'];
-		$_GET['method']=$_GET['m'];
+		if(isset($_GET['c'])){
+			$_GET['ctrl']=$_GET['c'];
+		}
+		if(isset($_GET['m'])){
+			$_GET['method']=$_GET['m'];
+		}
 		$this->get=&$_GET;
 	}
 	function get($key){

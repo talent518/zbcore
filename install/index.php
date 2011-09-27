@@ -22,6 +22,7 @@ class CtrlIndex extends CtrlBase{
 
 			$db=L('db.'.$_POST['db']['type']);
 
+			$db->charset=preg_replace("/[^a-z0-8]+/","",CFG()->charset);
 			foreach($_POST['db'] as $k=>$v)
 
 				$db->$k=$v;
@@ -43,7 +44,7 @@ class CtrlIndex extends CtrlBase{
 			if(L('io.file')->write(SRC_DIR.'config.php',$c))
 				$this->message('配置成功!',URL(array('method'=>'db','adm[email]'=>$_POST['adm']['email'],'adm[password]'=>$_POST['adm']['password'])),TRUE);
 			else
-				$this->message('配置失败，可能是文件(/source/config.php)不可以写!');
+				$this->message('配置失败，可能是文件(/source/config.php)不可写!');
 		}else{
 			$this->display('cfg');
 		}
@@ -52,7 +53,7 @@ class CtrlIndex extends CtrlBase{
 		if(GET('begin')){
 			header('Content-Type:text/html; charset='.CFG()->charset);
 ?>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=CFG()->charset?>" /><style>
+<meta http-equiv="Content-Type" content="text/html; charset=<?=CFG()->charset?>" /><style type="text/css">
 html,body{font-size:12px;}
 b{margin-left:1em;color:green;font-weight:normal;padding-left:1em;background:transparent url(<?=SKIN_URL?>images/right.gif) left center no-repeat;}
 strong{margin-left:1em;color:red;font-weight:normal;padding-left:1em;background:transparent url(<?=SKIN_URL?>images/wrong.gif) left center no-repeat;}
@@ -64,6 +65,8 @@ strong{margin-left:1em;color:red;font-weight:normal;padding-left:1em;background:
 			echo '<br/>管理设置';
 			echo M('user')->edit(1,$user)?'<b>成功!</b>':'<strong>失败!</strong>';
 			echo '<script>parent.document.getElementById("nextStep").disabled=false;</script>';
+			ob_flush();
+			flush();
 		}else{
 			$this->setVar('adm',GET('adm'));
 			$this->display('db');

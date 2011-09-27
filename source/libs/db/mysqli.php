@@ -11,25 +11,22 @@ class LibDbMysqli extends LibDbBase{
 
 	function connect($silent=FALSE){
 		list($host,$port)=explode(':',$this->host);
-		if(!($this->link=@mysqli_connect($host,$this->user,$this->pwd,$silent?null:$this->name,$port)) && !$silent)
+		if(!($this->link=@mysqli_connect($host,$this->user,$this->pwd,$silent?null:$this->name,$port)) && !$silent){
 			$this->halt('Can not connect to MySQL server');
-
+		}
 		if($this->version() > '4.1'){
-			if($this->charset)
+			if($this->charset){
 				@mysqli_query($this->link,"SET character_set_connection=$this->charset,character_set_results=$this->charset,character_set_client=binary");
-
-			if($this->version() > '5.0.1')
+			}
+			if($this->version() > '5.0.1'){
 				@mysqli_query($this->link,"SET sql_mode=''");
+			}
 		}
 		return is_object($this->link)?true:false;
 	}
 
 	function sdb($name){
 		return @mysqli_select_db($this->link,$name);
-	}
-
-	function cdb($name){
-		return $this->query('CREATE DATABASE `'.$name.'` CHARACTER SET '.$this->charset,TRUE) && $this->sdb($name);
 	}
 
 	function query($sql,$silent=FALSE,$retry=FALSE){
@@ -93,7 +90,7 @@ class LibDbMysqli extends LibDbBase{
 	}
 
 	function error(){
-		return (($this->link)?@mysqli_error($this->link):@mysqli_conntect_error());
+		return (($this->link)?@mysqli_error($this->link):@mysqli_connect_error());
 	}
 
 	function errno(){

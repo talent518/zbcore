@@ -21,22 +21,26 @@ class ModelDb{
 				if($tn && $notify){
 					echo '<b>OK!</b><br/><br/>';
 					ob_flush();
+					flush();
 				}
 				$tn=substr($sql,22,-2);
 				$sql='DROP TABLE IF EXISTS `'.$db->tablepre.$tn.'`';
 				if($notify){
 					echo '删除表 '.$db->tablepre.$tn.' …';
 					ob_flush();
+					flush();
 				}
 			}elseif(substr($sql,0,14)=='CREATE TABLE `'){
 				if($notify){
 					echo '<b>OK!</b><br/>';
 					ob_flush();
+					flush();
 				}
 				$sql='CREATE TABLE `'.$db->tablepre.substr($sql,14);
 				if($notify){
 					echo '创建表 '.$db->tablepre.$tn.' 结构…';
 					ob_flush();
+					flush();
 				}
 				$insert=true;
 			}else{
@@ -44,6 +48,7 @@ class ModelDb{
 				if($notify && $insert){
 					echo '<b>OK!</b><br/>写入表 '.$db->tablepre.$tn.' 数据…';
 					ob_flush();
+					flush();
 					$insert=false;
 				}
 			}
@@ -58,6 +63,7 @@ class ModelDb{
 		if($tn && $notify){
 			echo '<b>OK!</b><br/>';
 			ob_flush();
+			flush();
 		}
 		return true;
 	}
@@ -73,10 +79,12 @@ class ModelDb{
 			if($notify){
 				echo $tn;
 				ob_flush();
+				flush();
 			}
 			if($notify){
 				echo '删除表 '.$n.' …';
 				ob_flush();
+				flush();
 			}
 			$sql="DROP TABLE IF EXISTS `$tn`;\r\n";
 			if(!fputs($fp,$sql,strlen($sql)))
@@ -84,6 +92,7 @@ class ModelDb{
 			if($notify){
 				echo '<b>OK!</b><br/>创建表 '.$n.' 结构…';
 				ob_flush();
+				flush();
 			}
 			$sql=str_replace(array('CREATE TABLE `'.$db->tablepre,"\r","\n"),array('CREATE TABLE `','',''),$db->result('SHOW CREATE TABLE `'.$n.'`',0,'Create Table')).";\r\n";
 			if(!fputs($fp,$sql,strlen($sql)))
@@ -91,6 +100,7 @@ class ModelDb{
 			if($notify){
 				echo '<b>OK!</b><br/>写入表 '.$n.' 数据…';
 				ob_flush();
+				flush();
 			}
 
 			$rows=array();
