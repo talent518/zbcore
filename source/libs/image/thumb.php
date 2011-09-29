@@ -16,8 +16,9 @@ class LibImageThumb extends LibImageBase{
 	 */
 	function open($image){
 		$this->info=$this->getInfo($image);
-		if($this->info['type']=='bmp')
-			include_once('./gd_bmp.class.php');
+		if($this->info['type']=='bmp'){
+			include_once(dirname(__FILE__).DIR_SEP.'gd_bmp.func.php');
+		}
 
 		//载入原图
 		$createFun='ImageCreateFrom'.($this->info['type']=='jpg'?'jpeg':$this->info['type']);
