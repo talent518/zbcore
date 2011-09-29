@@ -66,7 +66,7 @@ class LibDbMysql extends LibDbBase{
 		return @mysql_affected_rows($this->link);
 	}
 
-	function result($query,$row,$field=null){
+	function result($query,$row,$field=0){
 		if(is_string($query)){
 			$query=$this->query($query);
 		}
