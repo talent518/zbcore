@@ -65,6 +65,7 @@ class LibDbBase{
 			if($spages){
 				$page=GET('page')+0;
 				$count=$this->result(str_replace($field,'count(*)',$sql),0);
+				define('COUNT',$count);
 				define('PAGES',(int)($count/$limit)+($count%$limit?1:0));
 				define('APAGE',$page>0?$page:1);
 				if($page>1 && $page>PAGES){

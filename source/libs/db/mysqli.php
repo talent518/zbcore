@@ -68,7 +68,7 @@ class LibDbMysqli extends LibDbBase{
 		if(is_string($query)){
 			$query=$this->query($query);
 		}
-		@mysqli_data_seek($this->link,$row);
+		@mysqli_data_seek($query,$row);
 		$row=(is_string($col)?$this->row($query):@mysqli_fetch_row($query));
 		return $this->tidy($row[$col]);
 	}
@@ -78,7 +78,7 @@ class LibDbMysqli extends LibDbBase{
 	}
 
 	function insert_id(){
-		return ($id=@mysqli_insert_id($this->link)) >= 0?$id:$this->result($this->query('SELECT last_insertid()'),0);
+		return ($id=@mysqli_insert_id($this->link)) >= 0?$id:$this->result('SELECT last_insertid()',0);
 	}
 
 	function version(){

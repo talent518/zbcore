@@ -78,7 +78,7 @@ class LibDbMysql extends LibDbBase{
 	}
 
 	function insert_id(){
-		return ($id=@mysql_insert_id($this->link)) >= 0?$id:$this->result($this->query('SELECT last_insertid()'),0);
+		return ($id=@mysql_insert_id($this->link)) >= 0?$id:$this->result('SELECT last_insertid()',0);
 	}
 
 	function version(){
