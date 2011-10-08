@@ -1,4 +1,4 @@
-<?
+<?php
 define('IN_PROJ','admin');
 define('AUTORUN',true);
 

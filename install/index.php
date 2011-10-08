@@ -1,4 +1,4 @@
-<?
+<?php
 if(!defined('IN_SITE'))
 	exit('Access Denied');
 
@@ -58,7 +58,7 @@ html,body{font-size:12px;}
 b{margin-left:1em;color:green;font-weight:normal;padding-left:1em;background:transparent url(<?=SKIN_URL?>images/right.gif) left center no-repeat;}
 strong{margin-left:1em;color:red;font-weight:normal;padding-left:1em;background:transparent url(<?=SKIN_URL?>images/wrong.gif) left center no-repeat;}
 </style>
-<?
+<?php
 			M('db')->import(CTRL_DIR.'db.sql',TRUE);
 			$adm=GET('adm');
 			$user=array('gid'=>1,'username'=>'admin','email'=>$adm['email'],'password'=>$adm['password']);
