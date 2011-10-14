@@ -25,10 +25,14 @@
 				<td class="l">{$r.gname}</td>
 				<td>
 					<a href="{link ctrl=user method=list id=$r.gid}" class="load" title="查看用户">查看</a>
+				{if $r.gid>1}
 					<span class="split">|</span>
 					<a href="{link ctrl=group method=edit id=$r.gid}" class="edit" title="编辑用户组">编辑</a>
-					<span class="split">|</span>
-					<a href="{link ctrl=group method=drop id=$r.gid}" class="drop" title="删除用户组">删除</a>
+					{if !$r.protected}
+						<span class="split">|</span>
+						<a href="{link ctrl=group method=drop id=$r.gid}" class="drop" title="删除用户组">删除</a>
+					{/if}
+				{/if}
 				</td>
 			</tr>
 			{/loop}

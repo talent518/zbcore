@@ -36,6 +36,7 @@ class CtrlUser extends CtrlBase{
 				'username'=>$_POST['username'],
 				'password'=>$_POST['password'],
 				'email'=>$_POST['email'],
+				'protected'=>$_POST['protected']+0,
 			);
 			if($this->mod->add($data))
 				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$data['cid'])),true);
@@ -54,6 +55,7 @@ class CtrlUser extends CtrlBase{
 				'username'=>$_POST['username'],
 				'password'=>$_POST['password'],
 				'email'=>$_POST['email'],
+				'protected'=>$_POST['protected']+0,
 			);
 			if($this->mod->edit($this->id,$data))
 				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$data['cid'])),true);

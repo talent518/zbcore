@@ -34,8 +34,10 @@
 					<a href="{link ctrl=user method=datum id=$r.uid}" class="edit" title="查看用户资料">查看</a>
 					<span class="split">|</span>
 					<a href="{link ctrl=user method=edit id=$r.uid}" class="edit" title="编辑用户">编辑</a>
+				{if !$r.protected}
 					<span class="split">|</span>
 					<a href="{link ctrl=user method=drop id=$r.uid}" class="drop" title="删除用户">删除</a>
+				{/if}
 				</td>
 			</tr>
 			{/loop}

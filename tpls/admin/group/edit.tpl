@@ -10,6 +10,10 @@
 				<td><textarea name="remark" cols="40" rows="3">{$edit.remark|html}</textarea></td>
 			</tr>
 			<tr>
+				<th>受保护：</th>
+				<td><input name="protected" type="radio" value="1"{if $edit.protected} checked{/if}/>是&nbsp;<input name="protected" type="radio" value="0"{if !$edit.protected} checked{/if}/>否</td>
+			</tr>
+			<tr>
 				<th>排序：</th>
 				<td><input name="order" type="text" value="{$edit.order}" size="4" /></td>
 			</tr>

@@ -31,8 +31,7 @@ class ModelUserGroup extends ModelBase{
 	private $cookie='auth',$timeout=1440;
 	var $MEMBER;
 	function add(&$data){
-		if($this->check($data)){
-			DB()->insert('user_group',$data);
+		if(parent::add($data)){
 			$id=DB()->insert_id();
 			$this->drop_cache($id);
 			return true;
@@ -40,24 +39,35 @@ class ModelUserGroup extends ModelBase{
 		return false;
 	}
 	function edit($id,&$data){
-		if(!$group=$this->get($id)){
+		if($id==1){
+			$this->error='受保护用户组不可删除！';
+			return false;
+		}elseif(!$group=$this->get($id)){
 			$this->error='编辑的用户组不存在！';
 			return false;
 		}
 
 		$this->rules['gname']['query']=array('user_group','gid<>'.$id.' AND `gname`=\''.$data['gname'].'\'');
-
-		if($this->check($data)){
-			DB()->update('user_group',$data,'gid='.$id);
+		if($id==1){
+			$data['protected']=1;
+		}
+		if(parent::edit($id,$data)){
 			$this->drop_cache($id);
 			return true;
 		}
 		return false;
 	}
 	function drop($id=0){
-		if($group=$this->get($id)){
+		if($id==1){
+			$this->error='受保护用户组不可删除！';
+			return false;
+		}elseif($group=$this->get($id)){
+			if($group['protected']){
+				$this->error='受保护用户组不可删除！';
+				return false;
+			}
 			DB()->delete('user_group','gid='.$id);
-			$this->drop_cache($group['gid'],$id);
+			$this->drop_cache($id);
 			return true;
 		}else{
 			$this->error='用户组不存在！';

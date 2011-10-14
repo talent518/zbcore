@@ -87,6 +87,10 @@ class ModelUser extends ModelBase{
 		unset($this->rules['password']['required']);
 		$this->rules['email']['query']=array('user','uid<>'.$id.' AND `email`=\''.$data['email'].'\'');
 
+		if($id==1){
+			$data['gid']=$data['ismanage']=$data['protected']=1;
+		}
+
 		if($this->check($data)){
 			if(empty($data['password'])){
 				if(isset($data['password']))
@@ -108,7 +112,14 @@ class ModelUser extends ModelBase{
 		return false;
 	}
 	function drop($id=0){
-		if($user=$this->get_by_uid($id)){
+		if($id==1){
+			$this->error='受保护用户不可删除！';
+			return false;
+		}elseif($user=$this->get($id)){
+			if($user['protected']){
+				$this->error='受保护用户不可删除！';
+				return false;
+			}
 			DB()->delete('user','uid='.$id);
 			DB()->delete('user_datum','uid='.$id);
 			return true;
@@ -176,16 +187,16 @@ class ModelUser extends ModelBase{
 	}
 
 	function get_by_uid($uid=0){
-		return $this->get_by_where('uid='.intval($uid));
+		return $this->get($uid);
 	}
 	function get_by_username($username){
-		$username=saddslashes($username);
+		$username=addslashes($username);
 		return $this->get_by_where("username='$username'");
 	}
 	function get_by_email($email){
 		if(!L('validate')->email($email))
 			return false;
-		$email=saddslashes($email);
+		$email=addslashes($email);
 		return $this->get_by_where("email='$email'");
 	}
 

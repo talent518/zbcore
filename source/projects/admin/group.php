@@ -33,6 +33,7 @@ class CtrlGroup extends CtrlBase{
 			$data=array(
 				'gname'=>$_POST['gname'],
 				'remark'=>$_POST['remark'],
+				'protected'=>$_POST['protected']+0,
 				'order'=>$_POST['order'],
 			);
 			if($this->mod->add($data))
@@ -50,6 +51,7 @@ class CtrlGroup extends CtrlBase{
 			$data=array(
 				'gname'=>$_POST['gname'],
 				'remark'=>$_POST['remark'],
+				'protected'=>$_POST['protected']+0,
 				'order'=>$_POST['order'],
 			);
 			if($this->mod->edit($this->id,$data))

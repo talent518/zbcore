@@ -21,6 +21,10 @@
 				<th>登入后台：</th>
 				<td><input name="ismanage" type="radio" value="1"/>是 <input name="ismanage" type="radio" value="0" checked/>否</td>
 			</tr>
+			<tr>
+				<th>受保护：</th>
+				<td><input name="protected" type="radio" value="1"/>是&nbsp;<input name="protected" type="radio" value="0" checked/>否</td>
+			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
