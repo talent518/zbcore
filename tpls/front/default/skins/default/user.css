@@ -9,6 +9,8 @@ html,body{overflow:hidden;}
 
 #wpl{overflow:hidden;overflow-y:scroll;}
 
+.line10{clear:both;width:100%;height:10px;overflow:hidden;}
+
 .wp{margin:0px auto;width:978px;overflow:hidden;border:1px #b0d3ee solid;}
 #hd{height:50px;margin-top:5px;background:#f0f7ff url(images/ucenter_hd.gif) no-repeat;text-align:right;}
 #hd p{padding-right:20px;line-height:50px;font-size:14px;border-bottom:none;}
