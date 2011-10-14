@@ -71,13 +71,17 @@ class ModelUserGroup extends ModelBase{
 		}
 	}
 
+	function _get($id=0){
+		return parent::get($id);
+	}
+
 	function &get($id=0){
 		if(!$id)
 			return;
 		$cache=L('cache');
 		$cache->dir='user_group';
 		$cache->name=$id;
-		$cache->callback=array(parent,'get',array($id));
+		$cache->callback=array($this,'_get',$id);
 		return $cache->get();
 	}
 	function &get_list(){

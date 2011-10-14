@@ -42,7 +42,11 @@ class LibCache{
 	//获取数据
 	public function getData(&$callback){
 		list($object,$name,$param)=$callback;
-		return call_user_method_array($name,$object,$param);
+		if(is_object($object)){
+			return call_user_method_array($name,$object,is_array($param)?$param:array(&$param));
+		}else{
+			return call_user_func_array($object,is_array($name)?$name:array(&$name));
+		}
 	}
 	//文件
 	private function file(){
