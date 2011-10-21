@@ -24,7 +24,7 @@ $.imagePreview.init=function(){
 	$('#imagePreview-statusBar').html('<label>总计：</label><span id="imagePreview-status-count"></span><label>实际大小：</label><span id="imagePreview-status-size"></span><label>缩放比例：</label><span id="imagePreview-status-zoom"></span><label>下载速度：</label><span id="imagePreview-status-bps"></span>');
 	if(isIE6){
 		$(window).scroll(function(){
-			$('#imagePreview-mask').css({top:$(window).scrollTop()});
+			$('#imagePreview-mask,#imagePreview').float('center');
 		});
 	}
 	$('#imagePreview').hide().draggable({handle:'#imagePreview-header'});
@@ -38,8 +38,9 @@ $.imagePreview.init=function(){
 		}
 	});
 	$(window).resize(function(){
-		if($('#imagePreview').is(':visible')){
+		if($('#imagePreview-mask').is(':visible')){
 			$('#imagePreview').float('center');
+			$('#imagePreview-mask').css({width:$(window).width(),height:$(window).height()});
 		}
 	});
 	$('#imagePreview-image').unbind('mousemove').bind('mousemove',function(e){

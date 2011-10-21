@@ -297,7 +297,9 @@ $.extend($.validator, {
 		min: $.validator.format('请输入一个大于或等于 {0} 的数值'),
 
 		integer: '请输入一个合法的十进制整数',
-		float: '请输入一个合法的十进制整数',
+		uinteger: '请输入一个合法的十进制正整数',
+		float: '请输入一个合法的十进制小数',
+		ufloat: '请输入一个合法的十进制正小数',
 		chinese:'只能包括中文和英文、数字和非特殊符号',
 		english:'只能包括英文字母、数字和非特殊符号',
 		username:'只能包括中文字、英文字母、数字和下划线并以中文或英文字母开头',
@@ -688,7 +690,7 @@ $.extend($.validator, {
 			}else{
 				label.removeClass(this.settings.rightClass).addClass( this.settings.errorClass );
 			}
-			label.is('.generated') && label.html(message);
+			label.is('.ungenerated,.readonly') || label.html(message);
 			this.toShow = this.toShow.add(label);
 		},
 
@@ -1109,12 +1111,22 @@ $.extend($.validator, {
 
 		//整数
 		integer: function(value, element) {
-			return this.optional(element) || /^-?(\d+)?$/.test(value);
+			return this.optional(element) || /^[\+\-]?(\d+)?$/.test(value);
+		},
+
+		//整数
+		uinteger: function(value, element) {
+			return this.optional(element) || /^(\d+)?$/.test(value);
 		},
 
 		//小数
 		float: function(value, element) {
-			return this.optional(element) || /^-?\d+\.\d+$/.test(value);
+			return this.optional(element) || /^[\+\-]?\d+(\.\d+)?$/.test(value);
+		},
+
+		//小数
+		ufloat: function(value, element) {
+			return this.optional(element) || /^\d+(\.\d+)?$/.test(value);
 		},
 
 		// 中英文

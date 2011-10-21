@@ -43,10 +43,16 @@ $.dialog.init=function(){
 		}
 	});
 	$(window).resize(function(event){
-		if($('#dialog').is(':visible')){
+		if($('#dialog-mask').is(':visible')){
 			$('#dialog').float('center');
+			$('#dialog-mask').css({width:$(window).width(),height:$(window).height()});
 		}
 	});
+	if(isIE6){
+		$(window).scroll(function(){
+			$('#dialog-mask,#dialog').float('center');
+		});
+	}
 };
 //显示对话框
 $.dialog.show=function(message,options){

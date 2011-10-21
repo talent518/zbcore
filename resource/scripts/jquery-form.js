@@ -43,11 +43,15 @@
  * ajaxSubmit() provides a mechanism for immediately submitting
  * an HTML form using AJAX.
  */
-$.fn.ajaxSubmit = function(callback) {
+$.fn.ajaxSubmit = function(options) {
 	// fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
 	if (!this.length) {
 		log('ajaxSubmit: skipping submit process - no element selected');
 		return this;
+	}
+
+	if (typeof options == 'function') {
+		options = { success: options };
 	}
 
 	var url = $.trim(this.attr('action'));
@@ -57,11 +61,13 @@ $.fn.ajaxSubmit = function(callback) {
    	}
    	url = url || window.location.href || '';
 
-	var options = {
+	options = $.extend(true, $.ajaxSettings,{
 		url:  $.xURL(url),
 		type: this.attr('method') || 'GET',
 		iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
-	};
+	}, options);
+
+	var callback=options.success;
 	options.success=function(xml){
 		xml=$.sXML(xml);
 		if(xml){
@@ -383,9 +389,9 @@ $.fn.ajaxSubmit = function(callback) {
  * passes the options argument along after properly binding events for submit elements and
  * the form itself.
  */
-$.fn.ajaxForm = function(callback) {
+$.fn.ajaxForm = function(options) {
 	return this.ajaxFormUnbind().bind('submit.form-plugin', function() {
-		$(this).ajaxSubmit(callback);
+		$(this).ajaxSubmit(options);
 		return false;
 	}).bind('click.form-plugin', function(e) {
 		var target = e.target;

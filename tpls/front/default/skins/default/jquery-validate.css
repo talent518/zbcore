@@ -1,6 +1,6 @@
 form font.required{margin-left:5px;padding:2px 0px;font-weight:bold;line-height:1em;}
 form label.generated,form label.ungenerated{margin-left:5px;padding:2px 2px 0px;border:1px transparent solid;line-height:1em;vertical-align:middle;}
-form label.ungenerated{color:#333 !important;}
+form label.ungenerated,form label.readonly{color:#333 !important;}
 form label.wrong{display:inline !important;float:none !important;width:auto !important;padding-left:1.5em;background:transparent url(images/wrong.gif) 4px 6px no-repeat;color:#F60;font-size:12px;}
 form label.right{display:inline !important;float:none !important;width:auto !important;padding-left:1.5em;background:transparent url(images/right.gif) 4px 4px no-repeat;color:#419639;font-size:12px;}
 form label.active{display:inline !important;float:none !important;width:auto !important;background-color:#fcfcfc;border-color:#d8ecff;}

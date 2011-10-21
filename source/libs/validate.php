@@ -124,6 +124,10 @@ class LibValidate{
 			$this->key=$key;
 			foreach($rule as $k=>$v){
 				$this->error = !empty($messages[$key][$k])?$messages[$key][$k]:$this->messages[strtolower($k)];
+				if(!method_exists($this,$k)){
+					$this->error=sprintf('规则“%s”中的 "%s"验证方法未定义！',$key,$k);
+					return false;
+				}
 				if(!$this->$k($data[$key],$v)){
 					return false;
 				}
@@ -166,13 +170,13 @@ class LibValidate{
 	//浮点数
 	function float($float){
 		if(!$this->required($float)) return true;
-		return eregi("^[\+\-]?[0-9]*\.[0-9]*$",$float);
+		return eregi("^[\+\-]?[0-9]+(\.[0-9]+)?$",$float);
 	}
 
 	//无符号浮点数
 	function ufloat($ufloat){
 		if(!$this->required($ufloat)) return true;
-		return eregi("^[0-9]*\.[0-9]*$",$ufloat);
+		return eregi("^[0-9]+(\.[0-9]+)?$",$ufloat);
 	}
 
 	//最小

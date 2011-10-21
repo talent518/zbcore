@@ -30,8 +30,14 @@ $.window.init=function(){
 	$(window).resize(function(event){
 		if($('#window-mask').is(':visible')){
 			$('#window').float('center');
+			$('#window-mask').css({width:$(window).width(),height:$(window).height()});
 		}
 	});
+	if(isIE6){
+		$(window).scroll(function(){
+			$('#window-mask,#window').float('center');
+		});
+	}
 };
 //调整窗口
 $.window.resize=function(){

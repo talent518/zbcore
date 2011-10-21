@@ -15,8 +15,14 @@ $.multiSelect.init=function(){
 	$(window).resize(function(event){
 		if($('#multiSelect-mask').is(':visible')){
 			$('#multiSelect').float('center');
+			$('#multiSelect-mask').css({width:$(window).width(),height:$(window).height()}).float('center');
 		}
 	});
+	if(isIE6){
+		$(window).scroll(function(){
+			$('#multiSelect-mask,#multiSelect').float('center');
+		});
+	}
 };
 
 //打开窗口
