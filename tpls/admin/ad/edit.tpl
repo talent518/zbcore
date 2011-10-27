@@ -182,8 +182,7 @@ $('#editform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$edit.
 	}else{
 		$('#editform input[name=type]').val('');
 	}
-	$('#editform').required();
-	$.window.resize();
+	$('#editform').required().getWindow().resize();
 }});
 $('#editform select[name=aid]').staged('{link ctrl=area method=json}',{val:{$edit.aid}});
 </script>

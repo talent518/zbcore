@@ -4,7 +4,7 @@ exit('Access Denied');
 
 class ModelMail extends ModelBase{
 	var $cfg,$error;
-	function getBody($tpl,$data){
+	function getBody($tpl,array $data){
 		static $_tpl;
 		if(!$_tpl){
 			$_tpl=clone L('template');
@@ -53,7 +53,7 @@ class ModelMail extends ModelBase{
 			$mail->AddAttachment($attachment);//附件
 		$mail->IsHTML(true); // 以HTML发送
 		$mail->Subject = $subject;
-		$mail->Body = $body; //HTML Body
+		$mail->Body = (is_array($body)?call_user_method_array('getBody',&$this,$body):$body); //HTML Body
 		$mail->AltBody = "This is the body when user views in plain text format"; //纯文字时的Body
 		if(!$mail->Send()){
 			$this->error=$mail->ErrorInfo;

@@ -181,8 +181,7 @@ $('#addform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$add.pi
 	}else{
 		$('#addform input[name=type]').val('');
 	}
-	$('#addform').required();
-	$.window.resize();
+	$('#addform').required().getWindow().resize();
 }});
 $('#addform select[name=aid]').staged('{link ctrl=area method=json}',{val:{$add.aid}});
 </script>

@@ -137,9 +137,6 @@ class ModelAd extends ModelBase{
 			'integer'=>'排序不是一个整数'
 		),
 	);
-	function __construct(){
-		parent::__construct();
-	}
 	function setCodeRule($type){
 		if(in_array($type,array('html','flash','image','text'))){
 			$this->rules['code']=$this->rules['code']['check'][$type];

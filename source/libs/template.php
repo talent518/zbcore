@@ -316,6 +316,9 @@ class LibTemplate{
 			case 'js'://php var to json
 				$string=L('json')->encode($string);
 				break;
+			case 'money'://numeric to money
+				$string=sprintf('<b class="numeric"><font style="font-family:Arial;">¥</font>%.2f</b>',$string);
+				break;
 		}
 		return $string;
 	}

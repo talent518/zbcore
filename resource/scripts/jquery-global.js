@@ -223,7 +223,6 @@ function sprintf(){
 			if(this.status){
 				if(this.backurl.length>0)
 					$('#bd').load(this.backurl);
-				$.window.close();
 			}else{
 				if(this.backurl.length>0)
 					window.open(this.backurl,'_blank');

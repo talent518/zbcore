@@ -78,7 +78,7 @@ $('#registerForm').validate({
 		}{if M('setup')->get('verify','frontregister')},
 		verify:{
 			required:true,
-			equalLength:{php echo M('setup')->get('verify','frontregister');}
+			equalLength:{php echo M('setup')->get('verify','length');}
 		}{/if},
 		agree:{
 			required:true

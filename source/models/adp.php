@@ -25,9 +25,6 @@ class ModelAdp extends ModelBase{
 			'integer'=>'排序不是一个整数'
 		),
 	);
-	function __construct(){
-		parent::__construct();
-	}
 	function add(&$data){
 		$this->rules['pname']['query']=array('adp','pname=\''.$data['pname'].'\'');
 		$data['size']=serialize($data['size']);

@@ -69,10 +69,21 @@ class ModelUser extends ModelBase{
 			$data['regtime']=TIMESTAMP;
 			DB()->insert('user',$data);
 			$uid=DB()->insert_id();
-			$cfg=M('setup')->get();
-			$code=encodestr("{$uid}\t{$email}\t{TIMESTAMP}");
-			$url=SITE_URL.URL(array('ctrl'=>'user','method'=>'vmail','code'=>$code));
-			M('mail')->send(array('email'=>$email,'name'=>$username),"注册帐户，已成功！验证邮件！","恭喜您！<br/>　　您在“{$cfg[sitetitle]}”注册帐户，已成功！<br/><br/>帐户信息如下：<br/>　　用户名：$username<br/>　　密码：$password<br/>　　邮箱地址：$email<br/><br/><center>请<a href=\"$url\" target=\"_blank\">点击此处</a>，以确认您的邮件地址正确无误！</center>");
+			$code=encodestr(sprintf("%d\t%s\t%d",$uid,$email,TIMESTAMP));
+			M('mail')->send(
+				array('email'=>$email,'name'=>$username),
+				"注册帐户，已成功！验证邮件！",
+				array(
+					'register',
+					array(
+						'uid'=>$uid,
+						'username'=>$username,
+						'password'=>$password,
+						'email'=>$email,
+						'code'=>$code
+					)
+				)
+			);
 			return true;
 		}
 		return false;
@@ -99,12 +110,9 @@ class ModelUser extends ModelBase{
 				$data['salt']=L('string')->rand(12,STRING_RAND_BOTH);
 				$data['password']=md5(md5($data['password']).$data['salt']);
 			}
-			if($user['email']!=$data['email']){
-				$cfg=M('setup')->get();
+			if($user['email']!=$data['email'] && M('setup')->get('user','verifyemail')){
 				$data['verifyemail']=0;
-				$code=encodestr("{$user[uid]}\t{$user[email]}\t{TIMESTAMP}");
-				$url=SITE_URL.URL(array('ctrl'=>'user','method'=>'vmail','code'=>$code));
-				M('mail')->send(array('email'=>$data['email'],'name'=>$user['username']),"验证邮件！","{$user[username]} 您好！<br/>　　您在“{$cfg[sitetitle]}”的帐户修改了EMail地址！之前的EMail地址是：{$user[email]}。<br/><center>请<a href=\"$url\" target=\"_blank\">点击此处</a>，以确认你的邮箱地址正确无误！</center>");
+				$this->svmail();
 			}
 			DB()->update('user',$data,'uid='.$id);
 			return true;
@@ -211,12 +219,12 @@ class ModelUser extends ModelBase{
 
 	function vmail($code){
 		if($data=decodestr($code)){
-			@list($uid,$email,$time)=$data;
-			if($uid>0 && $time>0 && $user=$this->get_by_uid($uid)){
+			@list($uid,$email,$time)=explode("\t",$data);
+			if($uid>0 && $time>0 && ($user=$this->get_by_uid($uid))){
 				if($time+86400<TIMESTAMP)
 					$this->error='Email验证超时！请在一天内进行验证！';
 				elseif(L('validate')->email($email) && $user['email']==$email){
-					DB()->update('user',array('verifyemail'=>1),'uid='.$uid);
+					DB()->update('user',array('email'=>$email,'verifyemail'=>1),'uid='.$uid);
 					return true;
 				}else
 					$this->error='错的厉害呀，好厉害的呀！';
@@ -224,5 +232,12 @@ class ModelUser extends ModelBase{
 		}else
 			$this->error='验证码错误！';
 		return false;
+	}
+
+	function svmail(){
+		$code=encodestr(sprintf("%d\t%s\t%d",$this->MEMBER['uid'],$this->MEMBER['email'],TIMESTAMP));
+		$return=M('mail')->send(array('email'=>$this->MEMBER['email'],'name'=>$this->MEMBER['username']),"验证邮件！",array('vmail',array('code'=>$code)));
+		$this->error=M('mail')->error;
+		return $return;
 	}
 }

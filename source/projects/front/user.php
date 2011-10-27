@@ -107,6 +107,13 @@ class CtrlUser extends CtrlBase{
 	function onVerify(){
 		L('image.verify')->verify();
 	}
+	function onSvmail(){
+		$this->checkLogin();
+		if(M('user')->svmail())
+			$this->message('已成功发送！',URL(array('ctrl'=>'user')),true);
+		else
+			$this->message(M('user')->error);
+	}
 	function onVmail(){
 		if(M('user')->vmail(GET('code')))
 			$this->message('已通过验证','',true);
