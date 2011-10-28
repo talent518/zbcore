@@ -112,6 +112,7 @@ class ModelUser extends ModelBase{
 			}
 			if($user['email']!=$data['email'] && M('setup')->get('user','verifyemail')){
 				$data['verifyemail']=0;
+				$this->MEMBER=array_merge($this->MEMBER,$data);
 				$this->svmail();
 			}
 			DB()->update('user',$data,'uid='.$id);
@@ -236,7 +237,16 @@ class ModelUser extends ModelBase{
 
 	function svmail(){
 		$code=encodestr(sprintf("%d\t%s\t%d",$this->MEMBER['uid'],$this->MEMBER['email'],TIMESTAMP));
-		$return=M('mail')->send(array('email'=>$this->MEMBER['email'],'name'=>$this->MEMBER['username']),"验证邮件！",array('vmail',array('code'=>$code)));
+		$return=M('mail')->send(
+			array('email'=>$this->MEMBER['email'],'name'=>$this->MEMBER['username']),
+			"验证邮件！",
+			array(
+				'vmail',
+				array(
+					'code'=>$code
+				)
+			)
+		);
 		$this->error=M('mail')->error;
 		return $return;
 	}

@@ -122,7 +122,7 @@ $.window.prototype={
 		}else{
 			options[name]=value;
 		}
-		$.extend(this.options,options);
+		$.extend(true,this.options,options);
 		this.open();
 		return this;
 	}

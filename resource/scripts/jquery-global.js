@@ -218,7 +218,7 @@ function sprintf(){
 		}
 		return false;
 	};
-	$.sXML=function(xml){
+	$.sXML=function(xml,callback){
 		return $.XML(xml,function(){
 			if(this.status){
 				if(this.backurl.length>0)
@@ -227,6 +227,8 @@ function sprintf(){
 				if(this.backurl.length>0)
 					window.open(this.backurl,'_blank');
 			}
+			if($.isFunction(callback))
+				callback.call(this);
 		});
 	};
 	$.get=function(url,data,callback){
