@@ -42,11 +42,6 @@ function:
 	自定义(配置保存到数据库)：{diy id=diyid,widget=widgetname class=classvalue}(<div id="diyid" class="classvalue">{content}</div>)
 	挂件(...)：后台设置{widget id=widgetid,name=widgetname title=titlevalue},调用{widget:widgetname arg1,arg2,arg3}
 
-lib.db.mysql.pages()
-	return model.base;
-
-xml change json
-
 db.backup,db.restore:大数据库支持
 
 sncore.display:执行后不退出

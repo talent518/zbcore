@@ -513,7 +513,7 @@ $.extend($.validator, {
 
 		prepareElement: function( element ) {
 			this.reset();
-			this.toHide = this.errorsFor(element);
+			this.toHide = this.errorsFor(element).not('.ungenerated');
 		},
 
 		check: function( element ) {
@@ -640,7 +640,7 @@ $.extend($.validator, {
 					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
 				}
 			}
-			this.toHide = this.toHide.not( this.toShow );
+			this.toHide = this.toHide.not( this.toShow ).not('.ungenerated');
 			this.hideErrors();
 			this.addWrapper( this.toShow ).show();
 		},
@@ -671,6 +671,8 @@ $.extend($.validator, {
 				label = $("<" + this.settings.errorElement + "/>").attr({'for':this.idOrName(element),'class':'generated'});
 				this.settings.errorPlacement?this.settings.errorPlacement(label,$(element)):label.insertAfter(element);
 			}
+			if(!label.is('.generated,.ungenerated') && label.is('.readonly,[readonly]'))
+				label.addClass('ungenerated');
 			if(!label.is('.generated,.ungenerated'))
 				label.addClass('generated');
 			return label.eq(0);
@@ -783,7 +785,21 @@ $.extend($.validator, {
 		number: {number: true},
 		numberDE: {numberDE: true},
 		digits: {digits: true},
-		creditcard: {creditcard: true}
+		creditcard: {creditcard: true},
+
+		integer: {integer: true},
+		uinteger: {uinteger: true},
+		float: {float: true},
+		ufloat: {ufloat: true},
+		chinese: {chinese: true},
+		english: {english: true},
+		username: {username: true},
+		password: {password: true},
+		mobile: {mobile: true},
+		phone: {phone: true},
+		fax: {fax: true},
+		zipcode: {zipcode: true},
+		mobile: {mobile: true}
 	},
 
 	addClassRules: function(className, rules) {

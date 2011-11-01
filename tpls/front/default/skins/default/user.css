@@ -46,7 +46,7 @@ dl.base dd.info p{padding:0px 20px;float:none;width:auto;border-bottom:1px #e7e7
 .formtable caption{margin-bottom:5px;height:30px;overflow:hidden;border:1px #acce8e solid;background:url(images/backgrounds.gif) left -275px repeat-x;line-height:30px;text-indent:10px;text-align:left;color:#acce8e;}
 .formtable th{color:#444;white-space:nowrap;}
 .formtable tbody th{width:80px;text-align:right;vertical-align:top;line-height:24px;}
-.formtable .hide{visibility:hidden;border-right:1px #fff solid;}
+.formtable .hide{border-right:1px #fff solid;}
 .formtable td.active{font-size:14px;font-weight:bold;background:#ecf5ff;}
 .formtable td.active a{color:#F60;}
 .formtable input{margin:0px;}
