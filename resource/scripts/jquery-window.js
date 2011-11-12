@@ -88,7 +88,10 @@ $.window.prototype={
 		},0);
 		return this;
 	},refresh:function(){
+		var $this=this;
 		$.get($this.options.url,function(content){
+			if($this.options.content==content)
+				return;
 			$this.options.content=content;
 			$this.open();
 		});

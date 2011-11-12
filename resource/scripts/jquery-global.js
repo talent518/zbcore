@@ -119,7 +119,7 @@ function sprintf(){
 		var $msg=$('#message');
 		if($msg.size()==0){
 			$msg=$('<div id="message"></div>').appendTo(document.body);
-			$msg.hide().css({position:'absolute',border:'1px #e7e7e7 solid',backgroundColor:'#fcfcfc',padding:'2px'}).css($css);
+			$msg.hide().css({position:'absolute',zIndex:9999,border:'1px #e7e7e7 solid',backgroundColor:'#fcfcfc',padding:'5px'}).css($css);
 		};
 		$(document).mousemove(function(e){
 			var $css={left:e.pageX+16,top:e.pageY+20},both=0;

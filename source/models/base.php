@@ -48,14 +48,14 @@ class ModelBase{
 				'spages'=>$spages,
 			),SQL_SELECT_LIST,$this->priKey);
 	}
-	function add(&$data,$isCheck=true,$isReplace=false){
+	function add($data,$isCheck=true,$isReplace=false){
 		if(!$isCheck || $this->check($data)){
 			DB()->insert($this->table,saddslashes($data),$isReplace);
 			return true;
 		}
 		return false;
 	}
-	function edit($id,&$data,$isCheck=true,$isString=true){
+	function edit($id,$data,$isCheck=true,$isString=true){
 		if($id<=0 || $this->exists($id)!=$id){
 			$this->error='信息不存在';
 			return false;
@@ -76,5 +76,11 @@ class ModelBase{
 			$this->error='信息不存在';
 		}
 		return false;
+	}
+	function update($data,$where,$isString=true){
+		DB()->update($this->table,$data,$where,$isString);
+	}
+	function delete($where){
+		DB()->delete($this->table,$where);
 	}
 }
