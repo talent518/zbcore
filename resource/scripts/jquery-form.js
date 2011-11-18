@@ -62,26 +62,10 @@ $.fn.ajaxSubmit = function(options) {
    	url = url || window.location.href || '';
 
 	options = $.extend(true, {
-		url:  $.xURL(url),
+		url:  url,
 		type: this.attr('method') || 'GET',
 		iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
 	}, options);
-
-	var callback=options.success;
-	var win=$(this).getWindow();
-	options.success=function(xml){
-		xml=$.sXML(xml,function(){
-			if(this.status && win){
-				win.close();
-			}
-		});
-		if(xml){
-			if($.isFunction(callback))
-				callback(xml);
-			else
-				$.debug(xml);
-		}
-	};
 
 	// hook for manipulating the form data before it is extracted;
 	// convenient for use with rich editors like tinyMCE or FCKEditor

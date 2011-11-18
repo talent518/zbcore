@@ -346,10 +346,41 @@ function sprintf(){
 			$('input[type=button]').addClass('button');
 			$('input[type=submit]').addClass('submit');
 		}
-		if($.validator)
-			$.validator.setDefaults({submitHandler:function(form){
-				$(form).ajaxSubmit();
-				return false;
-			}});
+		if($.validator && $.fn.ajaxSubmit){
+			var $ajaxSubmit=$.fn.ajaxSubmit;
+			$.fn.ajaxSubmit=function(options){
+				if($.isFunction(options)){
+					options={success:options};
+				}
+				return $ajaxSubmit.call(this,$.extend(true,{beforeSerialize:function(form,options){
+					options.url=$.xURL(options.url);
+				}},options));
+			};
+			$.validator.setDefaults({
+				submitQuiet:true,
+				submitHandler:function(form){
+					var settings=this.settings;
+					$(form).ajaxSubmit(function(xml){
+						if(settings.submitQuiet){
+							var win=$(form).getWindow();
+							xml=$.sXML(xml,function(){
+								if(this.status && win){
+									win.close();
+								}
+							});
+						}else{
+							xml=$.XML(xml);
+						}
+						if(xml){
+							if($.isFunction(callback))
+								callback(xml);
+							else
+								$.debug(xml);
+						}
+					});
+					return false;
+				}
+			});
+		}
 	});
 })(jQuery);

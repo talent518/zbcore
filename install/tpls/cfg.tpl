@@ -94,7 +94,6 @@
 	</table>
 	<center><button onclick="location.href='{link method=index}'">上一步</button><button type="submit" value="1">下一步</button></center>
 	<script type="text/javascript">
-	$.sXML=$.XML;
 	$('#cfgForm').validate({
 		rules:{
 			'db[host]':{
@@ -130,12 +129,11 @@
 				password:true,
 				equalTo:'#cfgForm input[name="adm[password]"]'
 			}
-		},
-		messages:{
+		},messages:{
 			'db[type]':{
 				required:'请选择'
 			}
-		}
+		},submitQuiet:false
 	});
 	</script>
 </form>

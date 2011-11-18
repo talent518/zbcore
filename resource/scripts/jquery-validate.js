@@ -262,10 +262,6 @@ $.extend($.validator, {
 		},
 		unhighlight: function( element, errorClass, validClass ) {
 			$(element).removeClass(errorClass).addClass(validClass);
-		},
-		submitHandler:function(form){
-			$(form).ajaxSubmit();
-			return false;
 		}
 	},
 

@@ -55,7 +55,6 @@ $('#verifyImage').click(function(){
 	uri.querys.rand=Math.floor(Math.random()*100000);
 	this.src=$.URI2URL(uri);
 });
-$.sXML=$.XML;
 $('#registerForm').validate({
 	rules:{
 		username:{
@@ -83,9 +82,7 @@ $('#registerForm').validate({
 		agree:{
 			required:true
 		}
-	},
-	messages:{
-	}
+	},submitQuiet:false
 });
 </script>
 {template user/footer}

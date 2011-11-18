@@ -21,28 +21,14 @@ class LibUrlRewrite{
 	function link($args=array()){
 		$url=($args['proj']?$args['proj']:(IN_PROJ=='front'?'index':IN_PROJ));
 		$url.='/'.($args['ctrl']?$args['ctrl']:'index');
-		if($url=='index/index' && in_array($args['method'],array('category','picture','article'))){
-			switch($args['method']){
-				case 'category':
-					$url='category/'.$args['cid'].($args['page']?'/'.$args['page']:null);
-					unset($args['cid'],$args['page']);
-					break;
-				case 'picture':
-					$url='picture/'.$args['id'];
-					unset($args['id']);
-					break;
-				case 'article':
-					$url='article'.($args['page']?'/'.$args['page']:($args['id']?'/show_'.$args['id']:null));
-					unset($args['page'],$args['id']);
-					break;
-			}
-		}elseif($args['method'])
+		if($args['method'])
 			$url.='/'.$args['method'];
 		else
 			$url.='/index';
 		unset($args['proj'],$args['ctrl'],$args['method']);
-		foreach($args as $k=>$v)
+		foreach($args as $k=>$v){
 			$url.='/'.$k.'/'.urlencode($v);
+		}
 		if(strlen($url)>1)
 			$url.='.html';
 		return ROOT_URL.$url;

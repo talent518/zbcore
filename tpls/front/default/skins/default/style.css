@@ -1,7 +1,7 @@
 @import url(global.css);
 
-#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;}
-#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;}
+#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;-moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
+#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;-moz-border-radius:5px 5px 0px 0px; -khtml-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; border-radius:5px 5px 0px 0px;}
 #message h2{clear:right;padding:30px 20px;font-weight:normal;}
 #message p{clear:both;text-align:right;padding-bottom:5px;}
 #message em.icon{float:left;width:90px;height:90px;overflow:hidden;}
