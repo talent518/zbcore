@@ -15,19 +15,19 @@ class CtrlUser extends CtrlBase{
 		$this->onList();
 	}
 	function onList(){
-		if($this->is_submit('list')){
-			$ids=array();
-			foreach($_POST['ids'] as $id=>$order)
-				if($_POST['_ids'][$id]!=$order)
-					$ids[$id]=$order;
-			$this->mod->order($this->id,$ids);
-			$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$this->id)),true);
-		}else{
-			$this->setVar('id',$this->id);
-			$this->setVar('list',$this->mod->get_list_by_where($this->id>0?'gid='.$this->id:'',20,true));
-			$this->formhash('list');
-			$this->display('user/list');
-		}
+		$where='1>0';
+		if($this->id>0)
+			$where.=' AND gid='.$this->id;
+		if(GET('uid')>0)
+			$where.=' AND uid='.(GET('uid')+0);
+		if(GET('username'))
+			$where.=' AND username=\''.GET('username').'\'';
+		if(GET('email'))
+			$where.=' AND email=\''.GET('email').'\'';
+		$this->setVar('id',$this->id);
+		$this->setVar('list',$this->mod->get_list_by_where($where,20,true));
+		$this->formhash('list');
+		$this->display('user/list');
 	}
 	function onAdd(){
 		if($this->is_submit('add')){

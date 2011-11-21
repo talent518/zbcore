@@ -2,7 +2,27 @@
 	<a href="{link ctrl=user method=add id=$id}" class="add button" title="添加用户">添加用户</a>
 	用户管理
 </h1>
-<form id="listform" class="formtable">
+<form id="listform" class="formtable" action="{link ctrl=user method=list}" method="get">
+	<table cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<th>用户ID：</th>
+			<td><input name="uid" type="text" value="{$_GET.uid}"/></td>
+			<th>用户名：</th>
+			<td><input name="username" type="text" value="{$_GET.username}"/></td>
+		</tr>
+		<tr>
+			<th>E-Mail：</th>
+			<td><input name="email" type="text" value="{$_GET.email}"/></td>
+			<th>用户组：</th>
+			<td>
+				<select name="id" val="{$_GET.id}"></select>
+			</td>
+		</tr>
+		<tr>
+			<th class="hide">&nbsp;</th>
+			<td colspan="3"><input type="submit" value="搜索"/></td>
+		</tr>
+	</table>
 	<table cellspacing="0" cellpadding="0" border="0" class="list">
 		<thead>
 			<tr>
@@ -59,4 +79,8 @@ $('#listform a.list').click(function(){
 	$('#bd').load(this.href);
 	return false;
 });
+$('#listform').ajaxForm(function(xml){
+	$('#bd').html($.sXML(xml));
+});
+$('#listform select[name=id]').staged('{link ctrl=user method=json}');
 </script>

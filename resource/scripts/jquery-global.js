@@ -274,12 +274,16 @@ function sprintf(){
 				callback(xml);
 		}});
 	};
-	$.fn.load=function(url,callback){
+	$.fn.load=function(url,data,callback){
 		if(typeof(url)!='string')
 			return $load.call(this,url);
+		if($.isFunction(data)){
+			callback=data;
+			data={};
+		}
 		var $this=this;
 		if($this.size())
-			$.ajax({url:url,type:'GET',success:function(xml){
+			$.ajax({url:url,type:'GET',data:data,success:function(xml){
 				xml=$.sXML(xml);
 				if(xml){
 					$($this).html(xml);
