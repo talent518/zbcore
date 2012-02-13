@@ -38,8 +38,10 @@ textarea,input[type=text],input[type=password]{border:1px #b0d3ee solid;backgrou
 textarea{height:auto;}
 button,input.button,input[type=submit],input[type=button]{cursor:pointer;border:medium none;}
 
-.focus{color:#000;}
-.blur{color:#999;}
+.focusb{color:#000;}
+.fblur{color:#999;}
+.fbtrue{color:green;border-color:green;}
+.fbfalse{color:red;border-color:red;}
 
 .pages{text-align:center;}
 

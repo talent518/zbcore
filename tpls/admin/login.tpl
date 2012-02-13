@@ -14,6 +14,7 @@
 	</dl><input name="loginhash" type="hidden" value="$loginhash"/>
 </form>
 <script type="text/javascript">
+$('#loginForm input[name=password]').fblur('000000');
 $('#loginForm').float('center');
 $('#verifyImage').click(function(){
 	var uri=$.URL2URI(this.src);

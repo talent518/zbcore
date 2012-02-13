@@ -167,15 +167,29 @@ function sprintf(){
 	};
 	$.fn.fblur=function(warn){
 		$(this).data('warn',warn).blur(function(){
-			$(this).removeClass('focus').addClass('blur');
 			var val=$(this).val();
-			if(val=='' || val==undefined)
+			if(val=='' || val==undefined){
 				$(this).val($(this).data('warn'));
+			}
+			$(this).removeClass('focusb fbtrue fbfalse').addClass('fblur');
 		}).focus(function(){
-			$(this).removeClass('blur').addClass('focus');
-			if($(this).val()==$(this).data('warn'))
+			if($(this).val()==$(this).data('warn')){
 				$(this).val('');
+			}
+			$(this).removeClass('fblur fbtrue fbfalse').addClass('focusb');
 		}).blur();
+		$(this.form).unbind('submit.fblur').bind('submit.fblur',function(){
+			var $return=true;
+			$('.focusb,.fblur,.fbtrue,.fbfalse',this).each(function(){
+				if($(this).val()==$(this).data('warn')){
+					$(this).removeClass('focusb fblur fbtrue').addClass('fbfalse');
+					$return=false;
+				}else{
+					$(this).removeClass('focusb fblur fbfalse').addClass('fbtrue');
+				}
+			});
+			return $return;
+		});
 		return this;
 	};
 })(jQuery);
@@ -188,8 +202,10 @@ function sprintf(){
 		s.success=function(data,status){
 			if($.isFunction(s.callback))
 				s.callback(data,status);
-			$('input[type=button]').addClass('button');
-			$('input[type=submit]').addClass('submit');
+			if(isIE6){
+				$('input[type=button]').addClass('button');
+				$('input[type=submit]').addClass('submit');
+			}
 		};
 		return $ajax.call(this,s);
 	};

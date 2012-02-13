@@ -17,7 +17,7 @@ a{color:#08509a;text-decoration:none;}
 a:hover{color:#ff8900;}
 a:focus{border:none;}
 
-.submit,input[type=submit]{display:-moz-inline-box;display:inline-block;width:60px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left -125px no-repeat;color:#234f8d;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
+.submit,input[type=submit]{display:-moz-inline-box;display:inline-block;_display:inline;width:60px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left -125px no-repeat;color:#234f8d;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
 
 button,.button,input[type=button]{display:-moz-inline-box;display:inline-block;width:71px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left -100px repeat-x;color:#fff;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
 
@@ -41,7 +41,9 @@ textarea,input[type=text],input[type=password]{border:1px #b0d3ee solid;backgrou
 textarea{height:auto;}
 button,input.button,input[type=submit],input[type=button]{cursor:pointer;border:medium none;}
 
-.focus{color:#000;}
-.blur{color:#999;}
+.focusb{color:#000;}
+.fblur{color:#999;}
+.fbtrue{color:green;border-color:green;}
+.fbfalse{color:red;border-color:red;}
 
 #loading{position:fixed;_position:absolute;z-index:9999;height:58px;line-height:58px;overflow:hidden;padding:0px 0px 0px 40px;background:url(images/loading.gif) left center no-repeat;font-size:20px;font-weight:bold;color:#419639;}
