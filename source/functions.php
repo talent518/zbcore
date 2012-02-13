@@ -91,7 +91,7 @@ function &W($wid){
 	}
 	if(!$wids[$wid]){
 		@include(WID_DIR.GD($wids).'.php');
-		$class='Widget'.GN($wids);
+		$class='Widgets'.GN($wids);
 		if(class_exists($class,false)){
 			$wids[$wid]=new $class();
 		}else{

@@ -30,6 +30,7 @@ defined('CTRL_DIR') or define('CTRL_DIR',PROJ_DIR.IN_PROJ.DIR_SEP);
 define('MOD_DIR',SRC_DIR.'models'.DIR_SEP);
 define('LIB_DIR',SRC_DIR.'libs'.DIR_SEP);
 define('WID_DIR',SRC_DIR.'widgets'.DIR_SEP);
+define('PLG_DIR',SRC_DIR.'plugins'.DIR_SEP);
 
 define('CACHE_DIR',ROOT_DIR.'cache'.DIR_SEP);//缓存目录
 define('CACHE_URL',ROOT_URL.'cache/');//缓存目录
