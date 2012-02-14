@@ -9,8 +9,8 @@ function:
 	GD	getdir
 	GN	getname
 
-	PM	PluginModel
-	SM	SelfModel
+	#PM	PluginModel
+	#SM	SelfModel
 
 	saddslashes
 	sstripslashes

@@ -31,11 +31,12 @@ class ModelBase{
 	function &get($id){
 		return $id!==0?$this->get_by_where($this->priKey.'='.($id+0)):false;
 	}
-	function &get_by_where($where=''){
+	function &get_by_where($where='',$order=''){
 		return DB()->select(array(
 				'table'=>$this->table,
 				'field'=>'*',
-				'where'=>$where
+				'where'=>$where,
+				'order'=>$order
 			),SQL_SELECT_ONLY);
 	}
 	function get_list_by_where($where='',$limit=0,$spages=false){
@@ -70,7 +71,7 @@ class ModelBase{
 		if($id<=0)
 			return false;
 		if($this->exists($id)==$id){
-			DB()->delete($this->table,$this->priKey.'='.($id+0));
+			DB()->delete($this->table,($id+0));
 			return true;
 		}else{
 			$this->error='信息不存在';
@@ -81,6 +82,6 @@ class ModelBase{
 		DB()->update($this->table,$data,$where,$isString);
 	}
 	function delete($where){
-		DB()->delete($this->table,$where);
+		DB()->delete($this->table,is_int($where)?$this->priKey.'='.$where:$where);
 	}
 }
