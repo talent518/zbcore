@@ -85,9 +85,10 @@ $('#addform').validate({
 });
 $('#addform input[name=type]').click(function(){
 	$(this.form).required();
-	if($.inArray($(this).val(),['flash','image'])!=-1)
+	if($.inArray($(this).val(),['flash','image'])!=-1){
 		$('#adp_size').show();
-	else
+	}else{
 		$('#adp_size').hide();
+	}
 });
 </script>

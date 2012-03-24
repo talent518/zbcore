@@ -3,7 +3,9 @@ function:
 	V	View=>LibTemplate
 	C	Controller
 	L	Library
-	R	Router=>LibUrl
+	R	LibRouter=>URL路由
+	U	Url
+
 	CFG	Config
 	DB	DbConfig
 	GD	getdir

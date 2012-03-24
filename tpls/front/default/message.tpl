@@ -1,6 +1,6 @@
 {template header}
-<div id="message" class="{if $success}success{else}error{/if}">
-	<h1>{if $success}成功{else}错误{/if}提醒</h1>
+<div id="message" class="{if $status}success{else}error{/if}">
+	<h1>{if $status}成功{else}错误{/if}提醒</h1>
 	<div class="body">
 		<em class="icon"></em>
 	{if $backurl}

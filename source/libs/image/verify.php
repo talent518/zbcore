@@ -38,7 +38,7 @@ class LibImageVerify extends LibImageBase{
 	 */
 	function enVerify($length=4,$mode=1,$type='png',$width=180,$height=50,$fontface='simhei.ttf'){
 		$randval=L('string')->rand($length,$mode);
-		L('cookie')->set('verify',$randval);
+		L('cookie')->set('verify',$randval,5);
 		$width=($length*10+10)>$width?$length*10+10:$width;
 		if($type!='gif' && function_exists('imagecreatetruecolor')){
 			$im=@imagecreatetruecolor($width,$height);
@@ -87,7 +87,7 @@ class LibImageVerify extends LibImageBase{
 	function cnVerify($length=4,$type='png',$width=180,$height=50,$fontface='simhei.ttf'){
 		$code=L('string')->rand($length,STRING_RAND_CN,CFG()->charset);
 		$width=($length*45)>$width?$length*45:$width;
-		L('cookie')->set('verify',$code);
+		L('cookie')->set('verify',$code,5);
 		$im=imagecreatetruecolor($width,$height);
 		$borderColor=imagecolorallocate($im, 100, 100, 100);					//边框色
 		$bkcolor=imagecolorallocate($im,250,250,250);

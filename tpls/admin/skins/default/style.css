@@ -5,15 +5,16 @@
 @import url(jquery-window.css);
 @import url(jquery-validate.css);
 
-#loginForm{float:left;_width:600px;padding:0px 20px;overflow:hidden;border:1px #d3d3d3 solid;-moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
+#loginForm{float:left;width:560px;padding:0px 20px;overflow:hidden;border:1px #d3d3d3 solid;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.window-wrap #loginForm{border:none;}
 #loginForm ul{float:left;width:300px;overflow:hidden;padding-right:30px;background:url(images/bg_login.gif) right center no-repeat;}
 #loginForm h1{height:50px;background:url(images/login_title.gif) left bottom no-repeat;text-indent:-1000em;}
 #loginForm li{padding-top:10px;padding-bottom:30px;line-height:20px;text-indent:2em;}
 #loginForm dl{float:left;overflow:hidden;padding:30px 0px;font-size:14px;}
 #loginForm dd{line-height:30px;height:30px;margin:5px 0px;}
 
-#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;-moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
-#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;-moz-border-radius:5px 5px 0px 0px; -khtml-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; border-radius:5px 5px 0px 0px;}
+#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;-moz-border-radius:5px 5px 0px 0px;-khtml-border-radius:5px 5px 0px 0px;-webkit-border-radius:5px 5px 0px 0px;border-radius:5px 5px 0px 0px;}
 #message h2{clear:right;padding:30px 20px;font-weight:normal;}
 #message p{clear:both;text-align:right;padding-bottom:5px;}
 #message em.icon{float:left;width:90px;height:90px;overflow:hidden;}
@@ -53,17 +54,6 @@
 h1.head{padding:10px 15px;font-size:14px;color:#369;}
 h1.head a{float:right;}
 
-.tabs{width:100%;height:31px;overflow:hidden;margin-bottom:5px;background:transparent url(images/tabs_main.gif) left bottom repeat-x;}
-.tabs ul{display:block;float:left;padding:0px 10px;height:31px;overflow:hidden;background-color:transparent;}
-.tabs ul *{display:inline;float:left;height:27px;line-height:27px;overflow:hidden;background-color:transparent;background-image:url(images/tabs_main.gif);}
-.tabs ul li{margin-right:5px;padding-left:5px;background-position:left -95px;background-repeat:no-repeat;}
-.tabs ul li a{padding-right:5px;background-position:right -125px;background-repeat:no-repeat;}
-.tabs ul li span{padding:0px 5px;background-position:left -155px;background-repeat:repeat-x;font-size:12px;cursor:pointer;}
-.tabs ul li.active{height:31px;background-position:left top;background-repeat:no-repeat;}
-.tabs ul li.active a{height:31px;background-position:right -31px;background-repeat:no-repeat;}
-.tabs ul li.active span{height:31px;background-position:center -62px;background-repeat:no-repeat;font-weight:800;}
-.tabs .more{display:block;float:right;}
-
 dl.base{overflow:hidden;}
 dl.base a{color:blue;}
 dl.base dt{clear:both;padding:0px 20px;line-height:30px;color:#09f;font-size:14px;font-weight:bold;border-bottom:1px #b0d3ee dotted;}
@@ -73,9 +63,9 @@ dl.base dd.info{padding:5px 0px;}
 dl.base dd.info p{padding:0px 20px;float:none;width:auto;border-bottom:1px #e7e7e7 dotted}
 
 .formtable{clear:both;overflow:hidden;padding:10px;}
-.formtable table{width:100%;border:1px #e7e7e7 solid;border-collapse:collapse;margin-bottom:5px;}
+.formtable table{width:100%;border:1px #d8ecff solid;border-collapse:collapse;margin-bottom:5px;}
 .formtable th,.formtable td{padding:8px;border:1px #d8ecff solid;border-collapse:collapse;}
-.formtable caption{margin-bottom:5px;height:30px;overflow:hidden;border:1px #acce8e solid;background:url(images/backgrounds.gif) left -170px repeat-x;line-height:30px;text-indent:10px;text-align:left;color:#acce8e;}
+.formtable caption{margin-bottom:5px;height:30px;border:1px #acce8e solid;background:url(images/backgrounds.gif) left -170px repeat-x;line-height:30px;text-indent:10px;text-align:left;color:#acce8e;}
 .formtable th{color:#444;white-space:nowrap;}
 .formtable tbody th{width:80px;text-align:right;vertical-align:top;line-height:24px;white-space:nowrap;}
 .formtable .hide{border-right:1px #fff solid;}
@@ -83,6 +73,12 @@ dl.base dd.info p{padding:0px 20px;float:none;width:auto;border-bottom:1px #e7e7
 .formtable td.active a{color:#F60;}
 .formtable input{margin:0px;}
 .formtable textarea{margin:0px;}
+
+.formtable .tab_title{margin:0px -10px 10px;}
+
+.tab_title{border:none;background:none;height:30px;border-bottom:1px #d8ecff solid;margin-bottom:10px;}
+.tab_title li{display:block;float:left;border-style:solid;border-color:#d8ecff;border-width:1px 1px 0px;line-height:29px;height:29px;margin-left:10px;padding:0px 8px;text-indent:0px;color:#369;-moz-border-radius:5px 5px 0px 0px;-khtml-border-radius:5px 5px 0px 0px;-webkit-border-radius:5px 5px 0px 0px;border-radius:5px 5px 0px 0px;cursor:pointer;background:url(images/backgrounds.gif) left -135px repeat-x;}
+.tab_title li.active{font-weight:bold;color:#3366ff;background:white;height:30px;position:relative;z-index:1;}
 
 .formtable table.list th,.formtable table.list td{text-align:center;white-space:nowrap;}
 .formtable table.list thead{background:url(images/backgrounds.gif) left -135px repeat-x;}

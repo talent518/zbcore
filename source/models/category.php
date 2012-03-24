@@ -3,19 +3,23 @@ if(!defined('IN_SITE'))
 exit('Access Denied');
 
 class ModelCategory extends ModelBase{
-	var $error,$rules=array(
+	protected $table='category';
+	protected $priKey='cat_id';
+	protected $order='`corder` desc,`cat_id` desc';
+	protected $rules=array(
 		'pid'=>array(
 			'required'=>true,
 			'integer'=>true
 		),
-		'cname'=>array(
+		'cat_name'=>array(
 			'required'=>true,
 			'maxlength'=>20,
 		),
 		'corder'=>array(
 			'integer'=>true
 		),
-	),$messages=array(
+	);
+	protected $messages=array(
 		'pid'=>array(
 			'required'=>'上级栏目不能为空',
 			'integer'=>'上级栏目不是一个整数'
@@ -29,17 +33,10 @@ class ModelCategory extends ModelBase{
 			'integer'=>'排序不是一个整数'
 		),
 	);
-	function __construct(){
-		parent::__construct();
-		$this->ModelCategory();
-	}
-	function ModelCategory(){
-	}
 	function add(&$data){
-		$this->rules['cname']['query']=array('category','pid='.$data['pid'].' AND cname=\''.$data['cname'].'\'');
+		$this->rules['cname']['query']=array('category','pid='.$data['pid'].' AND cat_name=\''.$data['cname'].'\'');
 
-		if($this->check($data)){
-			DB()->insert('category',$data);
+		if(parent::add($data)){
 			$this->drop_cache($data['pid']);
 			return true;
 		}
@@ -149,16 +146,8 @@ class ModelCategory extends ModelBase{
 		$cache=L('cache');
 		$cache->dir='category/list';
 		$cache->name=$pid;
-		$cache->callback=array(&$this,'_get_list',array($pid));
+		$cache->callback=array(&$this,'get_list_by_where',array('pid='.$pid));
 		return $cache->get();
-	}
-	function &_get_list($pid=0){
-		return DB()->select(array(
-			'table'=>'category',
-			'field'=>'*',
-			'where'=>'pid='.$pid,
-			'order'=>'corder DESC'
-		),-1,'cid');
 	}
 	function &get_tree($key=''){
 		$cache=L('cache');
@@ -171,7 +160,7 @@ class ModelCategory extends ModelBase{
 		$mapTree=array();
 		$q=DB()->select(array(
 			'table'=>'category',
-			'field'=>'cid,pid,cname,counts',
+			'field'=>'cat_id,pid,cat_name,counts',
 			'order'=>'corder DESC'
 		));
 		while($value=DB()->row($q)){

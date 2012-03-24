@@ -1,4 +1,4 @@
-{if !INAJAX}
+{if !IN_AJAX}
 	</div>
 	<div id="ft" class="wp">
 		<span>请联系我：Email:hanmolin1984@126.com</span>

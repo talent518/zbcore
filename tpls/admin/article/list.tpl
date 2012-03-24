@@ -4,8 +4,8 @@
 </h1>
 <form id="listform" class="formtable" action="{link ctrl=article method=list}" method="post">
 	<table cellspacing="0" cellpadding="0" border="0" class="list">
-	{if $articlepos}
-		<caption><b>当前位置：</b><a href="{link ctrl=article}" class="list">文章管理</a>{loop $articlepos $r}<b class="gray">&gt;</b><a href="{link ctrl=article method=list id=$r.id}" class="list">{$r.name}</a>{/loop}</caption>
+	{if $catpos}
+		<caption><b>当前位置：</b><a href="{link ctrl=article}" class="list">文章管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=article method=list id=$r.cat_id}" class="list">{$r.title}</a>{/loop}</caption>
 	{/if}
 		<thead>
 			<tr>
@@ -25,7 +25,7 @@
 					<input name="_ids[{$r.id}]" type="hidden" value="{$r.order}"/>
 				</td>
 				<td>{$r.id}</td>
-				<td class="l">{$r.name}</td>
+				<td class="l">{$r.title}</td>
 				<td>
 					<a href="{link proj=index method=article id=$r.id}" title="查看文章" target="_blank">查看</a>
 					<span class="split">|</span>

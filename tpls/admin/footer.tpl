@@ -1,3 +1,3 @@
-{if !INAJAX}</div>
+{if !IN_AJAX}</div>
 </body>
 </html>{/if}

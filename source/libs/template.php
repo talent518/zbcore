@@ -141,6 +141,9 @@ class LibTemplate{
 		//模板
 		$template = $this->templateTags($this->tpl);
 
+		$template = preg_replace("/\<\?/es", "'<<php>'.\$this->srcTags('echo \'?\';').'</php>'", $template);
+		$template = preg_replace("/\?\>/es", "'<php>'.\$this->srcTags('echo \'?\';').'</php>>'", $template);
+
 		$template = preg_replace("/\{pages:?([^\s]+)?\s+(.+?)\}/ie", "\$this->pageTags('\\1','\\2')", $template);
 
 		//PHP代码

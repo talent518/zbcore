@@ -1,3 +1,33 @@
+/*
+功能:select的多级选择
+作者:BaoCai Zhang
+邮箱:talent518@live.cn
+更新时间:2012年3月1日 17:24:29
+
+实例:
+
+
+例如：
+	<select name="id" names="ids" multiple="false"></select>
+	<script type="text/javascript">
+	$('select[name=cat_id]').staged('json.php?do=test',{val:1,not:3,isStaged:false,isMultiple:false,change:function(){}});//val为当前选择的id，not排除的id,isStaged是否为多级，isStaged的值会自动识别，change添加选择时的事件
+	</script>
+说明：
+	json格式多级：{"k0":{"k1":"A","k2":"B","k3":"C","k4":"D"},"k1":{"k5":"E","k6":"F"}}
+
+	json格式单级：{"k1":"A","k2":"B","k3":"C","k4":"D"}
+
+	加k前缀的作用，保持原顺序
+
+	select的names属性，会自动创建隐藏的input且name为names的值，意思为所选择的多级目录id列表（1,5）
+
+	目前多选择功能，只能选择同级下的选择多个
+
+	要想实现多级多选功能
+	也可以通过用$('select[name=cat_id]').val();获取选择的值，进行保存等操作，即可实现。
+
+*/
+
 
 (function($){
 	$.fn.staged=function(url,setting){

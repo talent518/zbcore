@@ -211,23 +211,40 @@ function sprintf(){
 	};
 	$.XML=function(xml,callback){
 		if(typeof(xml)=='object'){
-			var root=$(xml).find('root'),success=$(xml).find('success'),error=$(xml).find('error');
-			if(success.size()){
-				$.dialog.success(success.find('message').text(),function(){
-					if($.isFunction(callback))
-						callback.call({message:success.find('message').text(),backurl:success.find('backurl').text(),status:true});
-					else if(success.find('backurl').text().length>0)
-						location.href=success.find('backurl').text();
-				});
-			}else if(error.size()){
-				$.dialog.error(error.find('message').text(),function(){
-					if($.isFunction(callback))
-						callback.call({message:error.find('message').text(),backurl:error.find('backurl').text(),status:false});
-					else if(error.find('backurl').text().length>0)
-						location.href=error.find('backurl').text();
-				});
-			}else{
+			var root=$(xml).find('root'),message=$(xml).find('message');
+			if(root.size()){
 				return root.text();
+			}
+			if(message.size()){
+				try{
+					msg=window["eval"]("("+message.text()+")");
+				}catch(e){
+					msg=false;
+					$.debug(message.text(),{width:$(window).width()/2,height:$(window).height()/2});
+					return;
+				}
+				if(msg.function){
+					window["eval"]("(function(){"+msg.function+"}).call(msg)");
+					return;
+				}
+				if(msg.callback){
+					callback=window["eval"]("(function(){"+msg.callback+"})");
+				}
+				if(msg.status){
+					$.dialog.success(msg.message,function(){
+						if($.isFunction(callback))
+							callback.call(msg);
+						else if(msg.backurl.length>0)
+							location.href=msg.backurl;
+					});
+				}else{
+					$.dialog.error(msg.message,function(){
+						if($.isFunction(callback))
+							callback.call(msg);
+						else if(msg.backurl.length>0)
+							location.href=msg.backurl;
+					});
+				}
 			}
 		}else{
 			$.debug(xml,{width:$(window).width()/2,height:$(window).height()/2});
@@ -237,11 +254,16 @@ function sprintf(){
 	$.sXML=function(xml,callback){
 		return $.XML(xml,function(){
 			if(this.status){
-				if(this.backurl.length>0)
+				if(this.backurl)
 					$('#bd').load(this.backurl);
 			}else{
-				if(this.backurl.length>0)
-					window.open(this.backurl,'_blank');
+				if(this.backurl){
+					if($.window){
+						$.window({title:this.message,url:this.backurl});
+					}else{
+						window.open(this.backurl,'_blank');
+					}
+				}
 			}
 			if($.isFunction(callback))
 				callback.call(this);
@@ -333,7 +355,7 @@ function sprintf(){
 		if($.scrollEnabled){
 			$('#ie-select-bug').hide();
 			window.scrollTo(0,this.scrollTop);
-			$('html').css({overflow:'hidden',overflowX:'hidden',overflowY:'scroll'});
+			$('html').css({overflow:'hidden',overflowX:'hidden',overflowY:'auto'});
 		}else{
 			$('#ie-select-bug').show();
 			this.scrollTop=$(window).scrollTop();

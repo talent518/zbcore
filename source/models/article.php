@@ -3,11 +3,11 @@ if(!defined('IN_SITE'))
 exit('Access Denied');
 
 class ModelArticle extends ModelBase{
-	protected $table;
-	protected $priKey;
-	protected $order;
+	protected $table='article';
+	protected $priKey='art_id';
+	protected $order='art_id desc';
 	protected $rules=array(
-		'name'=>array(
+		'title'=>array(
 			'required'=>true,
 			'maxlength'=>20,
 			'query'=>'article'
@@ -21,7 +21,7 @@ class ModelArticle extends ModelBase{
 		),
 	);
 	protected $messages=array(
-		'name'=>array(
+		'title'=>array(
 			'required'=>'文章名称不能为空',
 			'maxlength'=>'文章名称字数不能超过20个字',
 			'query'=>'文章“{0}”已存在',
@@ -39,7 +39,7 @@ class ModelArticle extends ModelBase{
 		return parent::add($data,$isCheck,$isReplace);
 	}
 	function edit($id,$data,$isCheck=true,$isString=true){
-		$this->rules['name']['query']=array('article','id<>'.$id.' AND name=\''.$data['name'].'\'');
+		$this->rules['title']['query']=array('article','art_id<>'.$id.' AND title=\''.$data['title'].'\'');
 		$data['edittime']=TIMESTAMP;
 
 		return parent::edit($id,$data,$isCheck,$isString);

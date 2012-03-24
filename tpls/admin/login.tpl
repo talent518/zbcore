@@ -15,11 +15,17 @@
 </form>
 <script type="text/javascript">
 $('#loginForm input[name=password]').fblur('000000');
-$('#loginForm').float('center');
+{if IN_AJAX}
+	$('#loginForm').validate();
+{else}
+	$('#loginForm').float('center');
+{/if}
 $('#verifyImage').click(function(){
+	$('#loginForm input[name=verify]').val('');
 	var uri=$.URL2URI(this.src);
 	uri.querys.rand=Math.floor(Math.random()*100000);
 	this.src=$.URI2URL(uri);
-});
+	setTimeout(function(){$('#verifyImage').click();},300000);
+}).click();
 </script>
 {template footer}

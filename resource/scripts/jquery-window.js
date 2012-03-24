@@ -12,8 +12,12 @@
 ;(function($){
 
 $(window).resize(function(event){
-	$('.window-mask:visible').css({width:$(window).width(),height:$(window).height()});
-	$('.window-wrap:visible').float('center');
+	$('.window-wrap:visible').each(function(){
+		var win=$(this).data('window');
+		if(win){
+			win.resize();
+		}
+	});
 });
 if(isIE6){
 	$(window).scroll(function(){
@@ -23,10 +27,22 @@ if(isIE6){
 
 //初始化窗口为Object对象
 $.window=function(options){
-	this.options=options;
-	this.init();
-	this.open();
+	if($.isFunction(this)){
+		return new $.window(options);
+	}
+	this.options=$.extend({},$.window.defaultSetting,options);
+	if(this.options.title && (this.options.content || this.options.url)){
+		this.init();
+		this.open();
+		if(!this.options.content){
+			this.refresh();
+		}
+	}else{
+		alert('打开的窗口错误，窗口标题，（窗口内容或URL）不能为空！');
+	}
+	return this;
 };
+
 $.window.prototype={
 	windowMask:null,//半透明背景
 	windowWrap:null,//窗口容器
@@ -47,8 +63,7 @@ $.window.prototype={
 
 		var $this=this;
 
-		this.windowWrap.data('window',this).hide().draggable({handle:this.windowHeader});
-
+		this.windowWrap.data('window',this).attr('windowIndex',$.window.count++).hide().draggable({handle:this.windowHeader});
 		this.windowRefresh.hover(function(){
 			$(this).addClass('hover');
 		},function(){
@@ -76,7 +91,6 @@ $.window.prototype={
 
 		this.windowWrap.width(this.options.width);
 		this.windowTitle.html(this.options.title);
-		this.windowMask.width($(window).width()).height($(window).height()).show().css('cursor','wait');
 		this.windowContent.html(this.options.content);
 
 		var $this=this;
@@ -85,9 +99,13 @@ $.window.prototype={
 			$this.windowWrap.show();
 			$this.resize();
 			$this.windowMask.css('cursor','not-allowed');
-		},0);
+		},100);
+
+		this.options.callback.call(this);
 		return this;
 	},refresh:function(){
+		if(!this.options.url)
+			return this;
 		var $this=this;
 		$.get($this.options.url,function(content){
 			if($this.options.content==content)
@@ -97,6 +115,7 @@ $.window.prototype={
 		});
 		return this;
 	},resize:function(){//调整窗口
+		this.windowMask.width($(window).width()).height($(window).height()).show().css('cursor','wait');
 		this.windowWrap.height('auto');
 		this.windowContent.height('auto');
 		if(this.windowWrap.height()>$(window).height()-40){
@@ -138,18 +157,17 @@ $.window.count=0;
 $.fn.window=function(options){
 	$(this).each(function(){
 		var data={};
-		if(this.width) data.width=this.width;
-		$(this).data('options',$.extend({},$.window.defaultSetting,options,data));
+		if($(this).attr('width'))
+			data.width=parseInt($(this).attr('width'));
+		$(this).data('options',$.extend({},data,options));
 	}).unbind('click').bind('click',function(){
 		if(this.href==window.location.href+'#') return false;
-		var settings=$.extend({},$(this).data('options'),{title:this.title,url:this.href,data:{inajax:1}});
+		var settings=$.extend({},$(this).data('options'),{title:this.title,url:this.href,data:{IN_AJAX:1}});
 		var $this=$(this);
 		$this.addClass('windowUsed');
 		$.get(settings.url,function(content){
 			settings.content=content;
-			var win=new $.window(settings);
-			win.windowWrap.attr('windowIndex',$.window.count++);
-			settings.callback.call(win);
+			$.window(settings);
 			$this.removeClass('windowUsed').addClass('windowOpened');
 		});
 		return false;
@@ -158,7 +176,9 @@ $.fn.window=function(options){
 };
 
 $.fn.getWindow=function(){
-	return $(this).parents('.window-wrap[windowIndex]').data('window');
+	var winWrap=$(this).parents('.window-wrap');
+	var winChild=winWrap.children('.window-header,.window-content');
+	return(winChild.size()==2?winWrap.data('window'):false);
 };
 
 })(jQuery);

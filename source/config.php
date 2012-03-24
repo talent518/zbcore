@@ -19,6 +19,7 @@ class Config{
 	var $urlFormat		= 'base';	//url格式化('base','phpinfo','rewrite','html')
 
 	var $isCookie		= TRUE;
+	var $isServiceMode	= FALSE;
 }
 
 class DbConfig{

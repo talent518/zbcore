@@ -20,7 +20,7 @@ define('DIR_SEP',DIRECTORY_SEPARATOR);
 
 define('ROOT_DIR',dirname(__FILE__).DIR_SEP);
 define('ROOT_URL',substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'],'/')+1));
-define('SITE_URL','http://'.$_SERVER['HTTP_HOST']);
+define('SITE_URL',strtolower(substr($_SERVER['SERVER_PROTOCOL'],0,strpos($_SERVER['SERVER_PROTOCOL'],'/'))).'://'.$_SERVER['HTTP_HOST']);
 define('SITE_FULL_URL',SITE_URL.ROOT_URL);
 
 define('SRC_DIR',ROOT_DIR.'source'.DIR_SEP);
@@ -80,9 +80,9 @@ if(!IS_MQ_GPC){
 	$_REQUEST	= saddslashes($_REQUEST);
 }
 
-$inAjax=GET('inAjax');
-define('INAJAX',!empty($inAjax));
-unset($inAjax);
+$IN_AJAX=GET('inAjax');
+define('IN_AJAX',!empty($IN_AJAX));
+unset($IN_AJAX);
 
 if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
 	$onlineip = getenv('HTTP_CLIENT_IP');

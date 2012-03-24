@@ -4,9 +4,10 @@ if(!defined('IN_SITE'))
 
 class CtrlIndex extends CtrlBase{
 	//必须有此空方法
-	function __construct(){}
+	function __construct(){
+		parent::__construct(in_array(IN_METHOD,array('onIndex','onLogin','onLogout','onVerify')));
+	}
 	function onIndex(){
-		parent::__construct(1);
 		if($this->LOGINED){
 			$this->display('index');
 		}else{
@@ -14,20 +15,20 @@ class CtrlIndex extends CtrlBase{
 		}
 	}
 	function onLogin(){
-		parent::__construct(1);
 		if($this->is_submit('login')){
 			if(M('setup')->get('verify','adminlogin') && L('cookie')->get('verify')!=$_POST['verify'])
-				$this->message('验证码不正确',URL(array('ctrl'=>'user','method'=>'login')));
+				$this->message(array('message'=>'验证码不正确','callback'=>'return;'),URL(array('ctrl'=>'user','method'=>'login')));
 			$status=M('user')->login($_POST['username'],$_POST['password'],1);
 			switch($status){
 				case 1:
-					$this->message('登录成功！',URL(array('method'=>'index')),true);
+					M('user')->login($_POST['username'],$_POST['password'],0);
+					$this->message(array('message'=>'登录成功！','callback'=>'$("#loginForm").getWindow().close();return;'),URL(array('method'=>'index')),true);
 					break;
 				case 0:
-					$this->message('用户不存在！',URL(array('method'=>'login')));
+					$this->message(array('message'=>'用户不存在！','callback'=>'return;'),URL(array('method'=>'login')));
 					break;
 				case -1:
-					$this->message('密码不正确！',URL(array('method'=>'login')));
+					$this->message(array('message'=>'密码不正确！','callback'=>'return;'),URL(array('method'=>'login')));
 					break;
 			}
 		}else{
@@ -44,7 +45,6 @@ class CtrlIndex extends CtrlBase{
 		}
 	}
 	function onLogout(){
-		parent::__construct(1);
 		M('user')->logout(1);
 		$this->message('退出成功！',URL(array('method'=>'login')),true);
 	}
@@ -52,18 +52,15 @@ class CtrlIndex extends CtrlBase{
 		L('image.verify')->verify();
 	}
 	function onWelcome(){
-		parent::__construct();
 		$this->setVar('runtime',M('count')->runtime());
 		$this->setVar('count',M('count')->get());
 		$this->setVar('week',M('count')->week());
 		$this->display('welcome');
 	}
 	function onAboutus(){
-		parent::__construct();
 		$this->display('aboutus');
 	}
 	function onCache(){
-		parent::__construct();
 		if($this->is_submit('cache')){
 			if($_POST['data'])
 				L('io.dir')->drop(DATA_DIR,true);

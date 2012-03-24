@@ -152,31 +152,31 @@ class LibValidate{
 	//电子邮件
 	function email($email){
 		if(!$this->required($email)) return true;
-		return eregi("^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3}$",$email);
+		return preg_match("/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3}$/i",$email);
 	}
 
 	//整数
 	function integer($integer){
 		if(!$this->required($integer)) return true;
-		return eregi("^[\+\-]?[0-9]*$",$integer);
+		return preg_match("/^[\+\-]?[0-9]*$/",$integer);
 	}
 
 	//无符号整数
 	function uinteger($integer){
 		if(!$this->required($integer)) return true;
-		return eregi("^[0-9]*$",$integer);
+		return preg_match("/^[0-9]*$/",$integer);
 	}
 
 	//浮点数
 	function float($float){
 		if(!$this->required($float)) return true;
-		return eregi("^[\+\-]?[0-9]+(\.[0-9]+)?$",$float);
+		return preg_match("/^[\+\-]?[0-9]+(\.[0-9]+)?$/",$float);
 	}
 
 	//无符号浮点数
 	function ufloat($ufloat){
 		if(!$this->required($ufloat)) return true;
-		return eregi("^[0-9]+(\.[0-9]+)?$",$ufloat);
+		return preg_match("/^[0-9]+(\.[0-9]+)?$/",$ufloat);
 	}
 
 	//最小
@@ -204,19 +204,19 @@ class LibValidate{
 	//手机
 	function mobile($phone){
 		if(!$this->required($phone)) return true;
-		return eregi("^1(3|5|8)[0-9]{9}$",$phone);
+		return preg_match("/^1(3|5|8)[0-9]{9}$/",$phone);
 	}
 
 	//电话号
 	function phone($phone){
 		if(!$this->required($phone)) return true;
-		return eregi("^([0-9]{3,4}-?)?[0-9]{5,9}(-[0-9]{1,4})?$",$phone);
+		return preg_match("/^([0-9]{3,4}-?)?[0-9]{5,9}(-[0-9]{1,4})?$/",$phone);
 	}
 
 	//IP地址
 	function ip($ip){
 		if(!$this->required($ip)) return true;
-		return eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",$ip);
+		return preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/",$ip);
 	}
 
 	//字符最小长度
@@ -251,17 +251,17 @@ class LibValidate{
 	//URL地址
 	function url($data){
 		if(!$this->required($data)) return true;
-		return eregi("^http[s]?://[a-z\-_0-9\.]+([a-z0-9]+)+.*$",$data);
+		return preg_match("/^http[s]?://[a-z\-_0-9\.]+([a-z0-9]+)+.*$/i",$data);
 	}
 
 	//日期时间
 	function date($data){
 		if(!$this->required($data)) return true;
-		if(eregi("^[1-9][0-9]{3}\-[0-1]?[0-9]\-[0-3]?[0-9]$",$data)){
+		if(preg_match("/^[1-9][0-9]{3}\-[0-1]?[0-9]\-[0-3]?[0-9]$/",$data)){
 			list($year,$month,$day)=explode('-',$data);
-		}elseif(eregi("^[1-9][0-9]{3}/[0-1][0-9]/[0-3][0-9]$",$data)){
+		}elseif(preg_match("/^[1-9][0-9]{3}/[0-1][0-9]/[0-3][0-9]$/",$data)){
 			list($year,$month,$day)=explode('/',$data);
-		}elseif(eregi("^[0-1][0-9]/[0-3][0-9]/[1-9][0-9]{3}$",$data)){
+		}elseif(preg_match("/^[0-1][0-9]/[0-3][0-9]/[1-9][0-9]{3}$/",$data)){
 			list($month,$day,$year)=explode('/',$data);
 		}else{
 			return false;
@@ -285,7 +285,7 @@ class LibValidate{
 	//自定义
 	function custom($data,$value){
 		if(!$this->required($data)) return true;
-		return eregi($value,$data);
+		return preg_match("/".$value."/",$data);
 	}
 
 	//查询
@@ -303,25 +303,25 @@ class LibValidate{
 	//URL地址
 	function chinese($data){
 		if(!$this->required($data)) return true;
-		return eregi("^[\x21-\x7E\x0391-\xFFE5]+$",$data);
+		return preg_match("/^[\x21-\x7E\x0391-\xFFE5]+$/",$data);
 	}
 
 	//URL地址
 	function english($data){
 		if(!$this->required($data)) return true;
-		return eregi("^[\x21-\x7E]+$",$data);
+		return preg_match("/^[\x21-\x7E]+$/",$data);
 	}
 
 	//URL地址
 	function username($data){
 		if(!$this->required($data)) return true;
-		return eregi("^[a-zA-Z\x0391-\xFFE5][a-zA-Z0-9_\x0391-\xFFE5]+$",$data);
+		return preg_match("/^[a-zA-Z\x0391-\xFFE5][a-zA-Z0-9_\x0391-\xFFE5]+$/",$data);
 	}
 
 	//URL地址
 	function password($data){
 		if(!$this->required($data)) return true;
-		return eregi("^[a-z0-9_]+$",$data);
+		return preg_match("/^[a-z0-9_]+$/i",$data);
 	}
 
 	/**
@@ -345,7 +345,7 @@ class LibValidate{
 	*/
 	function idcard($idCard,$sex){
 		if(empty($idCard)) return true;
-		if(!eregi("^[0-9]{17}[0-9xX]$",$idCard)) return false;
+		if(!preg_match("/^[0-9]{17}[0-9xX]$/",$idCard)) return false;
 		if($this->IdCardVP($idCard)) return false;
 		if (strlen($idCard) == 15) {
 			return $this->IdCardVB15($idCard) && $sex==$this->IdCardVSex($idCard);

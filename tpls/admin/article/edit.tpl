@@ -3,7 +3,7 @@
 		<tbody>
 			<tr>
 				<th>文章名称：</th>
-				<td><input name="name" type="text" value="{$edit.name|html}" size="40" /></td>
+				<td><input name="title" type="text" value="{$edit.title|html}" size="40" /></td>
 			</tr>
 			<tr>
 				<th>SEO标题：</th>
@@ -65,4 +65,5 @@ $('#ckeditor').ckeditor(function(){
 	});
 	$.window.resize();
 }).ckeditorGet();
+$('#addform select[name=cat_id]').staged('{link ctrl=category method=json}',{val:{$edit.cat_id}});
 </script>

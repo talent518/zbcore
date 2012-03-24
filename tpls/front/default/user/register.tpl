@@ -50,11 +50,15 @@
 	</table>
 </form>
 <script type="text/javascript">
-$('#verifyImage').click(function(){
-	var uri=$.URL2URI(this.src);
-	uri.querys.rand=Math.floor(Math.random()*100000);
-	this.src=$.URI2URL(uri);
-});
+{if M('setup')->get('verify','frontregister')}
+	$('#verifyImage').click(function(){
+		$('#registerForm input[name=verify]').val('');
+		var uri=$.URL2URI(this.src);
+		uri.querys.rand=Math.floor(Math.random()*100000);
+		this.src=$.URI2URL(uri);
+		setTimeout(function(){$('#verifyImage').click();},300000);
+	}).click();
+{/if}
 $('#registerForm').validate({
 	rules:{
 		username:{

@@ -1,4 +1,4 @@
-{if !INAJAX}
+{if !IN_AJAX}
 	{template global_header}
 	<div id="hd" class="wp">
 		<a href="{ROOT_URL}" class="fl"><img src="{SKIN_URL}images/logo.gif"/></a>

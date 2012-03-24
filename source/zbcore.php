@@ -68,23 +68,36 @@ class ZBCore{
 		L('template')->display($tpl,$cache,$html);
 	}
 
-	function message($message,$backurl='',$success=false,$timeout=3){
+	function message($message,$backurl='',$status=false,$timeout=3){
 		$this->isCachePage=false;
 		$timeout*=1000;
 		$this->obclean();
-		if(INAJAX){
-			$dom=$success?'success':'error';
+		if(IN_AJAX){
+			if(is_array($message)){
+				if(!isset($message['status'])){
+					$message['status']=$status;
+				}
+				settype($message['status'],'boolean');
+				if(!isset($message['backurl'])){
+					$message['backurl']=$backurl;
+				}
+			}else{
+				$message=array(
+					'message'=>$message,
+					'backurl'=>$backurl,
+					'status'=>$status,
+					'timeout'=>$timeout,
+				);
+			}
+			$message=(function_exists('json_encode')?json_encode($message):L('json')->encode($message));
 			$content='<'.'?xml version="1.0" encoding="'.CFG()->charset.'"?>';
-			$content.='<'.$dom.'>';
 			$content.='<message><![CDATA['.str_replace(']]>',']]&gt;',$message).']]></message>';
-			$content.='<backurl>'.htmlspecialchars($backurl).'</backurl>';
-			$content.='<timeout>'.$timeout.'</timeout>';
-			$content.='</'.$dom.'>';
 			$this->echoPage(array('Content-type'=>'text/xml; charset='.CFG()->charset),$content);
 		}else{
 			$this->setCall();
+			is_array($message) && extract($message);
 			$this->setVar('head',array('title'=>$succes?'成功提醒':'失败提醒'));
-			$this->setVar('success',$success);
+			$this->setVar('status',$status);
 			$this->setVar('message',$message);
 			$this->setVar('backurl',$backurl);
 			$this->setVar('timeout',$timeout);
@@ -111,7 +124,7 @@ class ZBCore{
 	function obEchoPage(){
 		$content=trim(ob_get_contents());
 		$this->obclean();
-		if(INAJAX){
+		if(IN_AJAX){
 			$content=str_replace(']]>',']]&gt;',$content);
 			$content='<'.'?xml version="1.0" encoding="'.CFG()->charset.'"?><root><![CDATA['.$content.']]></root>';
 			$this->echoPage(array('Content-type'=>'text/xml; charset='.CFG()->charset),$content);
@@ -133,7 +146,7 @@ class ZBCore{
 		);
 		$page['header']['Etag']=md5($page['body']);
 		$page['header']['Last-Modified']=gmdate( "D, d M Y H:i:s",$isFile?$mtime:TIMESTAMP)." GMT";
-		if(CFG()->isGziped && function_exists( "gzencode" ) && $page['gziped']=gzencode($page['body'],3)){
+		if((CFG()->isGziped && !ini_get('zlib.output_compression')) && function_exists( "gzencode" ) && $page['gziped']=gzencode($page['body'],3)){
 			$page['gziped-size']=strlen( $page['gziped'] );
 		}
 

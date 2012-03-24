@@ -68,11 +68,11 @@
 					<a href="{link ctrl=position}">推荐位管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=category method=add id=0}" class="add" title="添加栏目">添加</a></em>
+					<em><a href="{link ctrl=category method=add}" class="add" title="添加栏目">添加</a></em>
 					<a href="{link ctrl=category}">栏目管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=article method=add id=0}" class="add" title="添加文章">添加</a></em>
+					<em><a href="{link ctrl=article method=add}" class="add" title="添加文章" width="1000">添加</a></em>
 					<a href="{link ctrl=article}">文章管理</a>
 				</li>
 				<li>
