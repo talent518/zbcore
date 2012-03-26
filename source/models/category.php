@@ -24,7 +24,7 @@ class ModelCategory extends ModelBase{
 			'required'=>'上级栏目不能为空',
 			'integer'=>'上级栏目不是一个整数'
 		),
-		'cname'=>array(
+		'cat_name'=>array(
 			'required'=>'栏目名称不能为空',
 			'maxlength'=>'栏目名称字数不能超过20个字',
 			'query'=>'在同级栏目“{0}”已存在',
@@ -34,7 +34,7 @@ class ModelCategory extends ModelBase{
 		),
 	);
 	function add(&$data){
-		$this->rules['cname']['query']=array('category','pid='.$data['pid'].' AND cat_name=\''.$data['cname'].'\'');
+		$this->rules['cat_name']['query']=array('category','pid='.$data['pid'].' AND cat_name=\''.$data['cat_name'].'\'');
 
 		if(parent::add($data)){
 			$this->drop_cache($data['pid']);
@@ -48,7 +48,7 @@ class ModelCategory extends ModelBase{
 			return false;
 		}
 
-		$this->rules['cname']['query']=array('category','cid<>'.$id.' AND pid='.$data['pid'].' AND cname=\''.$data['cname'].'\'');
+		$this->rules['cat_name']['query']=array('category','cid<>'.$id.' AND pid='.$data['pid'].' AND cat_name=\''.$data['cat_name'].'\'');
 
 		if($this->check($data)){
 			DB()->update('category',$data,'cid='.$id);
@@ -167,7 +167,7 @@ class ModelCategory extends ModelBase{
 			if($key=='id')
 				$mapTree[$value['pid']][]=$value['cid'];
 			elseif($key=='name')
-				$mapTree[$value['pid']][$value['cid']]=$value['cname'];
+				$mapTree[$value['pid']][$value['cid']]=$value['cat_name'];
 			else
 				$mapTree[$value['pid']][$value['cid']]=$value;
 		}

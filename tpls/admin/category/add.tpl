@@ -21,11 +21,11 @@
 			</tr>
 			<tr>
 				<th>栏目名称：</th>
-				<td><input name="cname" type="text" value="{$add.cname|html}" size="20" /></td>
+				<td><input name="cat_name" type="text" value="{$add.cat_name|html}" size="20" /></td>
 			</tr>
 			<tr>
 				<th>目录名称：</th>
-				<td><input name="cname" type="text" value="{$add.cname|html}" size="20" /></td>
+				<td><input name="cat_path" type="text" value="{$add.cat_path|html}" size="20" /></td>
 			</tr>
 			<tr>
 				<th>排序：</th>
@@ -35,15 +35,15 @@
 		<tbody>
 			<tr>
 				<th>SEO标题：</th>
-				<td><input name="cseo[title]" type="text" value="{$add.cseo.title|html}" size="30" /></td>
+				<td><input name="cseo[title]" type="text" value="{$edit.cseo.title|html}" size="30" /></td>
 			</tr>
 			<tr>
 				<th>SEO关键词：</th>
-				<td><input name="cseo[keywords]" type="text" value="{$add.cseo.keywords|html}" size="30" /></td>
+				<td><input name="cseo[keywords]" type="text" value="{$edit.cseo.keywords|html}" size="30" /></td>
 			</tr>
 			<tr>
 				<th>SEO描述：</th>
-				<td><textarea name="cseo[description]" cols="40" rows="3">{$add.cseo.description|html}</textarea></td>
+				<td><textarea name="cseo[description]" cols="40" rows="3">{$edit.cseo.description|html}</textarea></td>
 			</tr>
 		</tbody>
 		<tbody class="tpl">
@@ -87,7 +87,7 @@
 				required:true,
 				integer:true
 			},
-			cname:{
+			cat_name:{
 				required:true,
 				maxlength:20,
 				chinese:true
@@ -98,9 +98,9 @@
 		}
 	});
 
-	var lis=$('#addform .tab_title li');
-	lis.click(function(){
-		var i=lis.removeClass('active').index(this);
+	var list=$('#addform .tab_title li');
+	list.click(function(){
+		var i=list.removeClass('active').index(this);
 		$(this).addClass('active');
 		$('#addform .tab_body tbody').hide().eq(i).show();
 		$('#addform').getWindow().resize();
@@ -118,5 +118,5 @@
 	}).change();
 })(jQuery);
 
-/*$('#addform select[name=pid]').staged('{link ctrl=category method=json}',{val:{$add.pid}});*/
+$('#addform select[name=pid]').staged('{link ctrl=category method=json}',{val:{$add.pid}});
 </script>

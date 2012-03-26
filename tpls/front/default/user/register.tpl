@@ -51,12 +51,13 @@
 </form>
 <script type="text/javascript">
 {if M('setup')->get('verify','frontregister')}
-	$('#verifyImage').click(function(){
+$('#verifyImage').click(function(){
 		$('#registerForm input[name=verify]').val('');
-		var uri=$.URL2URI(this.src);
-		uri.querys.rand=Math.floor(Math.random()*100000);
-		this.src=$.URI2URL(uri);
-		setTimeout(function(){$('#verifyImage').click();},300000);
+	var uri=$.URL2URI(this.src);
+	uri.querys.timestamp={TIMESTAMP};
+	uri.querys.rand=Math.floor(Math.random()*100000);
+	this.src=$.URI2URL(uri);
+		setTimeout(function(){$('#verifyImage').click();},60000);
 	}).click();
 {/if}
 $('#registerForm').validate({

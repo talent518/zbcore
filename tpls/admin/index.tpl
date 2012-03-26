@@ -19,11 +19,11 @@
 				<li><a href="{link method=aboutus}">关于我们</a></li>
 				<li><a href="{link ctrl=setup method=config}">网站设置</a></li>
 				<li>
-					<em><a href="{link ctrl=user method=add id=0}" class="add" title="添加用户">添加</a></em>
+					<em><a href="{link ctrl=user method=add}" class="add" title="添加用户">添加</a></em>
 					<a href="{link ctrl=user}">用户管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=ad method=add id=0}" class="add" title="添加广告">添加</a></em>
+					<em><a href="{link ctrl=ad method=add}" class="add" title="添加广告">添加</a></em>
 					<a href="{link ctrl=ad}">广告管理</a>
 				</li>
 				<li>
@@ -42,7 +42,7 @@
 				<li><a href="{link ctrl=setup method=user}">用户设置</a></li>
 				<li><a href="{link ctrl=setup method=template}">模板/主题设置</a></li>
 				<li>
-					<em><a href="{link ctrl=area method=add id=0}" class="add" title="添加地区">添加</a></em>
+					<em><a href="{link ctrl=area method=add}" class="add" title="添加地区">添加</a></em>
 					<a href="{link ctrl=area}">地区管理</a>
 				</li>
 			</ol>
@@ -51,11 +51,11 @@
 			<h3><span>用户</span></h3>
 			<ol>
 				<li>
-					<em><a href="{link ctrl=user method=add id=0}" class="add" title="添加用户">添加</a></em>
+					<em><a href="{link ctrl=user method=add}" class="add" title="添加用户">添加</a></em>
 					<a href="{link ctrl=user}">用户管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=group method=add id=0}" class="add" title="添加用户组">添加</a></em>
+					<em><a href="{link ctrl=group method=add}" class="add" title="添加用户组">添加</a></em>
 					<a href="{link ctrl=group}">用户组管理</a>
 				</li>
 			</ol>
@@ -72,7 +72,7 @@
 					<a href="{link ctrl=category}">栏目管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=article method=add}" class="add" title="添加文章" width="1000">添加</a></em>
+					<em><a href="{link ctrl=article method=add}" class="add" title="添加文章">添加</a></em>
 					<a href="{link ctrl=article}">文章管理</a>
 				</li>
 				<li>
@@ -85,11 +85,11 @@
 			<h3><span>广告</span></h3>
 			<ol>
 				<li>
-					<em><a href="{link ctrl=ad method=add id=0}" class="add" title="添加广告">添加</a></em>
+					<em><a href="{link ctrl=ad method=add}" class="add" title="添加广告">添加</a></em>
 					<a href="{link ctrl=ad}">广告管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=adp method=add id=0}" class="add" title="添加广告位">添加</a></em>
+					<em><a href="{link ctrl=adp method=add}" class="add" title="添加广告位">添加</a></em>
 					<a href="{link ctrl=adp}">广告位管理</a>
 				</li>
 			</ol>

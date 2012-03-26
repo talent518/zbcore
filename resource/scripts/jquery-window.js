@@ -17,7 +17,7 @@ $(window).resize(function(event){
 		if(win){
 			win.resize();
 		}
-	});
+});
 });
 if(isIE6){
 	$(window).scroll(function(){
@@ -32,8 +32,8 @@ $.window=function(options){
 	}
 	this.options=$.extend({},$.window.defaultSetting,options);
 	if(this.options.title && (this.options.content || this.options.url)){
-		this.init();
-		this.open();
+	this.init();
+	this.open();
 		if(!this.options.content){
 			this.refresh();
 		}
@@ -100,7 +100,6 @@ $.window.prototype={
 			$this.resize();
 			$this.windowMask.css('cursor','not-allowed');
 		},100);
-
 		this.options.callback.call(this);
 		return this;
 	},refresh:function(){
@@ -162,7 +161,7 @@ $.fn.window=function(options){
 		$(this).data('options',$.extend({},data,options));
 	}).unbind('click').bind('click',function(){
 		if(this.href==window.location.href+'#') return false;
-		var settings=$.extend({},$(this).data('options'),{title:this.title,url:this.href,data:{IN_AJAX:1}});
+		var settings=$.extend({},$(this).data('options'),{title:this.title,url:this.href});
 		var $this=$(this);
 		$this.addClass('windowUsed');
 		$.get(settings.url,function(content){

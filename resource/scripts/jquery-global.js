@@ -224,11 +224,15 @@ function sprintf(){
 					return;
 				}
 				if(msg.function){
-					window["eval"]("(function(){"+msg.function+"}).call(msg)");
-					return;
+					try{
+						window["eval"]("(function(){"+msg.function+"})").call(msg);
+						return;
+					}catch(e){}
 				}
 				if(msg.callback){
-					callback=window["eval"]("(function(){"+msg.callback+"})");
+					try{
+						callback=window["eval"]("(function(){"+msg.callback+"})");
+					}catch(e){}
 				}
 				if(msg.status){
 					$.dialog.success(msg.message,function(){
@@ -239,7 +243,7 @@ function sprintf(){
 					});
 				}else{
 					$.dialog.error(msg.message,function(){
-						if($.isFunction(callback))
+	 					if($.isFunction(callback))
 							callback.call(msg);
 						else if(msg.backurl.length>0)
 							location.href=msg.backurl;

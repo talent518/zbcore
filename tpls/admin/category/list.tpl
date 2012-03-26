@@ -6,7 +6,7 @@
 <form id="listform" class="formtable" action="{link ctrl=category method=list id=$id}" method="post">
 	<table cellspacing="0" cellpadding="0" border="0" class="list">
 	{if $catpos}
-		<caption><b>当前位置：</b><a href="{link ctrl=category}" class="list">栏目管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=category method=list id=$r.cid}" class="list">{$r.cname}</a>{/loop}</caption>
+		<caption><b>当前位置：</b><a href="{link ctrl=category}" class="list">栏目管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=category method=list id=$r.cid}" class="list">{$r.cat_name}</a>{/loop}</caption>
 	{/if}
 		<thead>
 			<tr>
@@ -27,7 +27,7 @@
 					<input name="_ids[{$r.cid}]" type="hidden" value="{$r.corder}"/>
 				</td>
 				<td>{$r.cid}</td>
-				<td class="l"><a href="{link ctrl=category method=list id=$r.cid}" class="list">{$r.cname}</a></td>
+				<td class="l"><a href="{link ctrl=category method=list id=$r.cid}" class="list">{$r.cat_name}</a></td>
 				<td class="l">{$r.counts}</td>
 				<td>
 					<a href="{link ctrl=category method=add id=$r.cid}" class="add" title="添加栏目">添加</a>

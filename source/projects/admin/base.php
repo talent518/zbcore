@@ -15,7 +15,7 @@ class CtrlBase extends ZBCore{
 		if($this->LOGINED=M('user')->checklogin(1))
 			$this->MEMBER=M('user')->MEMBER;
 		elseif(!$login){
-			$this->message(array('message'=>IN_AJAX?'用户登录':'您还未登录或登录超时！','function'=>'new $.window({title:this.message,url:this.backurl,width:604}).refresh();'),URL(array('method'=>'login')),false,0);
+			$this->message(array('message'=>IN_AJAX?'用户登录':'您还未登录或登录超时！','function'=>'$.window({title:this.message,url:this.backurl,width:604})'),URL(array('method'=>'login')),false,0);
 		}
 		$this->setVar('MEMBER',$this->MEMBER);
 	}

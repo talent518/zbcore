@@ -16,13 +16,17 @@
 <script type="text/javascript">
 $('#loginForm input[name=username]').fblur('请输入用户名/邮箱');
 $('#loginForm input[name=password]').fblur('000000');
+{if IN_AJAX}
+	$('#loginForm').validate();
+{/if}
 {if M('setup')->get('verify','frontlogin')}
-	$('#verifyImage').click(function(){
+$('#verifyImage').click(function(){
 		$('#loginForm input[name=verify]').val('');
-		var uri=$.URL2URI(this.src);
-		uri.querys.rand=Math.floor(Math.random()*100000);
-		this.src=$.URI2URL(uri);
-		setTimeout(function(){$('#verifyImage').click();},300000);
+	var uri=$.URL2URI(this.src);
+	uri.querys.timestamp={TIMESTAMP};
+	uri.querys.rand=Math.floor(Math.random()*100000);
+	this.src=$.URI2URL(uri);
+		setTimeout(function(){$('#verifyImage').click();},60000);
 	}).click();
 {/if}
 </script>

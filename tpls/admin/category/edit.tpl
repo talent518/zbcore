@@ -7,7 +7,7 @@
 			</tr>
 			<tr>
 				<th>栏目名称：</th>
-				<td><input name="cname" type="text" value="{$edit.cname|html}" size="20" /></td>
+				<td><input name="cat_name" type="text" value="{$edit.cat_name|html}" size="20" /></td>
 			</tr>
 			<tr>
 				<th>SEO标题：</th>
@@ -41,7 +41,7 @@ $('#editform').validate({
 			required:true,
 			integer:true
 		},
-		cname:{
+		cat_name:{
 			required:true,
 			maxlength:20,
 			chinese:true

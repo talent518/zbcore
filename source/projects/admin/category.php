@@ -42,7 +42,7 @@ class CtrlCategory extends CtrlBase{
 			$data=array(
 				'pid'=>$_POST['pid'],
 				'pids'=>iimplode(explode(',',$_POST['pids'])),
-				'cname'=>$_POST['cname'],
+				'cat_name'=>$_POST['cat_name'],
 				'cseo'=>saddslashes(serialize(sstripslashes($_POST['cseo']))),
 				'corder'=>intval($_POST['corder']),
 			);
@@ -61,7 +61,7 @@ class CtrlCategory extends CtrlBase{
 			$data=array(
 				'pid'=>intval($_POST['pid']),
 				'pids'=>iimplode(explode(',',$_POST['pids'])),
-				'cname'=>$_POST['cname'],
+				'cat_name'=>$_POST['cat_name'],
 				'cseo'=>saddslashes(serialize(sstripslashes($_POST['cseo']))),
 				'corder'=>intval($_POST['corder']),
 			);
