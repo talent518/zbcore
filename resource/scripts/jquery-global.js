@@ -243,7 +243,7 @@ function sprintf(){
 					});
 				}else{
 					$.dialog.error(msg.message,function(){
-	 					if($.isFunction(callback))
+						if($.isFunction(callback))
 							callback.call(msg);
 						else if(msg.backurl.length>0)
 							location.href=msg.backurl;

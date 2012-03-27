@@ -18,7 +18,7 @@ $('#loginForm input[name=password]').fblur('000000');
 {if IN_AJAX}
 	$('#loginForm').validate();
 {else}
-$('#loginForm').float('center');
+	$('#loginForm').float('center');
 {/if}
 {if M('setup')->get('verify','adminlogin')}
 $('#verifyImage').click(function(){

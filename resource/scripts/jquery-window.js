@@ -17,7 +17,7 @@ $(window).resize(function(event){
 		if(win){
 			win.resize();
 		}
-});
+	});
 });
 if(isIE6){
 	$(window).scroll(function(){
@@ -32,8 +32,8 @@ $.window=function(options){
 	}
 	this.options=$.extend({},$.window.defaultSetting,options);
 	if(this.options.title && (this.options.content || this.options.url)){
-	this.init();
-	this.open();
+		this.init();
+		this.open();
 		if(!this.options.content){
 			this.refresh();
 		}
@@ -100,6 +100,7 @@ $.window.prototype={
 			$this.resize();
 			$this.windowMask.css('cursor','not-allowed');
 		},100);
+
 		this.options.callback.call(this);
 		return this;
 	},refresh:function(){

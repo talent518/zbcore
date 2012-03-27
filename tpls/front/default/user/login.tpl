@@ -21,7 +21,7 @@ $('#loginForm input[name=password]').fblur('000000');
 {/if}
 {if M('setup')->get('verify','frontlogin')}
 $('#verifyImage').click(function(){
-		$('#loginForm input[name=verify]').val('');
+	$('#loginForm input[name=verify]').val('');
 	var uri=$.URL2URI(this.src);
 	uri.querys.timestamp={TIMESTAMP};
 	uri.querys.rand=Math.floor(Math.random()*100000);
