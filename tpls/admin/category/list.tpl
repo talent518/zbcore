@@ -13,7 +13,8 @@
 				<th>排序</th>
 				<th>ID</th>
 				<th class="l" width="100%">栏目名称</th>
-				<th>站点数</th>
+				<th>栏目类型</th>
+				<th>数量</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -28,6 +29,7 @@
 				</td>
 				<td>{$r.cid}</td>
 				<td class="l"><a href="{link ctrl=category method=list id=$r.cid}" class="list">{$r.cat_name}</a></td>
+				<td>d</td>
 				<td class="l">{$r.counts}</td>
 				<td>
 					<a href="{link ctrl=category method=add id=$r.cid}" class="add" title="添加栏目">添加</a>
@@ -40,13 +42,13 @@
 			{/loop}
 		{else}
 			<tr>
-				<td colspan="5" class="c">您还没有添加{if !$id}子{/if}栏目！</td>
+				<td colspan="6" class="c">您还没有添加{if !$id}子{/if}栏目！</td>
 			</tr>
 		{/if}
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5" class="l">
+				<td colspan="6" class="l">
 					<input name="listsubmit" type="submit" value="排序"/>
 					<input name="listhash" type="hidden" value="$listhash"/>
 				</td>

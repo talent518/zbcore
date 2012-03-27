@@ -10,8 +10,7 @@
 				<th>栏目类型：</th>
 				<td><select name="ctype">
 					<option value="">请选择</option>
-					<option value="path">目录</option>
-					<option value="page">单面</option>
+					<option value="page">单页</option>
 					<option value="article">文章</option>
 				</select></td>
 			</tr>
@@ -47,13 +46,13 @@
 			</tr>
 		</tbody>
 		<tbody class="tpl">
-			<tr class="path">
-				<th>目录模板：</th>
-				<td><select name="path[tpl]"><option value="path">默认模板</option></select></td>
+			<tr class="page">
+				<th>列表模板：</th>
+				<td><select name="page[list_tpl]"><option value="list">默认模板</option></select></td>
 			</tr>
 			<tr class="page">
 				<th>单页模板：</th>
-				<td><select name="page[tpl]"><option value="page">默认模板</option></select></td>
+				<td><select name="page[view_tpl]"><option value="view">默认模板</option></select></td>
 			</tr>
 			<tr class="article">
 				<th>栏目模板：</th>
@@ -66,6 +65,18 @@
 			<tr class="article">
 				<th>内容模板：</th>
 				<td><select name="article[view_tpl]"><option value="view">默认模板</option></select></td>
+			</tr>
+			<tr class="picture">
+				<th>栏目模板：</th>
+				<td><select name="picture[cat_tpl]"><option value="category">默认模板</option></select></td>
+			</tr>
+			<tr class="picture">
+				<th>列表模板：</th>
+				<td><select name="picture[list_tpl]"><option value="list">默认模板</option></select></td>
+			</tr>
+			<tr class="picture">
+				<th>内容模板：</th>
+				<td><select name="picture[view_tpl]"><option value="view">默认模板</option></select></td>
 			</tr>
 		</tbody>
 		<tfoot>
