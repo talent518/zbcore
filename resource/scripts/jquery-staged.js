@@ -31,12 +31,18 @@
 
 (function($){
 	$.fn.staged=function(url,setting){
-		if($(this).data('staged'))
+		if($(this).data('staged') && !url){
 			return $(this).data('staged');
+		}
 		var $this=$(this);
 		$.getJson(url,function(data){
 			$this.each(function(){
-				var staged=new $.staged(this,data,setting);
+				staged=$(this).data('staged');
+				if(staged){
+					staged.setData(data);
+				}else{
+					staged=new $.staged(this,data,setting);
+				}
 				staged.init();
 			});
 		});
@@ -59,10 +65,12 @@
 			this.setting.name=select.name;
 		if(select.names)
 			this.seled=$('<input name="'+select.names+'" type="hidden" value=""/>').insertBefore(select);
-
-		this.data=data?(this.setting.isStaged?data:{k0:data}):{k0:{}};
+		this.setData(data);
 	};
 	$.staged.prototype={
+		setData:function(data){
+			this.data=data?(this.setting.isStaged?data:{k0:data}):{k0:{}};
+		},
 		init:function(){
 			if(this.sels.length>1){
 				return;

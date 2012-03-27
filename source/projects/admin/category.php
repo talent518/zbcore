@@ -43,6 +43,9 @@ class CtrlCategory extends CtrlBase{
 				'pid'=>$_POST['pid'],
 				'pids'=>iimplode(explode(',',$_POST['pids'])),
 				'cat_name'=>$_POST['cat_name'],
+				'cat_path'=>$_POST['cat_path'],
+				'ctype'=>$_POST['ctype'],
+				'ctpl'=>saddslashes(serialize(sstripslashes($_POST[$_POST['ctype'].'_tpl']))),
 				'cseo'=>saddslashes(serialize(sstripslashes($_POST['cseo']))),
 				'corder'=>intval($_POST['corder']),
 			);
@@ -51,7 +54,10 @@ class CtrlCategory extends CtrlBase{
 			else
 				$this->message($this->mod->error);
 		}else{
-			$this->setVar('add',array('pid'=>$this->id,'corder'=>0));
+			if($this->id>0){
+				$cat=$this->mod->get($this->id);
+			}
+			$this->setVar('add',array('pid'=>$this->id,'ctype'=>$cat['ctype'],'corder'=>0));
 			$this->setVar('addhash',$this->formhash('add'));
 			$this->display('category/add');
 		}
@@ -93,6 +99,6 @@ class CtrlCategory extends CtrlBase{
 			$this->message('栏目不存在！');
 	}
 	function onJson(){
-		$this->echoKJson($this->mod->get_tree('name'));
+		$this->echoKJson($this->mod->get_tree('name',GET('type')));
 	}
 }

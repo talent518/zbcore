@@ -11,6 +11,10 @@ class ModelCategory extends ModelBase{
 			'required'=>true,
 			'integer'=>true
 		),
+		'ctype'=>array(
+			'required'=>true,
+			'custom'=>"page|article|picture"
+		),
 		'cat_name'=>array(
 			'required'=>true,
 			'maxlength'=>20,
@@ -33,6 +37,18 @@ class ModelCategory extends ModelBase{
 			'integer'=>'排序不是一个整数'
 		),
 	);
+
+	var $ctypes=array(
+		'page'=>'单页',
+		'article'=>'文章',
+		'picture'=>'图片',
+	);
+	var $ctpls=array(
+		'page'=>array('list'=>'列表模板','view'=>'单页模板'),
+		'article'=>array('cate'=>'栏目模板','list'=>'列表模板','view'=>'单页模板'),
+		'picture'=>array('cate'=>'栏目模板','list'=>'列表模板','view'=>'单页模板'),
+	);
+
 	function add(&$data){
 		$this->rules['cat_name']['query']=array('category','pid='.$data['pid'].' AND cat_name=\''.$data['cat_name'].'\'');
 
@@ -48,10 +64,9 @@ class ModelCategory extends ModelBase{
 			return false;
 		}
 
-		$this->rules['cat_name']['query']=array('category','cid<>'.$id.' AND pid='.$data['pid'].' AND cat_name=\''.$data['cat_name'].'\'');
+		$this->rules['cat_name']['query']=array('category',$this->priKey.'<>'.$id.' AND pid='.$data['pid'].' AND cat_name=\''.$data['cat_name'].'\'');
 
-		if($this->check($data)){
-			DB()->update('category',$data,'cid='.$id);
+		if(parent::edit($id,$data)){
 			$this->drop_cache($data['pid'],$id);
 			$this->drop_cache($cat['pid']);
 			return true;
@@ -61,16 +76,16 @@ class ModelCategory extends ModelBase{
 	function drop($id=0){
 		if($cat=$this->get($id)){
 			$cids=$this->get_child($id);
-			DB()->delete('category','cid in('.iimplode($cids).')');
-			$count=DB()->count('picture','cid in('.iimplode($cids).')');
+			DB()->delete('category',$this->priKey.' in('.iimplode($cids).')');
+			$count=DB()->count($cat['ctype'],$this->priKey.' in('.iimplode($cids).')');
 			if($cat['pid']>0)
-			DB()->update('category',array('counts'=>'counts-'.$count),'cid in ('.$cat['pids'].')',false);
+			DB()->update('category',array('counts'=>'counts-'.$count),$this->priKey.' in ('.$cat['pids'].')',false);
 
 			$sids=DB()->select(array(
 				'table'=>'picture_position p',
 				'field'=>'p.posid,count(p.id) as `counts`',
 				'join'=>array('picture s'=>'s.id=p.id'),
-				'where'=>'s.cid in('.iimplode($cids).')',
+				'where'=>'s.cat_id in('.iimplode($cids).')',
 				'group'=>'p.posid'
 			),-1,'posid','counts');
 
@@ -82,12 +97,12 @@ class ModelCategory extends ModelBase{
 			$ids=DB()->select(array(
 				'table'=>'picture',
 				'field'=>'id',
-				'where'=>'cid in('.iimplode($cids).')'
+				'where'=>'cat_id in('.iimplode($cids).')'
 			),-1,'','id');
 			if($ids)
 				DB()->delete('picture_position','id in('.iimplode($ids).')');
 
-			DB()->delete('picture','cid in('.iimplode($cids).')');
+			DB()->delete('picture','cat_id in('.iimplode($cids).')');
 
 			$this->drop_cache(intval($cat['pid']));
 			foreach($cids as $id)
@@ -100,7 +115,7 @@ class ModelCategory extends ModelBase{
 	}
 	function order($pid,$ids){
 		foreach($ids as $id=>$order){
-			DB()->update('category',array('corder'=>intval($order)),'cid='.intval($id));
+			DB()->update('category',array('corder'=>intval($order)),'cat_id='.intval($id));
 			$this->drop_cache($pid,$id);
 		}
 	}
@@ -149,18 +164,19 @@ class ModelCategory extends ModelBase{
 		$cache->callback=array(&$this,'get_list_by_where',array('pid='.$pid));
 		return $cache->get();
 	}
-	function &get_tree($key=''){
+	function &get_tree($key='',$type=''){
 		$cache=L('cache');
 		$cache->dir='category';
-		$cache->name='tree'.($key?'_'.$key:'');
-		$cache->callback=array(&$this,'_get_tree',array($key));
+		$cache->name='tree'.($key?'_'.$key:'').($type?'_'.$type:'');
+		$cache->callback=array(&$this,'_get_tree',array($key,$type));
 		return $cache->get();
 	}
-	function &_get_tree($key=''){
+	function &_get_tree($key='',$type=''){
 		$mapTree=array();
 		$q=DB()->select(array(
 			'table'=>'category',
 			'field'=>'cat_id,pid,cat_name,counts',
+			'where'=>$type?'ctype=\''.$type.'\'':'',
 			'order'=>'corder DESC'
 		));
 		while($value=DB()->row($q)){
