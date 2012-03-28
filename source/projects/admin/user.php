@@ -39,7 +39,7 @@ class CtrlUser extends CtrlBase{
 				'protected'=>$_POST['protected']+0,
 			);
 			if($this->mod->add($data))
-				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$data['cid'])),true);
+				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$data['gid'])),true);
 			else
 				$this->message($this->mod->error);
 		}else{
@@ -58,7 +58,7 @@ class CtrlUser extends CtrlBase{
 				'protected'=>$_POST['protected']+0,
 			);
 			if($this->mod->edit($this->id,$data))
-				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$data['cid'])),true);
+				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$data['gid'])),true);
 			else
 				$this->message($this->mod->error);
 		}else{
@@ -72,7 +72,7 @@ class CtrlUser extends CtrlBase{
 	function onDrop(){
 		if($this->is_submit('drop')){
 			if($this->mod->drop(intval($_POST['id'])))
-				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$_POST['cid'])),true);
+				$this->message('提交成功',URL(array('ctrl'=>'user','method'=>'list','id'=>$_POST['gid'])),true);
 			else
 				$this->message($this->mod->error);
 		}elseif($user=$this->mod->get_by_uid($this->id)){

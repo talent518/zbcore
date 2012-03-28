@@ -21,12 +21,6 @@ class ModelPosition extends ModelBase{
 			'integer'=>'排序不是一个整数'
 		),
 	);
-	function __construct(){
-		parent::__construct();
-		$this->ModelPosition();
-	}
-	function ModelPosition(){
-	}
 	function add(&$data){
 		$this->rules['pname']['query']=array('position','pname=\''.$data['pname'].'\'');
 

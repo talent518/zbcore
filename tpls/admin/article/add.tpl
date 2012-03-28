@@ -2,13 +2,13 @@
 	<ul class="tab_title">
 		<li class="active">基本选项</li>
 		<li>SEO设置</li>
-		<li>特殊字段</li>
+		<!--li>特殊字段</li-->
 	</ul>
 	<table class="tab_body" cellspacing="0" cellpadding="0" border="0">
 		<tbody>
 			<tr>
 				<th>所属栏目：</th>
-				<td><select name="pid" names="pids"><option value="0">所属栏目</option></select></td>
+				<td><select name="cat_id"><option value="0">所属栏目</option></select></td>
 			</tr>
 			<tr>
 				<th>文章名称：</th>
@@ -40,8 +40,8 @@
 				<th>SEO描述：</th>
 				<td><input name="seo[description]" type="text" value="{$add.seo.description|html}" size="50" /></td>
 			</tr>
-		</tbody>
-		<tbody>
+		<!--tbody>
+		</tbody-->
 		</tbody>
 		<tfoot>
 			<tr>
@@ -56,6 +56,10 @@ CKEDITOR.instances={};
 $('#ckeditor').ckeditor(function(){
 	$('#addform').validate({
 		rules:{
+			cat_id:{
+				required:true,
+				min:1
+			},
 			name:{
 				required:true,
 				maxlength:20,
@@ -70,13 +74,21 @@ $('#ckeditor').ckeditor(function(){
 			}
 		},
 		messages:{
+			cat_id:{min:'请选择'},
 			content:{
-				required:'至少得写的什么吧',
-				minlength:'至少得写的什么吧'
+				required:'至少得写点什么吧',
+				minlength:'写的太少啦，再加20字如何！'
 			}
 		}
 	});
-	$('#addform').getWindow().resize();
+	var list=$('#addform .tab_title li');
+	list.click(function(){
+		var i=list.removeClass('active').index(this);
+		$(this).addClass('active');
+		$('#addform .tab_body>tbody').hide().eq(i).show();
+		$('#addform').getWindow().resize();
+	}).eq(0).click();
 }).ckeditorGet();
-$('#addform select[name=cat_id]').staged('{link ctrl=category method=json}',{val:{$add.cat_id}});
+
+$('#addform select[name=cat_id]').staged('{link ctrl=category method=json type=article}',{val:{$add.cat_id}});
 </script>

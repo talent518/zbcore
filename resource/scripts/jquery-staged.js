@@ -10,7 +10,7 @@
 例如：
 	<select name="id" names="ids" multiple="false"></select>
 	<script type="text/javascript">
-	$('select[name=cat_id]').staged('json.php?do=test',{val:1,not:3,isStaged:false,isMultiple:false,change:function(){}});//val为当前选择的id，not排除的id,isStaged是否为多级，isStaged的值会自动识别，change添加选择时的事件
+	$('select[name=cat_id]').staged('json.php?do=test',{val:1,not:3,isStaged:false,isMultiple:false,keyName:'text',change:function(){}});//val为当前选择的id，not排除的id,isStaged是否为多级，isStaged的值会自动识别，keyName当前选项值为一个object时使用，change添加选择时的事件
 	</script>
 说明：
 	json格式多级：{"k0":{"k1":"A","k2":"B","k3":"C","k4":"D"},"k1":{"k5":"E","k6":"F"}}
@@ -52,7 +52,7 @@
 		$(select).data('staged',this);
 		this.sels=[select];
 
-		this.defaults={};
+		this.defaults={keyName:'text'};
 		this.defaults.isMultiple=$(select).attr('multiple');
 		this.defaults.isStaged=(data['k'+0]?true:false);
 		this.defaults.val=parseInt($(select).attr('val'));;
@@ -63,8 +63,8 @@
 
 		if(select.name)
 			this.setting.name=select.name;
-		if(select.names)
-			this.seled=$('<input name="'+select.names+'" type="hidden" value=""/>').insertBefore(select);
+		if($(select).attr('names'))
+			this.seled=$('<input name="'+$(select).attr('names')+'" type="hidden" value=""/>').insertBefore(select);
 		this.setData(data);
 	};
 	$.staged.prototype={
@@ -132,7 +132,7 @@
 				text=this.data['k'+pid][val];
 				val=parseInt(/\d+/.exec(val));
 				if(val!=this.setting.not)
-					sel.append(sprintf('<option value="%s" %s>%s</option>',val,val==sid?'selected':'',text));
+					sel.append(sprintf('<option value="%s" %s>%s</option>',val,val==sid?'selected':'',typeof(text)=='object'?text[this.setting.keyName]:text));
 			}
 			if(this.setting.isStaged)
 				sel.change();

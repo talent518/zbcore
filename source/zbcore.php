@@ -105,17 +105,17 @@ class ZBCore{
 			$this->obEchoPage();
 		}
 	}
-	private function mkJson($json){
-		if(is_array($json)){
+	private function mkJson($json,$grade){
+		if(is_array($json) && ($grade==-1 || $grade>0)){
 			$return=array();
 			foreach($json as $k=>$v)
-				$return['k'.$k]=$this->mkJson($v);
+				$return['k'.$k]=$this->mkJson($v,$grade>0?$grade-1:$grade);
 			return $return;
 		}
 		return $json;
 	}
-	function echoKJson($json){
-		$this->echoJson($this->mkJson($json));
+	function echoKJson($json,$grade=-1){
+		$this->echoJson($this->mkJson($json,$grade));
 	}
 	function echoJson($json){
 		$this->obclean();

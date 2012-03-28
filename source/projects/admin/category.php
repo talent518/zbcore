@@ -12,6 +12,8 @@ class CtrlCategory extends CtrlBase{
 		$this->id=intval('0'.GET('id'));
 		$this->setVar('id',$this->id);
 		$this->mod=M('category');
+		$this->setVar('ctypes',$this->mod->ctypes);
+		$this->setVar('ctpls',$this->mod->ctpls);
 	}
 	function onIndex(){
 		$this->onList();
@@ -27,15 +29,10 @@ class CtrlCategory extends CtrlBase{
 		}else{
 			$this->setVar('id',$this->id);
 			$this->setVar('catpos',$this->mod->catpos($this->id));
-			$this->setVar('list',$this->mod->get_list($this->id));
+			$this->setVar('list',$this->mod->get_list_by_where('pid='.$this->id));
 			$this->setVar('listhash',$this->formhash('list'));
 			$this->display('category/list');
 		}
-	}
-	function onUpdate(){
-		$this->mod->updatepids();
-		$this->mod->updatecounts();
-		$this->message('更新缓存成功',URL(array('ctrl'=>'category','method'=>'list','id'=>$this->id)),true);
 	}
 	function onAdd(){
 		if($this->is_submit('add')){
@@ -45,8 +42,8 @@ class CtrlCategory extends CtrlBase{
 				'cat_name'=>$_POST['cat_name'],
 				'cat_path'=>$_POST['cat_path'],
 				'ctype'=>$_POST['ctype'],
-				'ctpl'=>saddslashes(serialize(sstripslashes($_POST[$_POST['ctype'].'_tpl']))),
-				'cseo'=>saddslashes(serialize(sstripslashes($_POST['cseo']))),
+				'ctpl'=>serialize(sstripslashes($_POST[$_POST['ctype'].'_tpl'])),
+				'cseo'=>serialize(sstripslashes($_POST['cseo'])),
 				'corder'=>intval($_POST['corder']),
 			);
 			if($this->mod->add($data))
@@ -56,8 +53,9 @@ class CtrlCategory extends CtrlBase{
 		}else{
 			if($this->id>0){
 				$cat=$this->mod->get($this->id);
+				$cat['ctpl']=unserialize($cat['ctpl']);
 			}
-			$this->setVar('add',array('pid'=>$this->id,'ctype'=>$cat['ctype'],'corder'=>0));
+			$this->setVar('add',array('pid'=>$this->id,'ctype'=>$cat['ctype'],'ctpl'=>$cat['ctpl'],'corder'=>0));
 			$this->setVar('addhash',$this->formhash('add'));
 			$this->display('category/add');
 		}
@@ -68,7 +66,10 @@ class CtrlCategory extends CtrlBase{
 				'pid'=>intval($_POST['pid']),
 				'pids'=>iimplode(explode(',',$_POST['pids'])),
 				'cat_name'=>$_POST['cat_name'],
-				'cseo'=>saddslashes(serialize(sstripslashes($_POST['cseo']))),
+				'cat_path'=>$_POST['cat_path'],
+				'ctype'=>$_POST['ctype'],
+				'ctpl'=>serialize(sstripslashes($_POST[$_POST['ctype'].'_tpl'])),
+				'cseo'=>serialize(sstripslashes($_POST['cseo'])),
 				'corder'=>intval($_POST['corder']),
 			);
 			if($this->mod->edit($this->id,$data))
@@ -79,6 +80,7 @@ class CtrlCategory extends CtrlBase{
 			if(!$edit=$this->mod->get($this->id))
 				$this->message('你要编辑的栏目不存在！');
 			$edit['cseo']=unserialize($edit['cseo']);
+			$edit['ctpl']=unserialize($edit['ctpl']);
 			$this->setVar('edit',$edit);
 			$this->setVar('edithash',$this->formhash('edit'));
 			$this->display('category/edit');

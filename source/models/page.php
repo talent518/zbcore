@@ -2,10 +2,10 @@
 if(!defined('IN_SITE'))
 exit('Access Denied');
 
-class ModelArticle extends ModelBase{
-	protected $table='article';
-	protected $priKey='art_id';
-	protected $order='`order` desc,`art_id` desc';
+class ModelPage extends ModelBase{
+	protected $table='page';
+	protected $priKey='page_id';
+	protected $order='`order` desc,`page_id` desc';
 	protected $rules=array(
 		'cat_id'=>array(
 			'required'=>true,
@@ -14,9 +14,22 @@ class ModelArticle extends ModelBase{
 		'title'=>array(
 			'required'=>true,
 			'maxlength'=>20,
-			'query'=>'article'
+			'query'=>'page',
+			'chinese'=>true
 		),
-		'content'=>array(
+		'page_title'=>array(
+			'required'=>true,
+			'maxlength'=>40,
+			'query'=>'page',
+			'chinese'=>true
+		),
+		'page_name'=>array(
+			'required'=>true,
+			'maxlength'=>40,
+			'query'=>'page',
+			'english'=>true
+		),
+		'page_content'=>array(
 			'required'=>true,
 			'minlength'=>20
 		),
@@ -30,11 +43,24 @@ class ModelArticle extends ModelBase{
 			'integer'=>'所属栏目不是一个整数'
 		),
 		'title'=>array(
-			'required'=>'文章名称不能为空',
-			'maxlength'=>'文章名称字数不能超过20个字',
-			'query'=>'文章“{0}”已存在',
+			'required'=>'短标题不能为空',
+			'maxlength'=>'短标题字数不能超过20个字',
+			'chinese'=>'页短标题只能为汉字',
+			'query'=>'页短标题“{0}”已存在',
 		),
-		'content'=>array(
+		'page_title'=>array(
+			'required'=>'页标题不能为空',
+			'maxlength'=>'页标题字数不能超过20个字',
+			'chinese'=>'页标题只能为汉字',
+			'query'=>'页标题“{0}”已存在',
+		),
+		'page_name'=>array(
+			'required'=>'页名称不能为空',
+			'maxlength'=>'页名称字数不能超过20个字',
+			'english'=>'页名称只能为英文',
+			'query'=>'页名称“{0}”已存在',
+		),
+		'page_content'=>array(
 			'required'=>'文章内容至少得写的什么吧',
 			'minlength'=>'文章内容至少得写的什么吧'
 		),
@@ -43,7 +69,6 @@ class ModelArticle extends ModelBase{
 		),
 	);
 	function add(&$data,$isCheck=true,$isReplace=false){
-		$data['addtime']=TIMESTAMP;
 		if(parent::add($data,$isCheck,$isReplace)){
 			$pos=M('category')->get($data['cat_id']);
 			$ids=explode(',',$pos['pids']);
@@ -54,15 +79,15 @@ class ModelArticle extends ModelBase{
 		return false;
 	}
 	function edit($id,$data,$isCheck=true,$isString=true){
-		$this->rules['title']['query']=array('article','art_id<>'.$id.' AND title=\''.$data['title'].'\'');
-		$data['edittime']=TIMESTAMP;
-
+		$this->rules['title']['query']=array('page','page_id<>'.$id.' AND title=\''.$data['title'].'\'');
+		$this->rules['page_title']['query']=array('page','page_id<>'.$id.' AND page_title=\''.$data['page_title'].'\'');
+		$this->rules['page_name']['query']=array('page','page_id<>'.$id.' AND page_name=\''.$data['page_name'].'\'');
 		if(parent::edit($id,$data,$isCheck,$isString)){
-			$article=$this->get($id);
-			if($article['cat_id']!=$data['cat_id']){
-				$pos=M('category')->get($article['cat_id']);
+			$page=$this->get($id);
+			if($page['cat_id']!=$data['cat_id']){
+				$pos=M('category')->get($page['cat_id']);
 				$ids=explode(',',$pos['pids']);
-				$ids[]=$article['cat_id'];
+				$ids[]=$page['cat_id'];
 				M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
 				$pos=M('category')->get($data['cat_id']);
 				$ids=explode(',',$pos['pids']);
@@ -74,16 +99,16 @@ class ModelArticle extends ModelBase{
 		return false;
 	}
 	function drop($id=0){
-		$article=$this->get($id);
-		$pos=M('category')->get($article['cat_id']);
+		$page=$this->get($id);
+		$pos=M('category')->get($page['cat_id']);
 		$ids=explode(',',$pos['pids']);
-		$ids[]=$article['cat_id'];
+		$ids[]=$page['cat_id'];
 		M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
 		return parent::drop($id);
 	}
 	function order($pid,$ids){
 		foreach($ids as $id=>$order)
-			$this->update(array('order'=>intval($order)),'art_id='.intval($id));
+			$this->update(array('order'=>intval($order)),'page_id='.intval($id));
 	}
 	function &get($id=0){
 		static $data;
@@ -97,13 +122,13 @@ class ModelArticle extends ModelBase{
 	}
 	function &get_prev($id){
 		if($get=$this->get($id))
-			return $this->get_by_where('`order`>='.$get['order'].' AND art_id>'.$id,'`order`,art_id');
+			return $this->get_by_where('`order`>='.$get['order'].' AND page_id>'.$id,'`order`,page_id');
 		else
 			return array();
 	}
 	function &get_next($id){
 		if($get=$this->get($id))
-			return $this->get_by_where('`order`<='.$get['order'].' AND art_id<'.$id,'`order` DESC,art_id DESC');
+			return $this->get_by_where('`order`<='.$get['order'].' AND page_id<'.$id,'`order` DESC,page_id DESC');
 		else
 			return array();
 	}

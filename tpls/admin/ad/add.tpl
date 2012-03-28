@@ -172,7 +172,7 @@ $('#addform').validate({
 	}
 });
 $('#addform tbody.type').hide();
-$('#addform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$add.pid},isStaged:false,keyText:'pname',change:function(pos){
+$('#addform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$add.pid},isStaged:false,keyName:'pname',change:function(pos){
 	$('#addform tbody.type').hide();
 	if(pos){
 		if(pos.size)

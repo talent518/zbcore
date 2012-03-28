@@ -72,8 +72,16 @@
 					<a href="{link ctrl=category}">栏目管理</a>
 				</li>
 				<li>
-					<em><a href="{link ctrl=article method=add}" class="add" title="添加文章">添加</a></em>
+					<em><a href="{link ctrl=page method=add}" class="add" title="添加单页" width="1000">添加</a></em>
+					<a href="{link ctrl=page}">单页管理</a>
+				</li>
+				<li>
+					<em><a href="{link ctrl=article method=add}" class="add" title="添加文章" width="1000">添加</a></em>
 					<a href="{link ctrl=article}">文章管理</a>
+				</li>
+				<li>
+					<em><a href="{link ctrl=picture method=add}" class="add" title="添加图片">添加</a></em>
+					<a href="{link ctrl=picture}">图片管理</a>
 				</li>
 				<li>
 					<em><a href="{link ctrl=partner method=add}" class="add" title="添加友情连接">添加</a></em>

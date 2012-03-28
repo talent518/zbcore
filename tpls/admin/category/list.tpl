@@ -1,6 +1,5 @@
 <h1 class="head">
 	<a href="{link ctrl=category method=add id=$id}" class="add button" title="添加栏目">添加栏目</a>
-	<a href="{link ctrl=category method=update id=$id}" class="button" title="更新缓存" onclick="$.post(this.href);return false;">更新缓存</a>
 	栏目管理
 </h1>
 <form id="listform" class="formtable" action="{link ctrl=category method=list id=$id}" method="post">
@@ -29,7 +28,7 @@
 				</td>
 				<td>{$r.cat_id}</td>
 				<td class="l"><a href="{link ctrl=category method=list id=$r.cat_id}" class="list">{$r.cat_name}</a></td>
-				<td>d</td>
+				<td>{php echo $ctypes[$r[ctype]];}</td>
 				<td class="l">{$r.counts}</td>
 				<td>
 					<a href="{link ctrl=category method=add id=$r.cat_id}" class="add" title="添加栏目">添加</a>

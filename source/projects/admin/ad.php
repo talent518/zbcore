@@ -150,6 +150,6 @@ class CtrlAd extends CtrlBase{
 			$this->message('广告不存在');
 	}
 	function onJson(){
-		$this->echoKJson($this->pmod->get_list());
+		$this->echoKJson($this->pmod->get_list(),1);
 	}
 }

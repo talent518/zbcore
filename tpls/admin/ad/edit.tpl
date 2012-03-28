@@ -173,7 +173,7 @@ $('#editform').validate({
 	}
 });
 $('#editform tbody.type').hide();
-$('#editform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$edit.pid},isStaged:false,keyText:'pname',change:function(pos){
+$('#editform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$edit.pid},isStaged:false,keyName:'pname',change:function(pos){
 	$('#editform tbody.type').hide();
 	if(pos){
 		if(pos.size)

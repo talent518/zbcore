@@ -8,9 +8,9 @@
 		<tbody>
 			<tr>
 				<th>栏目类型：</th>
-				<td>{if $add.ctype}<input name="ctype" type="hidden" value="{$add.ctype}"/>{else}<select name="ctype">
+				<td>{if $add.pid}<b>{php echo $ctypes[$add[ctype]];}</b><input name="ctype" type="hidden" value="{$add.ctype}"/>{else}<select name="ctype">
 					<option value="">请选择</option>
-				{loop M('category')->ctypes $k $v}
+				{loop $ctypes $k $v}
 					<option value="$k">$v</option>
 				{/loop}
 				</select>{/if}</td>
@@ -47,23 +47,19 @@
 			</tr>
 		</tbody>
 		<tbody class="tpl">
-		{if $add.ctype}
-			{loop M('category')->ctpls[$add.ctype] $k $v}
-			<tr class="$t">
+		{if $add.pid}
+			{loop $ctpls[$add.ctype] $k $v}
+			<tr class="{$add.ctype}">
 				<th>$v：</th>
-				<td><select name="{$t}_tpl[{$k}]">
-					<option value="{$k}">默认模板</option>
-				</select></td>
+				<td><input name="{$add.ctype}_tpl[{$k}]" type="text" value="{php echo $add[ctpl][$k];}"></td>
 			</tr>
 			{/loop}
 		{else}
-			{loop M('category')->ctpls $t $r}
+			{loop $ctpls $t $r}
 				{loop $r $k $v}
 				<tr class="$t">
 					<th>$v：</th>
-					<td><select name="{$t}_tpl[{$k}]">
-						<option value="{$k}">默认模板</option>
-					</select></td>
+					<td><input name="{$t}_tpl[{$k}]" type="text" value="{$k}"/></td>
 				</tr>
 				{/loop}
 			{/loop}
@@ -110,6 +106,7 @@
 {if $add.pid}
 	$('#addform select[name=pid]').staged('{link ctrl=category method=json type=$add.ctype}',{val:{$add.pid}});
 {else}
+	$('#addform select[name=pid]').staged('{link ctrl=category method=json type=$add.ctype}',{val:{$add.pid}});
 	$('#addform select[name=ctype]').change(function(){
 		var val=$(this).val();
 		if(val.length){

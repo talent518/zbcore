@@ -1,7 +1,7 @@
 <form class="formtable" id="dropform" action="{link ctrl=category method=drop}" method="post">
 <table class="list">
 {if $catpos}
-	<caption><b>当前位置：</b><a href="{link ctrl=category}" class="list">栏目管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=category method=list id=$r.cid}" class="list">{$r.cat_name}</a>{/loop}</caption>
+	<caption><b>当前位置：</b><a href="{link ctrl=category}" class="list">栏目管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=category method=list id=$r.cat_id}" class="list">{$r.cat_name}</a>{/loop}</caption>
 {/if}
 	<thead><tr><th>你确定要删除该栏目及栏目下的网址吗？</th></tr></thead>
 	<tbody>

@@ -1,7 +1,7 @@
 <form class="formtable" id="dropform" action="{link ctrl=group method=drop}" method="post">
 <table class="list">
 {if $catpos}
-	<caption><b>当前位置：</b><a href="{link ctrl=group}" class="list">用户组管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=group method=list id=$r.cid}" class="list">{$r.cname}</a>{/loop}</caption>
+	<caption><b>当前位置：</b><a href="{link ctrl=group}" class="list">用户组管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=group method=list id=$r.gid}" class="list">{$r.cname}</a>{/loop}</caption>
 {/if}
 	<thead><tr><th>你确定要删除该用户组吗？</th></tr></thead>
 	<tbody>

@@ -1,5 +1,6 @@
 <?php
 define('IN_PROJ','admin');
+$_SERVER['SCRIPT_NAME']=str_replace('/resource/ckfinder/core/connector/php','',$_SERVER['SCRIPT_NAME']);
 include_once(dirname(__FILE__).'/../../global.php');
 /*
  * ### CKFinder : Configuration File - Basic Instructions
