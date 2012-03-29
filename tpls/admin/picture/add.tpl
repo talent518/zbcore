@@ -1,4 +1,4 @@
-<form id="addform" class="formtable" action="{link ctrl=picture method=add}" method="post" enctype="multipart/form-data">
+<form id="addform" class="formtable" action="{link ctrl=picture method=add}" method="post">
 	<table cellspacing="0" cellpadding="0" border="0">
 		<tbody>
 			<tr>
@@ -11,7 +11,11 @@
 			</tr>
 			<tr>
 				<th>上传图片：</th>
-				<td><input name="url" type="file" value=""/></td>
+				<td>
+					<input id="jqFileUpload" name="url" type="text" value=""/>
+					<div id="jqFileUploadQueue"></div>
+					<div id="jqFileUploadResp"></div>
+				</td>
 			</tr>
 		{if $posList}
 			<tr>
@@ -55,8 +59,58 @@ $('#addform').validate({
 			integer:true
 		}
 	},messages:{
-		cat_id:{min:'请选择'}
+		cat_id:{min:'请选择'},url:{required:'请上传并选择默认图片'}
 	}
 });
 $('#addform select[name=cat_id]').staged('{link ctrl=category method=json type=picture}',{val:{$add.cat_id}});
+$("#jqFileUpload").uploadify({
+	'uploader': '{SKIN_URL}images/uploadify.swf',
+	'cancelImg': '{SKIN_URL}images/wrong.gif',
+	'script': '{SITE_FULL_URL}admin.php',
+	'scriptData': {ctrl:'picture',method:'upload',auth:'{$auth}'},
+	'method':'get',
+	'queueID':'jqFileUploadQueue',
+	'auto': true,
+	'multi': true,
+	'displayData': 'speed',
+	'fileDesc': 'Image(*.jpg;*.gif;*.png)',
+	'fileExt': '*.jpg;*.jpeg;*.gif;*.png',
+	onComplete: function (evt, queueID, fileObj, response, data) {
+		var msg;
+		try{
+			msg=window["eval"]("("+response+")");
+		}catch(e){
+			alert(response);
+		}
+		if(typeof(msg)=='string'){
+			alert('“'+fileObj.name+'”'+msg);
+		}else{
+			var p=$('<p/>').appendTo('#jqFileUploadResp');
+			$('<img height="30" style="cursor:pointer;border:2px white solid"/>').data('url',msg.url).click(function(){
+				$('#jqFileUploadResp img').css('borderColor','white');
+				$(this).css('borderColor','red');
+				$('#jqFileUpload').val($(this).data('url'));
+			}).attr('src',msg.src).appendTo(p);
+			var ipt=$('<input type="text" style="margin:0px 5px;" size="40"/>').appendTo(p);
+			ipt.attr('name','remarkes['+msg.img_id+']');
+			ipt.val(msg.remark);
+			ipt=$('<input type="text" size="4" style="margin-right:5px;"/>').appendTo(p);
+			ipt.attr('name','orderes['+msg.img_id+']');
+			ipt.val(0);
+			$('<a href="{link ctrl=picture method=drop.upload id=IMGID}"><img src="{SKIN_URL}images/wrong.gif"/></a>'.replace('IMGID',msg.img_id)).click(function(){
+				var jp=$(this).parent('p');
+				$.getJson(this.href,function(status){
+					if(status==true){
+						jp.remove();
+					}
+				});
+				return false;
+			}).appendTo(p);
+		}
+	},
+	onAllComplete:function(){
+		setTimeout(function(){$('#addform').getWindow().resize();},100);
+	}
+});
+
 </script>

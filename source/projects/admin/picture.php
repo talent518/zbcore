@@ -5,7 +5,7 @@ exit('Access Denied');
 class CtrlPicture extends CtrlBase{
 	var $id=0;
 	function __construct(){
-		parent::__construct();
+		parent::__construct(IN_METHOD=='onUpload');
 		$this->CtrlPicture();
 	}
 	function CtrlPicture(){
@@ -40,20 +40,25 @@ class CtrlPicture extends CtrlBase{
 			$data=array(
 				'cat_id'=>$_POST['cat_id'],
 				'title'=>$_POST['title'],
+				'url'=>$_POST['url'],
 				'posids'=>$_POST['posids'],
 				'remark'=>$_POST['remark'],
 				'order'=>$_POST['order'],
 			);
-			if(L('upload')->saveImage($_FILES['url'],'picture'))
-				$data['url']=L('upload')->url;
-			elseif(L('upload')->error)
-				$this->message(L('upload')->error);
-			if($this->mod->add($data))
+			if($this->mod->add($data)){
+				$idata=array();
+				$idata['pic_id']=$this->mod->id;
+				foreach($_POST['remarkes'] as $k=>$v){
+					$idata['remark']=$v;
+					$idata['order']=$_POST['orderes'][$k];
+					M('picture.image')->edit($k,$idata,false);
+				}
 				$this->message('提交成功',URL(array('ctrl'=>'picture','method'=>'list','id'=>$data['cat_id'])),true);
-			else
+			}else
 				$this->message($this->mod->error);
 		}else{
 			$this->setVar('add',array('cat_id'=>$this->id,'order'=>0));
+			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
 			$this->setVar('posList',$this->pmod->get_list());
 			$this->setVar('addhash',$this->formhash('add'));
 			$this->display('picture/add');
@@ -64,18 +69,19 @@ class CtrlPicture extends CtrlBase{
 			$data=array(
 				'cat_id'=>$_POST['cat_id'],
 				'title'=>$_POST['title'],
-				'url'=>$_POST['_url'],
+				'url'=>$_POST['url'],
 				'posids'=>$_POST['posids'],
 				'remark'=>$_POST['remark'],
 				'order'=>$_POST['order'],
 			);
-			if(L('upload')->saveImage($_FILES['url'],'picture'))
-				$data['url']=L('upload')->url;
-			elseif(L('upload')->error)
-				$this->message(L('upload')->error);
 			if($this->mod->edit($this->id,$data)){
-				if($_POST['_url'] && L('upload')->file)
-					@unlink(RES_UPLOAD_DIR.$_POST['_url']);
+				$idata=array();
+				$idata['pic_id']=$this->id;
+				foreach($_POST['remarkes'] as $k=>$v){
+					$idata['remark']=$v;
+					$idata['order']=$_POST['orderes'][$k];
+					M('picture.image')->edit($k,$idata,false);
+				}
 				$this->message('提交成功',URL(array('ctrl'=>'picture','method'=>'list','id'=>$data['cat_id'])),true);
 			}else
 				$this->message($this->mod->error);
@@ -83,6 +89,7 @@ class CtrlPicture extends CtrlBase{
 			if(!$edit=$this->mod->get($this->id))
 				$this->message('你要编辑的图片不存在！');
 			$this->setVar('edit',$edit);
+			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
 			$this->setVar('posList',$this->pmod->get_list());
 			$this->setVar('edithash',$this->formhash('edit'));
 			$this->display('picture/edit');
@@ -101,5 +108,38 @@ class CtrlPicture extends CtrlBase{
 			$this->display('picture/drop');
 		}else
 			$this->message('图片不存在！');
+	}
+	function onUpload(){
+		@list($uid,$password)=explode("|",decodestr(str_replace(' ','+',GET('auth'))));
+		$uid=intval($uid);
+		$password=addslashes($password);
+		$logined=($uid && $password && DB()->count('user',"`uid`=$uid AND `password`='$password'"));
+		if(!$logined)
+			$this->echoJson($uid.' '.$password.' 管理员没有登录，不允许上传！');
+
+		if(L('upload')->saveImage($_FILES['Filedata'],'picture')){
+			$data=array(
+				'url'=>L('upload')->url,
+				'size'=>$_FILES['Filedata']['size'],
+				//'type'=>$_FILES['Filedata']['type'],
+				'remark'=>$_FILES['Filedata']['name']
+			);
+			M('picture.image')->add($data);
+			$data['src']=RES_UPLOAD_URL.$data['url'];
+			$data['img_id']=DB()->insert_id();
+			$this->echoJson($data);
+		}else{
+			$this->echoJson(L('upload')->error?L('upload')->error:'没有文件被上传');
+		}
+	}
+	function onDropUpload(){
+		$return=false;
+		$id=GET('id')+0;
+		if($get=M('picture.image')->get($id)){
+			@unlink(RES_UPLOAD_DIR.$get['url']);
+			M('picture.image')->delete($id);
+			$return=true;
+		}
+		$this->echoJson($return);
 	}
 }

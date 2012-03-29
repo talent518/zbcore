@@ -223,9 +223,9 @@ function sprintf(){
 					$.debug(message.text(),{width:$(window).width()/2,height:$(window).height()/2});
 					return;
 				}
-				if(msg.function){
+				if(msg['function']){
 					try{
-						window["eval"]("(function(){"+msg.function+"})").call(msg);
+						window["eval"]("(function(){"+msg['function']+"})").call(msg);
 						return;
 					}catch(e){}
 				}

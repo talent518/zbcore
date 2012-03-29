@@ -4,6 +4,7 @@
 @import url(jquery-dialog.css);
 @import url(jquery-window.css);
 @import url(jquery-validate.css);
+@import url(jquery-uploadify.css);
 
 #loginForm{float:left;width:560px;padding:0px 20px;overflow:hidden;border:1px #d3d3d3 solid;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 .window-wrap #loginForm{border:none;}

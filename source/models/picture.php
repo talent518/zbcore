@@ -70,14 +70,14 @@ class ModelPicture extends ModelBase{
 			return false;
 		}
 
-		$this->rules['name']['query']=array('picture','id<>'.$id.' AND cat_id='.$data['cat_id'].' AND `title`=\''.$data['title'].'\'');
+		$this->rules['name']['query']=array('picture','pic_id<>'.$id.' AND cat_id='.$data['cat_id'].' AND `title`=\''.$data['title'].'\'');
 		$data['edittime']=TIMESTAMP;
 
 		if($this->check($data)){
 			$olds=explode(',',$picture['posids']);
 			$news=$data['posids'];
 			unset($data['posids']);
-			DB()->update('picture',$data,'id='.$id);
+			$this->update($data,'pic_id='.$id);
 			if($picture['cat_id']!=$data['cat_id']){
 				$pos=$this->mod->get($picture['cat_id']);
 				$ids=explode(',',$pos['pids']);
@@ -112,9 +112,12 @@ class ModelPicture extends ModelBase{
 		if($picture=$this->get($id)){
 			$pos=$this->mod->get($picture['cat_id']);
 			DB()->update('category',array('counts'=>'counts-1'),'cat_id in ('.($pos['pids']?$pos['pids'].',':'').$picture['cat_id'].')',false);
-			DB()->delete('picture','pic_id='.$id);
+			$this->delete('pic_id='.$id);
 			DB()->delete('picture_position','id='.$id);
-			@unlink(RES_UPLOAD_DIR.$picture['url']);
+			foreach(M('picture.image')->get_list_by_where('pic_id='.$id) as $r){
+				@unlink(RES_UPLOAD_DIR.$r['url']);
+			}
+			M('picture.image')->delete('pic_id='.$id);
 			if($picture['posids'])
 				DB()->update('position',array('counts'=>'counts-1'),'posid in ('.$picture['posids'].')',false);
 			return true;
@@ -125,7 +128,7 @@ class ModelPicture extends ModelBase{
 	}
 	function order($cat_id,$ids){
 		foreach($ids as $id=>$order){
-			DB()->update('picture',array('order'=>intval($order)),'id='.intval($id));
+			$this->update(array('order'=>intval($order)),'pic_id='.intval($id));
 		}
 	}
 

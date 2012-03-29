@@ -71,7 +71,7 @@ class ModelBase{
 		if($id<=0)
 			return false;
 		if($this->exists($id)==$id){
-			DB()->delete($this->table,($id+0));
+			$this->delete($id+0);
 			return true;
 		}else{
 			$this->error='信息不存在';

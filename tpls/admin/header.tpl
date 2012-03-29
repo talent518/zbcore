@@ -25,6 +25,8 @@
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-datepick_zh_CN.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-form.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-staged.js"></script>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}swfobject.js"></script>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-uploadify.js"></script>
 </head>
 <body>
 <div id="wpl">{/if}

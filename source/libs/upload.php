@@ -44,7 +44,7 @@ class LibUpload{
 				}
 				break;
 			case UPLOAD_ERR_INI_SIZE://1
-				$this->error='上传的文件超过了 php.ini 中 '.@ini_get('upload_max_filesize').' 选项限制的值';
+				$this->error='上传的文件超过了 '.@ini_get('upload_max_filesize').' 限制的值';
 				break;
 			case UPLOAD_ERR_FORM_SIZE://2
 				$maxfilesize=@ini_get('MAX_FILE_SIZE')?@ini_get('MAX_FILE_SIZE'):@ini_get('upload_max_filesize');

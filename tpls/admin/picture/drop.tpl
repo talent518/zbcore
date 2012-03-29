@@ -11,7 +11,14 @@
 					<th class="r">图片标题：</th><td class="l">{$picture.title|html}</td>
 				</tr>
 				<tr>
-					<th class="r">图片：</th><td class="l"><img src="{thumb RES_UPLOAD_DIR.$picture.url,100,100}"/></td>
+					<th class="r">图片：</th><td class="l">
+					{loop M('picture.image')->get_list_by_where('pic_id='.$id) $k $r}
+						<p>
+							<img src="{RES_UPLOAD_URL}{$r.url}" width="100" style="margin-right:5px;border:2px {if $r.url==$picture.url}red{else}white{/if} solid"/>
+							<span>{$r.remark}</span>
+						</p>
+					{/loop}
+					</td>
 				</tr>
 				<tr>
 					<th class="r">备注：</th><td class="l">{$picture.remark|html}</td>
