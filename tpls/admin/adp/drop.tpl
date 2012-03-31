@@ -5,7 +5,10 @@
 		<tr>
 			<td><table>
 				<tr>
-					<th class="r">广告位名称：</th><td class="l">{$pos.pname}</td>
+					<th class="r">标题：</th><td class="l">{$pos.ptitle}</td>
+				</tr>
+				<tr>
+					<th class="r">名称：</th><td class="l">{$pos.pname}</td>
 				</tr>
 				<tr>
 					<th class="r">类型：</th><td class="l">{if $pos.type=='html'}HTML{elseif $pos.type=='flash'}Flash{elseif $pos.type=='image'}图片{else}文本{/if}</td>

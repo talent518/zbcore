@@ -23,6 +23,10 @@
 				<td><input name="recommended" type="radio" value="1"/>是&nbsp;<input name="recommended" type="radio" value="0" checked/>否</td>
 			</tr>
 			<tr>
+				<th>来源：</th>
+				<td><input name="source" type="text" value="{$add.source|html}" size="4" /></td>
+			</tr>
+			<tr>
 				<th>排序：</th>
 				<td><input name="order" type="text" value="{$add.order}" size="4" /></td>
 			</tr>

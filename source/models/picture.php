@@ -1,5 +1,5 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelPicture extends ModelBase{
@@ -132,14 +132,14 @@ class ModelPicture extends ModelBase{
 		}
 	}
 
-	function &get($id=0){
-		return DB()->select(array(
+	function &get($id=0,$isPos=false){
+		return ($isPos?DB()->select(array(
 			'table'=>'picture s',
 			'field'=>'s.*,group_concat(p.posid) as `posids`',
 			'join'=>array('picture_position p'=>'s.pic_id=p.id'),
 			'group'=>'s.pic_id',
 			'where'=>'s.pic_id='.$id
-		),1);
+		),1):parent::get($id));
 	}
 	function &get_prev($id,$len=1){
 		$get=$this->get($id);
@@ -147,8 +147,7 @@ class ModelPicture extends ModelBase{
 			'table'=>'picture',
 			'field'=>'pic_id,title,url',
 			'where'=>'`order`>='.$get['order'].' AND pic_id>'.$id.' AND cat_id='.$get['cat_id'],
-			'order'=>'`order`,pic_id',
-			'limit'=>$len
+			'order'=>'`order`,pic_id'
 		),$len>1?SQL_SELECT_LIST:SQL_SELECT_ONLY);
 		return $len>1?array_reverse($list):$list;
 	}
@@ -158,8 +157,7 @@ class ModelPicture extends ModelBase{
 			'table'=>'picture',
 			'field'=>'pic_id,title,url',
 			'where'=>'`order`<='.$get['order'].' AND pic_id<'.$id.' AND cat_id='.$get['cat_id'],
-			'order'=>'`order` DESC,pic_id DESC',
-			'limit'=>$len
+			'order'=>'`order` DESC,pic_id DESC'
 		),$len>1?SQL_SELECT_LIST:SQL_SELECT_ONLY);
 		return $len>1?$list:$list;
 	}

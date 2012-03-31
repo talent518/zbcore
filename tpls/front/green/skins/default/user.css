@@ -1,0 +1,89 @@
+@import url(global.css);
+@import url(jquery-datepick.css);
+@import url(jquery-datepick_ui.css);
+@import url(jquery-dialog.css);
+@import url(jquery-window.css);
+@import url(jquery-validate.css);
+
+html,body{overflow:hidden;}
+
+#wpl{overflow:hidden;overflow-y:scroll;}
+
+.line10{clear:both;width:100%;height:10px;overflow:hidden;}
+
+.wp{margin:0px auto;width:978px;overflow:hidden;border:1px #b0d3ee solid;}
+#hd{height:50px;margin-top:5px;background:#f0f7ff url(images/ucenter_hd.gif) no-repeat;text-align:right;-moz-border-radius:5px 5px 0px 0px; -khtml-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; border-radius:5px 5px 0px 0px;}
+#hd p{padding-right:20px;line-height:50px;font-size:14px;border-bottom:none;}
+#wp{-moz-border-radius:0px 0px 5px 5px; -khtml-border-radius:0px 0px 5px 5px; -webkit-border-radius:0px 0px 5px 5px; border-radius:0px 0px 5px 5px;}
+.bwp{width:100%;overflow:hidden;background:url(images/nav_bg.gif) repeat-y;}
+#ft{height:30px;background:white;text-align:center;line-height:30px;font-size:14px;}
+
+#loading{position:fixed;_position:absolute;z-index:9999;height:58px;line-height:58px;overflow:hidden;padding:0px 0px 0px 40px;background:url(images/loading.gif) left center no-repeat;font-size:20px;font-weight:bold;color:#419639;}
+
+#loginForm{margin:150px auto;width:560px;overflow:hidden;padding:0px 20px;overflow:hidden;border:1px #d3d3d3 solid;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.window-wrap #loginForm{border:none;}
+#loginForm ul{float:left;width:300px;overflow:hidden;padding-right:30px;background:url(images/bg_login.gif) right center no-repeat;}
+#loginForm h1{height:50px;background:url(images/login_title.gif) left bottom no-repeat;text-indent:-1000em;}
+#loginForm li{padding-top:10px;padding-bottom:30px;line-height:20px;text-indent:2em;}
+#loginForm dl{float:left;width:225px;overflow:hidden;padding:25px 0px;font-size:14px;}
+#loginForm dd{line-height:30px;height:30px;padding:5px 0px;}
+#loginForm dd.ipt input{width:160px;height:28px;margin:0px;}
+#loginForm dd.ipt img{margin-left:10px;}
+
+.head{padding:15px 20px;background:#f0f7ff;border-bottom:1px #b0d3ee solid;color:#444;overflow:hidden;}
+h1.head{padding:10px 15px;font-size:14px;color:#369;}
+h1.head a{float:right;}
+
+dl.base{margin-bottom:-1px;width:100%;overflow:hidden;}
+dl.base a{color:blue;}
+dl.base dt{clear:both;padding:0px 20px;line-height:30px;color:#09f;font-size:14px;font-weight:bold;border-bottom:1px #b0d3ee dotted;}
+dl.base dt a{float:right;color:blue;}
+dl.base dd{clear:both;overflow:hidden;padding:5px 20px;line-height:25px;border-bottom:1px #b0d3ee solid;}
+dl.base dd p{float:left;width:50%;overflow:hidden;}
+dl.base dd.info{padding:5px 0px;}
+dl.base dd.info p{padding:0px 20px;float:none;width:auto;border-bottom:1px #e7e7e7 dotted}
+
+.formtable{clear:both;overflow:hidden;padding:10px;}
+.formtable table{width:100%;border:1px #e7e7e7 solid;border-collapse:collapse;margin-bottom:5px;}
+.formtable th,.formtable td{padding:8px;border:1px #d8ecff solid;border-collapse:collapse;}
+.formtable caption{margin-bottom:5px;height:30px;overflow:hidden;border:1px #acce8e solid;background:url(images/backgrounds.gif) left -275px repeat-x;line-height:30px;text-indent:10px;text-align:left;color:#acce8e;}
+.formtable th{color:#444;white-space:nowrap;}
+.formtable tbody th{width:80px;text-align:right;vertical-align:top;line-height:24px;}
+.formtable .hide{border-right:1px #fff solid;}
+.formtable td.active{font-size:14px;font-weight:bold;background:#ecf5ff;}
+.formtable td.active a{color:#F60;}
+.formtable input{margin:0px;}
+
+.formtable table.list th,.formtable table.list td{text-align:center;white-space:nowrap;}
+.formtable table.list thead{background:url(images/backgrounds.gif) left -240px repeat-x;}
+.formtable table.list tbody{background:#f4f9ff;}
+.formtable table.list tfoot{background:#ecf5ff;}
+.formtable table.list tr.even{}
+.formtable table.list tr.odd{background:#fff;}
+
+.formtable .l{text-align:left!important;}
+.formtable .c{text-align:center!important;}
+.formtable .r{text-align:right!important;}
+.formtable .t{vertical-align:top!important;}
+.formtable .m{vertical-align:middle!important;}
+.formtable .b{vertical-align:bottom!important;}
+
+#registerForm{margin:50px auto;width:600px;overflow:hidden;}
+#registerForm th{font-size:14px;}
+#registerForm h1{height:50px;background:url(images/login_title.gif) 2.2em bottom no-repeat;text-indent:-1000em;}
+#registerForm h2{color:#08c;padding:10px 0px 5px;}
+#registerForm p{text-indent:2em;line-height:18px;}
+#registerForm b{color:#F60;}
+
+#nv{float:left;width:159px;overflow:hidden;}
+#nv h3{height:30px;line-height:30px;background:url(images/backgrounds.gif) left -240px repeat-x;color:#333;font-weight:normal;}
+#nv h3 span{display:block;text-indent:30px;background:url(images/icons.gif) 10px -270px no-repeat;}
+#nv h3 span.recent{background:url(images/icons.gif) 10px -175px no-repeat;}
+#nv p{height:25px;overflow:hidden;border-bottom:1px #d8ecff solid;background:#f4f9ff url(images/icons.gif) 15px -220px no-repeat;line-height:25px;text-indent:28px;}
+#nv p a{display:block;}
+#nv p em{position:relative;z-index:1;float:right;margin:8px;width:9px;height:9px;overflow:hidden;}
+#nv p em a{text-indent:-10em;background:url(images/icons.gif) left -245px no-repeat;}
+#nv p.active{font-weight:bold;background-color:white;}
+#nv p.active a{color:#333;}
+
+#bd{float:right;width:818px;overflow:hidden;}

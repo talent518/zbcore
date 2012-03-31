@@ -1,10 +1,11 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelAd extends ModelBase{
 	protected $table='ad';
 	protected $priKey='id';
+	protected $forKey='pid';
 	protected $order='`order` DESC';
 	protected $rules=array(
 		'pid'=>array(
@@ -16,9 +17,15 @@ class ModelAd extends ModelBase{
 			'required'=>true,
 			'integer'=>true
 		),
+		'title'=>array(
+			'required'=>true,
+			'maxlength'=>50,
+			'chinese'=>true,
+		),
 		'name'=>array(
 			'required'=>true,
 			'maxlength'=>50,
+			'english'=>true,
 		),
 		'code'=>array(
 			'check'=>array(
@@ -64,7 +71,7 @@ class ModelAd extends ModelBase{
 			'integer'=>true
 		),
 		'expired'=>array(
-			'required'=>true,
+			//'required'=>true,
 			'date'=>true
 		),
 		'order'=>array(
@@ -81,9 +88,15 @@ class ModelAd extends ModelBase{
 			'required'=>'所属地区不能为空',
 			'integer'=>'所属地区不是一个整数'
 		),
+		'title'=>array(
+			'required'=>'广告名称不能为空',
+			'maxlength'=>'广告名称字数不能超过{0}个字',
+			'chinese'=>'广告标题只能包括中文和英文、数字和非特殊符号',
+		),
 		'name'=>array(
 			'required'=>'广告名称不能为空',
 			'maxlength'=>'广告名称字数不能超过{0}个字',
+			'english'=>'广告名称只能包括英文字母、数字和非特殊符号',
 			'query'=>'在同级广告位中广告“{0}”已存在',
 		),
 		'code'=>array(
@@ -190,7 +203,16 @@ class ModelAd extends ModelBase{
 			$data['code']=(unserialize($data['code'])?unserialize($data['code']):$data['code']);
 		return $data;
 	}
-	function show($adp,$ad){
+	function show($id,$isCode=true){
+		$ad=(is_int($id)?$this->get($id):$this->get_by_where('`name`=\''.addslashes($id).'\''));
+		if($isCode){
+			$adp=M('adp')->get($ad['pid']);
+			return $this->get_code($adp,$ad);
+		}else{
+			return $ad;
+		}
+	}
+	function get_code($adp,$ad){
 		$html='';
 		@extract($adp);
 		@extract($ad);
@@ -209,7 +231,7 @@ class ModelAd extends ModelBase{
 					$code['text']='<em>'.$code['text'].'</em>';
 				if($code['bold'])
 					$code['text']='<b>'.$code['text'].'</b>';
-				$html='<p><a href="'.$code['url'].'" title="'.$text.'">'.$code['text'].'</a></p>';
+				$html='<a href="'.$code['url'].'" title="'.$text.'">'.$code['text'].'</a>';
 				break;
 			case 'html':
 				$html=$code;

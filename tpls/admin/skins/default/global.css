@@ -43,7 +43,5 @@ button,input.button,input[type=submit],input[type=button]{cursor:pointer;border:
 
 .focusb{color:#000;}
 .fblur{color:#999;}
-.fbtrue{color:green;border-color:green;}
-.fbfalse{color:red;border-color:red;}
 
 #loading{position:fixed;_position:absolute;z-index:9999;height:58px;line-height:58px;overflow:hidden;padding:0px 0px 0px 40px;background:url(images/loading.gif) left center no-repeat;font-size:20px;font-weight:bold;color:#419639;}

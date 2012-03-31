@@ -1,11 +1,11 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlPicture extends CtrlBase{
 	var $id=0;
 	function __construct(){
-		parent::__construct(IN_METHOD=='onUpload');
+		parent::__construct(IN_METHOD=='upload');
 		$this->CtrlPicture();
 	}
 	function CtrlPicture(){
@@ -13,7 +13,6 @@ class CtrlPicture extends CtrlBase{
 		$this->setVar('id',$this->id);
 		$this->cmod=M('category');
 		$this->mod=M('picture');
-		$this->pmod=M('position');
 	}
 	function onIndex(){
 		$this->onList();
@@ -59,7 +58,7 @@ class CtrlPicture extends CtrlBase{
 		}else{
 			$this->setVar('add',array('cat_id'=>$this->id,'order'=>0));
 			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
-			$this->setVar('posList',$this->pmod->get_list());
+			$this->setVar('posList',M('position')->get_list_by_where());
 			$this->setVar('addhash',$this->formhash('add'));
 			$this->display('picture/add');
 		}
@@ -86,11 +85,11 @@ class CtrlPicture extends CtrlBase{
 			}else
 				$this->message($this->mod->error);
 		}else{
-			if(!$edit=$this->mod->get($this->id))
+			if(!$edit=$this->mod->get($this->id,true))
 				$this->message('你要编辑的图片不存在！');
 			$this->setVar('edit',$edit);
 			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
-			$this->setVar('posList',$this->pmod->get_list());
+			$this->setVar('posList',M('position')->get_list_by_where());
 			$this->setVar('edithash',$this->formhash('edit'));
 			$this->display('picture/edit');
 		}

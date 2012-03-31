@@ -1,6 +1,13 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
+
+define('ZBC_NAME','ZBCore');
+define('ZBC_VERSION','1.0.0');
+define('ZBC_RELEASE','20120331');
+define('ZBC_DESCRIBE','<b>ZBCore</b>是一个简易<b>PHP框架</b>,<b>CMS系统</b>，适用于小中型站点的架设。<br/><b>功能包括：</b>广告，友情链接，栏目（单页，文章和图片），基本用户登录、注册与管理，邮件发送（注册，验证和改密码），可定制模板（后台，前台和邮件），完全Ajax技术(jQuery)，PHP采用MVC+LIB模式开发。');
+define('ZBC_AUTHOR','abao');
+define('ZBC_SITE','http://www.zbcore.com/');
 
 class ZBCore{
 	private $isEchoPaged=false,$isAutoEchoPage=false;
@@ -15,20 +22,7 @@ class ZBCore{
 		$tpl->timeout=CFG()->timeout;
 		$tpl->isEncrypt=CFG()->isEncrypt;
 		$tpl->isCheckTpl=!CFG()->isServiceMode;
-		$tpl->setVar('version',$this->version());
 		$tpl->setVar('charset',CFG()->charset);
-	}
-
-	function &version(){
-		return array(
-			'name'=>'ZBCore',
-			'number'=>'1.0.0',
-			'release'=>'20110118',
-			'describe'=>'ZBCore是一个简易PHP框架。',
-			'author'=>'abao',
-			'copyright'=>'ZBCore',
-			'link'=>'http://www.zbcore.com/'
-		);
 	}
 
 	//判断提交是否正确
@@ -65,7 +59,7 @@ class ZBCore{
 
 	function display($tpl,$cache='',$html=false){
 		$this->isAutoEchoPage=true;
-		L('template')->display($tpl,$cache,$html);
+		L('template')->display($tpl,$cache,CFG()->isServiceMode && $html);
 	}
 
 	function message($message,$backurl='',$status=false,$timeout=3){

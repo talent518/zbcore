@@ -103,19 +103,21 @@
 			</ol>
 		</ul>
 	</div>
-	<div id="bd">
-	</div>
+	<div id="bd"></div>
 </div>
 <script type="text/javascript" src="{RES_URL}ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="{RES_URL}ckeditor/adapters/jquery.js"></script>
 <script type="text/javascript" src="{RES_URL}ckfinder/ckfinder.js"></script>
 <script type="text/javascript">
-$('#nv a:not(.add)').click(function(){
+var bas=$('#nv a:not(.add)');
+bas.click(function(){
+	var i=bas.index(this);
+	location.hash=location.hash.split(':')[0]+':'+i;
 	$('#bd').load(this.href);
 	$('#nv li').removeClass('active');
 	$(this).parent('li').addClass('active');
 	return false;
-}).eq(0).click();
+});
 $('#nv a.add').window();
 
 var hda=$('#hd ul a').each(function(i){
@@ -124,10 +126,12 @@ var hda=$('#hd ul a').each(function(i){
 		$('#nv ul').hide().eq(i).show();
 	});
 });
-if(hda.is('[href="'+location.hash+'"]')){
-	hda.filter('[href="'+location.hash+'"]').click();
-}else{
+var hashs=location.hash.split(':');
+if(!hda.filter('[href="'+hashs[0]+'"]').click().size()){
 	hda.eq(0).click();
+}
+if(!bas.eq(hashs[1]).click().size()){
+	bas.eq(0).click();
 }
 
 $(window).resize(function(){

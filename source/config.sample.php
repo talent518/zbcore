@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 class Config{
@@ -16,7 +16,10 @@ class Config{
 
 	var $charset		= 'utf-8';		//页面字符集(可选 'gbk', 'big5', 'utf-8')
 	var $isGziped 		= TRUE;			//启用gzip
-	var $urlFormat		= 'base';	//url格式化('base','phpinfo','rewrite','html')
+	var $urlFormat		= 'base';		//url格式化('base','phpinfo','rewrite')
+
+	var $urlSuffix		= '.html';		//URL后缀
+	var $shortUrlSuffix	= '.shtml';		//短URL后缀
 
 	var $isCookie		= TRUE;
 	var $isServiceMode	= FALSE;

@@ -16,7 +16,7 @@
 		<div class="stepstatbg stepstat2"></div>
 	</div>
 </div>
-<form id="cfgForm" class="formtable" action="{link method=cfg}" method="post">
+<form id="cfgForm" class="formtable" action="install.php?method=cfg" method="post">
 	<table class="base">
 		<caption>数据库配置</caption>
 		<tbody>
@@ -92,7 +92,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<center><button onclick="location.href='{link method=index}'">上一步</button><button type="submit" value="1">下一步</button></center>
+	<center><button onclick="location.href='install.php?method=index'">上一步</button><button type="submit" value="1">下一步</button></center>
 	<script type="text/javascript">
 	$('#cfgForm').validate({
 		rules:{

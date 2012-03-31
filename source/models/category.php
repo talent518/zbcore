@@ -1,5 +1,5 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelCategory extends ModelBase{
@@ -55,7 +55,10 @@ class ModelCategory extends ModelBase{
 
 	function add(&$data){
 		$this->rules['cat_name']['query']=array('category','pid='.$data['pid'].' AND cat_name=\''.$data['cat_name'].'\'');
-
+		$cache=L('cache');
+		$cache->dir='';
+		$cache->name='category_id_tree';
+		$cache->drop();
 		return parent::add($data);
 	}
 	function edit($id,&$data){
@@ -71,6 +74,10 @@ class ModelCategory extends ModelBase{
 				$cat_ids=$this->get_child($id);
 				$this->update(array('ctype'=>$data['ctype'],'ctpl'=>$data['ctpl']),$this->priKey.' in ('.iimplode($cat_ids).')');
 			}
+			$cache=L('cache');
+			$cache->dir='';
+			$cache->name='category_id_tree';
+			$cache->drop();
 			return true;
 		}
 		return false;
@@ -82,6 +89,10 @@ class ModelCategory extends ModelBase{
 			$this->delete($this->priKey.' in('.iimplode($cat_ids).')');
 			if($count>0 && $cat['pid']>0)
 				$this->update(array('counts'=>'counts-'.$count),$this->priKey.' in ('.$cat['pids'].')',false);
+			$cache=L('cache');
+			$cache->dir='';
+			$cache->name='category_id_tree';
+			$cache->drop();
 			return true;
 		}else{
 			$this->error='栏目不存在！';
@@ -161,7 +172,7 @@ class ModelCategory extends ModelBase{
 		return $pos;
 	}
 	function &get_child($id,$list=false){
-		$tree=$this->get_tree('id');
+		$tree=$this->get_id_by_tree();
 		if(!is_array($list))
 			$list=array($id);
 		if($tree[$id]){
@@ -182,6 +193,13 @@ class ModelCategory extends ModelBase{
 		if(!isset($ids[$id]))
 			$ids[$id]=parent::get($id);
 		return $ids[$id];
+	}
+	function get_id_by_tree(){
+		$cache=L('cache');
+		$cache->dir='';
+		$cache->name='category_id_tree';
+		$cache->callback=array(&$this,'get_tree',array('id'));
+		return $cache->get();
 	}
 	function &get_tree($key='',$type=''){
 		static $trees;

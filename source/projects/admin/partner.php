@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlPartner extends CtrlBase{
@@ -57,7 +57,7 @@ class CtrlPartner extends CtrlBase{
 			$data=array(
 				'name'=>$_POST['name'],
 				'url'=>$_POST['url'],
-				'logo'=>$_POST['logo'],
+				'logo'=>$_POST['_logo'],
 				'description'=>$_POST['description'],
 				'order'=>$_POST['order'],
 			);

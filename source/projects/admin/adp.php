@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlAdp extends CtrlBase{
@@ -31,6 +31,7 @@ class CtrlAdp extends CtrlBase{
 	function onAdd(){
 		if($this->is_submit('add')){
 			$data=array(
+				'ptitle'=>$_POST['ptitle'],
 				'pname'=>$_POST['pname'],
 				'type'=>$_POST['type'],
 				'size'=>$_POST['size'],
@@ -50,6 +51,7 @@ class CtrlAdp extends CtrlBase{
 	function onEdit(){
 		if($this->is_submit('edit')){
 			$data=array(
+				'ptitle'=>$_POST['ptitle'],
 				'pname'=>$_POST['pname'],
 				'type'=>$_POST['type'],
 				'size'=>$_POST['size'],

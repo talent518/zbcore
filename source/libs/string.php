@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 define('STRING_RAND_EN',1);

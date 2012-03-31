@@ -11,8 +11,10 @@
 #loginForm ul{float:left;width:300px;overflow:hidden;padding-right:30px;background:url(images/bg_login.gif) right center no-repeat;}
 #loginForm h1{height:50px;background:url(images/login_title.gif) left bottom no-repeat;text-indent:-1000em;}
 #loginForm li{padding-top:10px;padding-bottom:30px;line-height:20px;text-indent:2em;}
-#loginForm dl{float:left;overflow:hidden;padding:30px 0px;font-size:14px;}
-#loginForm dd{line-height:30px;height:30px;margin:5px 0px;}
+#loginForm dl{float:left;width:225px;overflow:hidden;padding:25px 0px;font-size:14px;}
+#loginForm dd{line-height:30px;height:30px;padding:5px 0px;}
+#loginForm dd.ipt input{width:160px;height:28px;margin:0px;}
+#loginForm dd.ipt img{margin-left:10px;}
 
 #message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 #message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;-moz-border-radius:5px 5px 0px 0px;-khtml-border-radius:5px 5px 0px 0px;-webkit-border-radius:5px 5px 0px 0px;border-radius:5px 5px 0px 0px;}

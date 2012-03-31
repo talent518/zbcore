@@ -1,5 +1,5 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlArticle extends CtrlBase{
@@ -36,6 +36,7 @@ class CtrlArticle extends CtrlBase{
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
+				'source'=>$_POST['source'],
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);
@@ -56,6 +57,7 @@ class CtrlArticle extends CtrlBase{
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
+				'source'=>$_POST['source'],
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);

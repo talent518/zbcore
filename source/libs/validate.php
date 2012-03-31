@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 /*
 @desc 批量数据验证
@@ -251,7 +251,7 @@ class LibValidate{
 	//URL地址
 	function url($data){
 		if(!$this->required($data)) return true;
-		return preg_match("/^http[s]?://[a-z\-_0-9\.]+([a-z0-9]+)+.*$/i",$data);
+		return preg_match("/^(https?|ftp|rtsp|mms|gopher|mailto|ed2k|thunder|flashget|news):\/\/[a-z\-_0-9\.]+([a-z0-9]+)+.*$/i",$data);
 	}
 
 	//日期时间

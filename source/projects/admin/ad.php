@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlAd extends CtrlBase{
@@ -35,6 +35,7 @@ class CtrlAd extends CtrlBase{
 			$data=array(
 				'pid'=>$_POST['pid'],
 				'aid'=>$_POST['aid'],
+				'title'=>$_POST['title'],
 				'name'=>$_POST['name'],
 				'code'=>$_POST['code'][$_POST['type']],
 				'enable'=>$_POST['enable'],
@@ -73,6 +74,7 @@ class CtrlAd extends CtrlBase{
 			$data=array(
 				'pid'=>$_POST['pid'],
 				'aid'=>$_POST['aid'],
+				'title'=>$_POST['title'],
 				'name'=>$_POST['name'],
 				'code'=>$_POST['code'][$_POST['type']],
 				'enable'=>$_POST['enable'],

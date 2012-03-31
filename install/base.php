@@ -1,6 +1,6 @@
 <?php
-if(!defined('IN_SITE'))
-exit('Access Denied');
+if(!defined('IN_ZBC'))
+	exit('Access Denied');
 
 class CtrlBase extends ZBCore{
 	function __construct(){

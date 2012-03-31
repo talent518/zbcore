@@ -10,6 +10,10 @@
 				<td><select name="aid"></select></td>
 			</tr>
 			<tr>
+				<th>广告标题：</th>
+				<td><input name="title" type="text" value="{$edit.title|html}" size="20" /></td>
+			</tr>
+			<tr>
 				<th>广告名称：</th>
 				<td><input name="name" type="text" value="{$edit.name|html}" size="20" /></td>
 			</tr>
@@ -69,7 +73,7 @@
 			</tr>
 			<tr>
 				<th>过期时间：</th>
-				<td><input name="expired" type="text" value="{date 'Y-m-d',$edit.expired}" size="10" /></td>
+				<td><input name="expired" type="text" value="{if $edit.expired}{date 'Y-m-d',$edit.expired}{/if}" size="10" /></td>
 			</tr>
 			<tr>
 				<th>排序：</th>
@@ -100,7 +104,7 @@ $('#editform').validate({
 		name:{
 			required:true,
 			maxlength:50,
-			chinese:true
+			english:true
 		},
 		'code[html]':{
 			required:function(elem){
@@ -154,7 +158,7 @@ $('#editform').validate({
 			custom:/^((#[a-fA-F0-9]{3,6})|([a-zA-Z]+))$/
 		},
 		expired:{
-			required:true,
+			required:false,
 			dateISO:true
 		},
 		order:{
@@ -173,7 +177,7 @@ $('#editform').validate({
 	}
 });
 $('#editform tbody.type').hide();
-$('#editform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$edit.pid},isStaged:false,keyName:'pname',change:function(pos){
+$('#editform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$edit.pid},isStaged:false,keyName:'ptitle',change:function(pos){
 	$('#editform tbody.type').hide();
 	if(pos){
 		if(pos.size)
@@ -182,7 +186,8 @@ $('#editform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$edit.
 	}else{
 		$('#editform input[name=type]').val('');
 	}
-	$('#editform').required().getWindow().resize();
+	$('#editform').required();
+	$('#editform').getWindow().resize();
 }});
 $('#editform select[name=aid]').staged('{link ctrl=area method=json}',{val:{$edit.aid}});
 </script>

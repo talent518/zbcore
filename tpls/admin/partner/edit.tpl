@@ -11,7 +11,7 @@
 			</tr>
 			<tr>
 				<th>LOGO：</th>
-				<td><input name="logo" type="file" value="" size="28" /><input name="logo" type="hidden" value="{$edit.logo|html}"/></td>
+				<td><input name="logo" type="file" value="" size="28" /><input name="_logo" type="hidden" value="{$edit.logo|html}"/></td>
 			</tr>
 			<tr>
 				<th>描述：</th>

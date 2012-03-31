@@ -34,5 +34,5 @@
 	<p>有关 ABCMS 最终用户授权协议、商业授权与技术服务的详细内容，均由 ABCMS 官方网站独家提供。郑州知深教育咨询有限公司拥有在不事先通知的情况下，修改授权协议和服务价目表的权力，修改后的协议或价目表对自改变之日起的新授权用户生效。</p>
 	<p>电子文本形式的授权协议如同双方书面签署的协议一样，具有完全的和等同的法律效力。您一旦开始安装 ABCMS，即被视为完全理解并接受本协议的各项条款，在享有上述条款授予的权力的同时，受到相关的约束和限制。协议许可范围以外的行为，将直接违反本授权协议并构成侵权，我们有权随时终止授权，责令停止损害，并保留追究相关责任的权力。</p>
 </div>
-<center><button onclick="location.href='{link method=chkenv}'">我同意</button><button onclick="window.close();">我不同意</button></center>
+<center><button onclick="location.href='install.php?method=chkenv'">我同意</button><button onclick="window.close();">我不同意</button></center>
 {template footer}

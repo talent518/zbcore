@@ -166,29 +166,33 @@ function sprintf(){
 		return this;
 	};
 	$.fn.fblur=function(warn){
-		$(this).data('warn',warn).blur(function(){
+		var $this=$(this);
+		if(!$this.is('textarea,input') || ($this.attr('type')!='text' && $this.attr('type')!='password')){
+			return this;
+		}
+		if($this.data('fblur')){
+			$this.data('fblur').val(warn);
+			return this;
+		}
+		var ipt=String($this.clone().val('').get(0).outerHTML).replace(/type\=\".+?\"/,'type="text"');
+		var fblur=$(ipt).insertBefore(this);
+		$this.hide().data('fblur',fblur).addClass('focusb');
+		fblur.removeAttr('id');
+		fblur.removeAttr('name');
+		fblur.addClass('fblur');
+		fblur.css({cursor:'pointer'});
+		fblur.attr('title',warn);
+		fblur.val(warn);
+		fblur.focus(function(){
+			fblur.hide();
+			$this.show().focus();
+		});
+		$this.blur(function(){
 			var val=$(this).val();
 			if(val=='' || val==undefined){
-				$(this).val($(this).data('warn'));
+				$this.hide();
+				fblur.show();
 			}
-			$(this).removeClass('focusb fbtrue fbfalse').addClass('fblur');
-		}).focus(function(){
-			if($(this).val()==$(this).data('warn')){
-				$(this).val('');
-			}
-			$(this).removeClass('fblur fbtrue fbfalse').addClass('focusb');
-		}).blur();
-		$(this.form).unbind('submit.fblur').bind('submit.fblur',function(){
-			var $return=true;
-			$('.focusb,.fblur,.fbtrue,.fbfalse',this).each(function(){
-				if($(this).val()==$(this).data('warn')){
-					$(this).removeClass('focusb fblur fbtrue').addClass('fbfalse');
-					$return=false;
-				}else{
-					$(this).removeClass('focusb fblur fbfalse').addClass('fbtrue');
-				}
-			});
-			return $return;
 		});
 		return this;
 	};
@@ -241,6 +245,7 @@ function sprintf(){
 						else if(msg.backurl.length>0)
 							location.href=msg.backurl;
 					});
+					setTimeout($.dialog.hide,3000);
 				}else{
 					$.dialog.error(msg.message,function(){
 						if($.isFunction(callback))

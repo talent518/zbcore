@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 class LibTemplate{
@@ -134,7 +134,7 @@ class LibTemplate{
 		return $list;
 	}
 	private function with($content,$html=false){
-		return '<?php if(!defined("IN_SITE")) exit("Access Denied");'.($this->isCheckTpl?'if(!$this->checkSubTpl(\''.implode('|', $this->subTpls).'\','.TIMESTAMP.','.($html?'true':'false').')){ ':'').(($this->html && !$html)?'$this->subTpls='.var_export($this->subTpls,true).';$this->php_i='.$this->php_i.';$this->php_searchs='.var_export($this->php_searchs,true).';$this->php_replaces='.var_export($this->php_replaces,true).';':'').'?>'.$content.($this->isCheckTpl?'<?php } ?>':'');
+		return '<?php if(!defined("IN_ZBC")) exit("Access Denied");'.($this->isCheckTpl?'if(!$this->checkSubTpl(\''.implode('|', $this->subTpls).'\','.TIMESTAMP.','.($html?'true':'false').')){ ':'').(($this->html && !$html)?'$this->subTpls='.var_export($this->subTpls,true).';$this->php_i='.$this->php_i.';$this->php_searchs='.var_export($this->php_searchs,true).';$this->php_replaces='.var_export($this->php_replaces,true).';':'').'?>'.$content.($this->isCheckTpl?'<?php } ?>':'');
 	}
 	private function parse(){
 		$this->init();
@@ -169,7 +169,11 @@ class LibTemplate{
 		$template = preg_replace("/\{date\s+(.+?)\}/e", "\$this->varPregTags('<?=sgmdate(\\1)?>')", $template);
 		$template = preg_replace("/\{thumb\s+(.+?)\}/e", "\$this->varPregTags('<?=thumb(\\1)?>')", $template);
 
-		$template = preg_replace("/\{ad\s+(.+?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\\1)?>')", $template);
+		$template = preg_replace("/\{ad\s+(.+?)\}/e", "\$this->varPregTags('<?=M(\\'ad\\')->show(\\1)?>')", $template);
+		$template = preg_replace("/\{ad:(.+?)\}/e", "\$this->varPregTags('<?=M(\\'ad\\')->show(\"\\1\")?>')", $template);
+		$template = preg_replace("/\{adp\s+(.+?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\\1)?>')", $template);
+		$template = preg_replace("/\{adp:(.+?)\|(.+?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\"\\1\",\"\\2\")?>')", $template);
+		$template = preg_replace("/\{adp:([^\|]?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\"\\1\")?>')", $template);
 		$template = preg_replace("/\{link\s+(.+?)\}/e", "\$this->linkTags('\\1')", $template);
 
 		//变量
@@ -294,6 +298,7 @@ class LibTemplate{
 				$funcs++;
 			$name=preg_replace('/[^a-z0-9_]+/i','',$this->tpl).$funcs;
 		}
+		$code = str_replace('\\"','"',$code);
 		$code = preg_replace("/\{callback\s+(.+?)\}/es", "\$this->varPregTags('<?php {$name}(\\1); ?>')", $code);
 		$this->func_i++;
 		$this->func_searchs[$this->func_i] = '<!--FUNC_BEGIN_TAG_'.$this->func_i.'-->';

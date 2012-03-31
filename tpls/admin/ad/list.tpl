@@ -12,7 +12,7 @@
 			<tr>
 			{$i=0;}
 			{loop $poslist $r}
-				<td width="12.5%"{if $r.pid==$id} class="active"{/if}><a href="{link ctrl=ad method=list id=$r.pid}" class="list">{$r.pname}</a></td>
+				<td width="12.5%"{if $r.pid==$id} class="active"{/if}><a href="{link ctrl=ad method=list id=$r.pid}" class="list">{$r.ptitle}</a></td>
 				{if ($i++)%8==9}
 				</tr><tr>
 				{/if}
@@ -30,7 +30,8 @@
 			<tr>
 				<th>排序</th>
 				<th>ID</th>
-				<th class="l" width="100%">网站名称</th>
+				<th class="l" width="100%">标题</th>
+				<th class="l">调用代码</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -44,7 +45,8 @@
 					<input name="_ids[{$r.id}]" type="hidden" value="{$r.order}"/>
 				</td>
 				<td>{$r.id}</td>
-				<td class="l">{$r.name}</td>
+				<td class="l">{$r.title}</td>
+				<td class="l">{ad&nbsp;{$r.id}},&#123;ad:{$r.name}}</td>
 				<td>
 					<a href="{link ctrl=ad method=show id=$r.id}" target="_blank" title="预览广告">预览</a>
 					<span class="split">|</span>

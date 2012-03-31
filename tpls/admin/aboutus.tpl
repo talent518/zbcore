@@ -6,11 +6,11 @@
 	</dd>
 	<dt>功能说明</dt>
 	<dd class="info">
-		<p>　　{$version.describe}</p>
+		<p>　　{ZBC_DESCRIBE}</p>
 	</dd>
 	<dt>相关声明</dt>
 	<dd class="info">
-		<p><a href="http://zbcore.com/" target="_blank">ZBCore</a> 拥有 ZBCore 的所有版权</p>
+		<p><a href="{ZBC_SITE}" target="_blank">{ZBC_NAME}</a> 拥有 {ZBC_AUTHOR} 的所有版权</p>
 		<p>本项目引用了以下开源项目 :  jQuery，jQuery UI，jQuery Validate，jQuery Datepick，PHPMailer等。原作者拥有其所有版权</p>
 	</dd>
 </dl>

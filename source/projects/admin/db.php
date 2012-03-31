@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 define('DB_CACHE_DIR',CACHE_DIR.'db'.DIR_SEP);

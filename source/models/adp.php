@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelAdp extends ModelBase{
@@ -7,18 +7,31 @@ class ModelAdp extends ModelBase{
 	protected $priKey='pid';
 	protected $order='`porder` DESC';
 	protected $rules=array(
+		'ptitle'=>array(
+			'required'=>true,
+			'chinese'=>true,
+			'maxlength'=>20,
+		),
 		'pname'=>array(
 			'required'=>true,
+			'english'=>true,
 			'maxlength'=>20,
+			'query'=>'adp',
 		),
 		'porder'=>array(
 			'integer'=>true
 		),
 	);
 	protected $messages=array(
+		'ptitle'=>array(
+			'required'=>'标题不能为空',
+			'maxlength'=>'标题字数不能超过{0}个字',
+			'chinese'=>'标题只能包括中文和英文、数字和非特殊符号',
+		),
 		'pname'=>array(
-			'required'=>'广告位名称不能为空',
-			'maxlength'=>'广告位名称字数不能超过{0}个字',
+			'required'=>'名称不能为空',
+			'maxlength'=>'名称字数不能超过{0}个字',
+			'english'=>'名称只能包括英文字母、数字和非特殊符号',
 			'query'=>'广告位“{0}”已存在',
 		),
 		'porder'=>array(
@@ -26,38 +39,13 @@ class ModelAdp extends ModelBase{
 		),
 	);
 	function add(&$data){
-		$this->rules['pname']['query']=array('adp','pname=\''.$data['pname'].'\'');
 		$data['size']=serialize($data['size']);
-
-		if($this->check($data)){
-			DB()->insert('adp',$data);
-			return true;
-		}
-		return false;
+		return parent::add($data);
 	}
 	function edit($id,&$data){
-		if(!$pos=$this->get($id)){
-			$this->error='编辑的广告位不存在！';
-			return false;
-		}
-
 		$this->rules['pname']['query']=array('adp','pid<>'.$id.' AND pname=\''.$data['pname'].'\'');
 		$data['size']=serialize($data['size']);
-
-		if($this->check($data)){
-			DB()->update('adp',$data,'pid='.$id);
-			return true;
-		}
-		return false;
-	}
-	function drop($id=0){
-		if($pos=$this->get($id)){
-			DB()->delete('adp','pid='.$id);
-			return true;
-		}else{
-			$this->error='广告位不存在！';
-			return false;
-		}
+		return parent::edit($id,$data);
 	}
 	function order($ids){
 		foreach($ids as $id=>$order)
@@ -83,13 +71,21 @@ class ModelAdp extends ModelBase{
 		}
 		return $list;
 	}
-	function show($id){
+	function show($id,$delimiter='',$isCode=true){
 		$html='';
-		$adp=$this->get($id);
-		foreach(M('ad')->get_list($id) as $ad){
+		$adp=(is_int($id)?$this->get($id):$this->get_by_where('pname=\''.addslashes($id).'\''));
+
+		$ads=M('ad')->get_list_by_where($adp['pid']);
+		foreach($ads as $id=>$ad){
 			$ad['code']=(unserialize($ad['code'])?unserialize($ad['code']):$ad['code']);
-			$html.=M('ad')->show($adp,$ad);
+			if($isCode){
+				if($html && $delimiter)
+					$html.=$delimiter;
+				$html.=M('ad')->get_code($adp,$ad);
+			}else{
+				$ads[$id]=$ad;
+			}
 		}
-		return $html;
+		return $isCode?$html:$ads;
 	}
 }

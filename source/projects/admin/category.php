@@ -1,5 +1,5 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlCategory extends CtrlBase{

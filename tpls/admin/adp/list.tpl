@@ -8,7 +8,8 @@
 			<tr>
 				<th>排序</th>
 				<th>ID</th>
-				<th class="l" width="100%">广告位名称</th>
+				<th class="l" width="100%">标题</th>
+				<th class="l">调用代码</th>
 				<th>类型</th>
 				<th>大小（宽/高）</th>
 				<th>广告数（现有/限制）</th>
@@ -25,7 +26,8 @@
 					<input name="_ids[{$r.pid}]" type="hidden" value="{$r.porder}"/>
 				</td>
 				<td>{$r.pid}</td>
-				<td class="l">{$r.pname}</td>
+				<td class="l">{$r.ptitle}</td>
+				<td class="l">{adp&nbsp;{$r.pid}},&#123;adp:{$r.pname}}</td>
 				<td class="l">{if $r.type=='html'}HTML{elseif $r.type=='flash'}Flash{elseif $r.type=='image'}图片{else}文本{/if}</td>
 				<td class="l">{$r.size.width}/{$r.size.height}</td>
 				<td class="l">{$r.adnum}/{$r.pcount}</td>

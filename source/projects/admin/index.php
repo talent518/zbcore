@@ -1,11 +1,11 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 class CtrlIndex extends CtrlBase{
 	//必须有此空方法
 	function __construct(){
-		parent::__construct(in_array(IN_METHOD,array('onIndex','onLogin','onLogout','onVerify')));
+		parent::__construct(in_array(IN_METHOD,array('index','login','logout','verify')));
 	}
 	function onIndex(){
 		if($this->LOGINED){
@@ -17,7 +17,7 @@ class CtrlIndex extends CtrlBase{
 	function onLogin(){
 		if($this->is_submit('login')){
 			if(M('setup')->get('verify','adminlogin') && L('cookie')->get('verify')!=$_POST['verify'])
-				$this->message(array('message'=>'验证码不正确','callback'=>'return;'),URL(array('ctrl'=>'user','method'=>'login')));
+				$this->message(array('message'=>'验证码不正确','callback'=>'return;'),URL(array('method'=>'login')));
 			$status=M('user')->login($_POST['username'],$_POST['password'],1);
 			switch($status){
 				case 1:

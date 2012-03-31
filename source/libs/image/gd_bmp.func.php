@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 function imagebmp(&$im, $filename = '', $bit = 8, $compression = 0){

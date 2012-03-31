@@ -10,6 +10,10 @@
 				<td><select name="aid"></select></td>
 			</tr>
 			<tr>
+				<th>广告标题：</th>
+				<td><input name="title" type="text" value="{$add.title|html}" size="20" /></td>
+			</tr>
+			<tr>
 				<th>广告名称：</th>
 				<td><input name="name" type="text" value="{$add.name|html}" size="20" /></td>
 			</tr>
@@ -69,7 +73,7 @@
 			</tr>
 			<tr>
 				<th>过期时间：</th>
-				<td><input name="expired" type="text" value="{date 'Y-m-d',$add.expired}" size="10" /></td>
+				<td><input name="expired" type="text" value="" size="10" /></td>
 			</tr>
 			<tr>
 				<th>排序：</th>
@@ -96,10 +100,15 @@ $('#addform').validate({
 		aid:{
 			integer:true
 		},
-		name:{
+		title:{
 			required:true,
 			maxlength:50,
 			chinese:true
+		},
+		name:{
+			required:true,
+			maxlength:50,
+			english:true
 		},
 		'code[html]':{
 			required:function(elem){
@@ -153,7 +162,7 @@ $('#addform').validate({
 			custom:/^((#[a-fA-F0-9]{3,6})|([a-zA-Z]+))$/
 		},
 		expired:{
-			required:true,
+			required:false,
 			dateISO:true
 		},
 		order:{
@@ -172,7 +181,7 @@ $('#addform').validate({
 	}
 });
 $('#addform tbody.type').hide();
-$('#addform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$add.pid},isStaged:false,keyName:'pname',change:function(pos){
+$('#addform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$add.pid},isStaged:false,keyName:'ptitle',change:function(pos){
 	$('#addform tbody.type').hide();
 	if(pos){
 		if(pos.size)
@@ -181,7 +190,8 @@ $('#addform select[name=pid]').staged('{link ctrl=ad method=json}',{val:{$add.pi
 	}else{
 		$('#addform input[name=type]').val('');
 	}
-	$('#addform').required().getWindow().resize();
+	$('#addform').required();
+	$('#addform').getWindow().resize();
 }});
 $('#addform select[name=aid]').staged('{link ctrl=area method=json}',{val:{$add.aid}});
 </script>

@@ -1,12 +1,16 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelPosition extends ModelBase{
+	protected $table='position';
+	protected $priKey='posid';
+	protected $order='`porder` desc,`posid`';
 	var $error,$rules=array(
 		'pname'=>array(
 			'required'=>true,
 			'maxlength'=>20,
+			'pname'=>'position',
 		),
 		'porder'=>array(
 			'integer'=>true
@@ -21,96 +25,24 @@ class ModelPosition extends ModelBase{
 			'integer'=>'排序不是一个整数'
 		),
 	);
-	function add(&$data){
-		$this->rules['pname']['query']=array('position','pname=\''.$data['pname'].'\'');
-
-		if($this->check($data)){
-			DB()->insert('position',$data);
-			$this->drop_cache(-1);
-			return true;
-		}
-		return false;
-	}
-	function edit($id,&$data){
-		if(!$pos=$this->get($id)){
-			$this->error='编辑的推荐位不存在！';
-			return false;
-		}
-
+	function edit($id,&$data,$isCheck=true,$isString=true){
 		$this->rules['pname']['query']=array('position','posid<>'.$id.' AND pname=\''.$data['pname'].'\'');
-
-		if($this->check($data)){
-			DB()->update('position',$data,'posid='.$id);
-			$this->drop_cache($id);
-			$this->drop_cache(-1);
-			return true;
-		}
-		return false;
-	}
-	function drop($id=0){
-		if($pos=$this->get($id)){
-			DB()->delete('position','posid='.$id);
-			$this->drop_cache(-1);
-			$this->drop_cache($id);
-			return true;
-		}else{
-			$this->error='推荐位不存在！';
-			return false;
-		}
+		return parent::edit($id,$data,$isCheck,$isString);
 	}
 	function order($ids){
 		foreach($ids as $id=>$order){
 			DB()->update('position',array('porder'=>intval($order)),'posid='.intval($id));
-			$this->drop_cache($id);
 		}
-		$this->drop_cache(-1);
-	}
-	function update_counts(){
-		foreach(DB()->select(array('table'=>'picture_position','field'=>'posid,count(spid) as `count`','group'=>'posid'),-1,'posid','count') as $id=>$count){
-			DB()->update('position',array('counts'=>intval($count)),'posid='.intval($id));
-			$this->drop_cache($id);
-		}
-		$this->drop_cache(-1);
 	}
 	function &get($id=0){
 		if(!$id)
 			return;
-		$cache=L('cache');
-		$cache->dir='position';
-		$cache->name=$id;
-		$cache->callback=array(DB(),'select',array(array(
-			'table'=>'position',
-			'field'=>'*',
-			'where'=>'posid='.$id
-		),1));
-		return $cache->get();
-	}
-	function &get_list(){
-		$cache=L('cache');
-		$cache->dir='position';
-		$cache->name='list';
-		$cache->callback=array(&$this,'_get_list');
-		return $cache->get();
-	}
-	function &_get_list(){
-		return DB()->select(array(
-			'table'=>'position',
-			'field'=>'*',
-			'order'=>'porder DESC'
-		),-1,'posid');
-	}
-	function drop_cache($id=0){
-		if($id>0){
-			$cache=L('cache');
-			$cache->dir='position';
-			$cache->name=$id;
-			$cache->drop();
-		}elseif($id==-1){
-			$cache=L('cache');
-			$cache->dir='position';
-			$cache->name='list';
-			$cache->drop();
-		}else
-			return L('io.dir')->drop(DATA_DIR.'position',true);
+		static $ids;
+		if(!is_array($ids)){
+			$ids=array();
+		}
+		if(!isset($ids[$id]))
+			$ids[$id]=parent::get($id);
+		return $ids[$id];
 	}
 }

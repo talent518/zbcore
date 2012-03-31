@@ -2,7 +2,11 @@
 	<table cellspacing="0" cellpadding="0" border="0">
 		<tbody>
 			<tr>
-				<th>广告位名称：</th>
+				<th>标题：</th>
+				<td><input name="ptitle" type="text" value="{$add.ptitle|html}" size="20" /></td>
+			</tr>
+			<tr>
+				<th>名称：</th>
 				<td><input name="pname" type="text" value="{$add.pname|html}" size="20" /></td>
 			</tr>
 			<tr>
@@ -41,10 +45,15 @@
 <script type="text/javascript">
 $('#addform').validate({
 	rules:{
-		pname:{
+		ptitle:{
 			required:true,
 			maxlength:20,
 			chinese:true
+		},
+		pname:{
+			required:true,
+			maxlength:20,
+			english:true
 		},
 		type:{
 			required:true

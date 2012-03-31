@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_PROJ'))
+if(!defined('IN_ZBC'))
 	exit;
 
 set_time_limit(0);
@@ -7,7 +7,6 @@ set_magic_quotes_runtime(0);
 date_default_timezone_set('PRC');
 
 define('IS_DEBUG',TRUE);
-define('IN_SITE',TRUE);
 
 IS_DEBUG?error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE):error_reporting(0);
 
@@ -18,37 +17,19 @@ define('MICROTIME',(float)$msec);$msec=null;unset($msec);
 define('IS_MQ_GPC',get_magic_quotes_gpc());
 define('DIR_SEP',DIRECTORY_SEPARATOR);
 
-define('ROOT_DIR',dirname(__FILE__).DIR_SEP);
-define('ROOT_URL',substr($_SERVER['SCRIPT_NAME'],0,strrpos($_SERVER['SCRIPT_NAME'],'/')+1));
 define('SITE_URL',strtolower(substr($_SERVER['SERVER_PROTOCOL'],0,strpos($_SERVER['SERVER_PROTOCOL'],'/'))).'://'.$_SERVER['HTTP_HOST']);
 define('SITE_FULL_URL',SITE_URL.ROOT_URL);
 
-define('SRC_DIR',ROOT_DIR.'source'.DIR_SEP);
-define('PROJ_DIR',SRC_DIR.'projects'.DIR_SEP);
+define('SRC_DIR',dirname(__FILE__).DIR_SEP);
 
-defined('CTRL_DIR') or define('CTRL_DIR',PROJ_DIR.IN_PROJ.DIR_SEP);
 define('MOD_DIR',SRC_DIR.'models'.DIR_SEP);
 define('LIB_DIR',SRC_DIR.'libs'.DIR_SEP);
 define('WID_DIR',SRC_DIR.'widgets'.DIR_SEP);
 define('PLG_DIR',SRC_DIR.'plugins'.DIR_SEP);
 
-define('CACHE_DIR',ROOT_DIR.'cache'.DIR_SEP);//缓存目录
-define('CACHE_URL',ROOT_URL.'cache/');//缓存目录
-
 define('DATA_DIR',CACHE_DIR.'data'.DIR_SEP);//数据缓存目录
-define('HTML_DIR',ROOT_DIR.'html'.DIR_SEP);//数据缓存目录
-define('HTML_URL',ROOT_URL.'html/');//数据缓存目录
 
-define('TPL_DIR',ROOT_DIR.'tpls'.DIR_SEP);//模板目录
-define('TPL_URL',ROOT_URL.'tpls/');//模板URL
 define('TPL_CACHE_DIR',CACHE_DIR.'tpls'.DIR_SEP);//模板缓存目录
-define('TPL_CACHE_URL',CACHE_URL.'tpls/');//模板缓存URL
-
-define('RES_DIR',ROOT_DIR.'resource'.DIR_SEP);//资源目录
-define('RES_URL',ROOT_URL.'resource/');//资源URL
-
-define('RES_CACHE_DIR',CACHE_DIR.'resource'.DIR_SEP);//资源缓存目录
-define('RES_CACHE_URL',CACHE_URL.'resource/');//资源缓存URL
 
 define('RES_FONT_DIR',RES_DIR.'fonts'.DIR_SEP);//字体目录
 
@@ -64,9 +45,17 @@ define('RES_UPLOAD_URL',RES_URL.'uploads/');//上传URL
 define('RES_THUMB_DIR',RES_DIR.'thumb'.DIR_SEP);//缩略图目录
 define('RES_THUMB_URL',RES_URL.'thumb/');//缩略图URL
 
-is_dir(CTRL_DIR) or exit('Project not exists.');
+if(!file_exists(SRC_DIR.'config.php')){
+	if(IN_PROJ!='install'){
+		header('Location:'.ROOT_URL.'install.php');
+		exit;
+	}else{
+		include_once(SRC_DIR.'config.sample.php');
+	}
+}else{
+	include_once(SRC_DIR.'config.php');
+}
 
-include_once(SRC_DIR.'config.php');
 include_once(SRC_DIR.'zbcore.php');//核心对象
 include_once(SRC_DIR.'functions.php');//核心函數
 
@@ -100,4 +89,29 @@ if(!eregi("[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}",$onlineip))
 define('CLIENT_IP',$onlineip);
 $onlineip=null;unset($onlineip);
 
-defined('AUTORUN') && autorun();
+function loader(){
+	defined('CTRL_DIR') or define('CTRL_DIR',SRC_DIR.'projects'.DIR_SEP.IN_PROJ.DIR_SEP);
+	is_dir(CTRL_DIR) or exit(IS_DEBUG?'Project <b>'.IN_PROJ.'</b> not exists.':0);
+
+	$ctrl=GET('ctrl')?GET('ctrl'):'index';
+	$method=GET('method')?GET('method'):'index';
+
+	define('IN_CTRL',strtolower($ctrl));
+	define('IN_METHOD',strtolower($method));
+
+	define('IN_URL_C',sprintf('/%s/%s',IN_PROJ,IN_CTRL));
+	define('IN_URL_M',sprintf('%s/%s',IN_URL_C,IN_METHOD));
+	define('IN_URL_CM',sprintf('%s/%s',IN_CTRL,IN_METHOD));
+	define('IN_URL',sprintf('%s/%s',IN_URL_M,CFG()->urlSuffix));
+
+	$method='on'.GN($method);
+
+	ob_start();
+
+	if(method_exists(C($ctrl),$method))
+		C($ctrl)->$method();
+	else
+		exit(IS_DEBUG?"controller <b>'$ctrl'</b> no method <b>'$method'</b>!":0);
+
+	exit;
+}

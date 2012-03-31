@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 function __autoload($class){
@@ -44,7 +44,7 @@ function &M($model){
 		if(class_exists($class,false)){
 			$models[$model]=new $class();
 		}else{
-			exit('class <b>'.$class.'</b> not exists!');
+			exit(IS_DEBUG?'class <b>'.$class.'</b> not exists!':0);
 		}
 	}
 	return $models[$model];
@@ -61,7 +61,7 @@ function &C($ctrl){
 		if(class_exists($_ctrl,false)){
 			$ctrls[$ctrl]=new $_ctrl();
 		}else{
-			exit('class <b>'.$_ctrl.'</b> not exists!');
+			exit(IS_DEBUG?'class <b>'.$class.'</b> not exists!':0);
 		}
 	}
 	return $ctrls[$ctrl];
@@ -78,7 +78,7 @@ function &L($lib){
 		if(class_exists($class,false)){
 			$libs[$lib]=new $class();
 		}else{
-			exit('class <b>'.$class.'</b> not exists!');
+			exit(IS_DEBUG?'class <b>'.$class.'</b> not exists!':0);
 		}
 	}
 	return $libs[$lib];
@@ -95,7 +95,7 @@ function &W($wid){
 		if(class_exists($class,false)){
 			$wids[$wid]=new $class();
 		}else{
-			exit('class <b>'.$class.'</b> not exists!');
+			exit(IS_DEBUG?'class <b>'.$class.'</b> not exists!':0);
 		}
 	}
 	return $wids[$wid];
@@ -105,10 +105,6 @@ function &DB(){
 	static $db;
 	if(!$db){
 		$cfg=new DbConfig;
-		if(IN_PROJ!='install' && file_exists(ROOT_DIR.'install.php') && !extension_loaded($cfg->type)){
-			header('Location:'.ROOT_URL.'install.php');
-			exit;
-		}
 		$db=L('db.'.$cfg->type);
 		$db->charset=$cfg->charset;
 		$db->host=$cfg->host;
@@ -133,27 +129,6 @@ function &CFG(){
 		$config=new Config;
 	}
 	return $config;
-}
-
-function autorun(){
-	$ctrl=GET('ctrl');
-	$ctrl=empty($ctrl)?'index':$ctrl;
-
-	$method=GET('method');
-	$method=empty($method)?'Index':GN($method);
-	$method='on'.$method;
-
-	ob_start();
-
-	define('IN_CTRL',$ctrl);
-	define('IN_METHOD',$method);
-
-	if(method_exists(C($ctrl),$method))
-		C($ctrl)->$method();
-	else
-		exit("controller <b>'$ctrl'</b> no method <b>'$method'</b>!");
-
-	exit;
 }
 
 function GET($key){

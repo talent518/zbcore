@@ -76,9 +76,10 @@
 				return;
 			}
 			$(this.sels[0]).change(this.change);
+			var cgrade=0;
 			if(this.setting.isStaged){
 				var grades=this.getGrades(0);
-				if(grades.length){
+				if(grades.length>1){
 					var grade=0,pid=grades.pop(),val;
 					while(grades.length>0){
 						val=grades.pop();
@@ -86,21 +87,23 @@
 						pid=val;
 						grade++;
 					}
-					if(grade==0)
-						this.setOption(0,0,pid);
+					cgrade=grade-1;
 				}else{
 					this.setOption(0,0,0);
 				}
 			}else{
 				this.setOption(0,0,this.setting.val);
 			}
+			$(this.sels[cgrade]).change();
 		},
 		getGrades:function(pid){
 			var grades=[];
 			for(var i in this.data['k'+pid]){
 				i=parseInt(/\d+/.exec(i));
-				if(this.setting.val==i)
-					return [i];
+				if(this.setting.val==i){
+					grades.push(i);
+					break;
+				}
 				grades=this.getGrades(i);
 				if(grades.length>0){
 					grades.push(i);
@@ -108,7 +111,7 @@
 				}
 			}
 			if(pid==0)
-				grades.push(pid);
+				grades.push(0);
 			return grades;
 		},
 		setOption:function(grade,pid,sid){
@@ -131,19 +134,17 @@
 			for(val in this.data['k'+pid]){
 				text=this.data['k'+pid][val];
 				val=parseInt(/\d+/.exec(val));
-				if(val!=this.setting.not)
-					sel.append(sprintf('<option value="%s" %s>%s</option>',val,val==sid?'selected':'',typeof(text)=='object'?text[this.setting.keyName]:text));
+				if(val!=this.setting.not){
+					sel.append(sprintf('<option value="%s" %s>%s</option>',val,val==sid?'selected="selected"':'',typeof(text)=='object'?text[this.setting.keyName]:text));
+				}
 			}
-			if(this.setting.isStaged)
-				sel.change();
 		},
 		isUsable:function(pid){
 			if(!this.data['k'+pid])
 				return false;
-			var len=0;
-			for(var val in this.data['k'+pid])
-				if('k'+this.setting.not==val)
-					return false;
+			//for(var val in this.data['k'+pid])
+			//	if('k'+this.setting.not==val)
+			//		return false;
 			return true;
 		},
 		change:function(){

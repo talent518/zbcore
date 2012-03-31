@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelBase{
@@ -7,6 +7,7 @@ class ModelBase{
 
 	protected $table;
 	protected $priKey;
+	protected $forKey;
 	protected $order;
 	protected $rules;
 	protected $messages;
@@ -43,7 +44,7 @@ class ModelBase{
 		return DB()->select(array(
 				'table'=>$this->table,
 				'field'=>'*',
-				'where'=>$where,
+				'where'=>is_int($where)?$this->forKey.'='.$where:$where,
 				'order'=>$this->order,
 				'limit'=>$limit,
 				'spages'=>$spages,
@@ -62,7 +63,7 @@ class ModelBase{
 			return false;
 		}
 		if(!$isCheck || $this->check($data)){
-			DB()->update($this->table,saddslashes($data),($id+0>0)?'`'.$this->priKey.'`='.($id+0):'1>0',$isString);
+			DB()->update($this->table,$isString?saddslashes($data):$data,($id+0>0)?'`'.$this->priKey.'`='.($id+0):'1>0',$isString);
 			return true;
 		}
 		return false;
@@ -79,7 +80,7 @@ class ModelBase{
 		return false;
 	}
 	function update($data,$where,$isString=true){
-		DB()->update($this->table,$data,$where,$isString);
+		DB()->update($this->table,$data,is_int($where)?$this->priKey.'='.$where:$where,$isString);
 	}
 	function delete($where){
 		DB()->delete($this->table,is_int($where)?$this->priKey.'='.$where:$where);

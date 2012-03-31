@@ -11,7 +11,7 @@
 	</dd>
 	<dt>程序数据库/版本</dt>
 	<dd>
-		<p>程序版本：{$version.name} V{$version.number} ( {$version.release} )</p>
+		<p>程序版本：{ZBC_NAME} V{ZBC_VERSION} ( {ZBC_RELEASE} )</p>
 		<p>操作系统：{PHP_OS}</p>
 		<p>WEB服务器：{$_SERVER.SERVER_SOFTWARE}</p>
 		<p>PHP版本：{PHP_VERSION}{if @ini_get('safe_mode')} Safe Mode{/if}</p>

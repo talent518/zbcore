@@ -1,5 +1,5 @@
 <?php
-if(!defined('IN_SITE')) {
+if(!defined('IN_ZBC')) {
 	exit('Access Denied');
 }
 
@@ -13,7 +13,7 @@ class LibCache{
 		if(empty($data)){
 			return false;
 		}
-		$data="<?php if(!defined('IN_SITE')) exit('Access Denied');\r\nreturn ".var_export($data,true).";";
+		$data="<?php if(!defined('IN_ZBC')) exit('Access Denied');\r\nreturn ".var_export($data,true).";";
 		return L('io.file')->write($this->file(),$data);
     }
     //获取

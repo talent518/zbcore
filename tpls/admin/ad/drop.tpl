@@ -8,7 +8,11 @@
 		<tr>
 			<td><table>
 				<tr>
-					<th class="r">网站名称：</th>
+					<th class="r">广告标题：</th>
+					<td class="l">{$ad.title|html}</td>
+				</tr>
+				<tr>
+					<th class="r">广告名称：</th>
 					<td class="l">{$ad.name|html}</td>
 				</tr>
 			{if $adp.type=='html'}
@@ -45,7 +49,7 @@
 				</tr>
 				<tr>
 					<th class="r">文字大小：</th>
-					<td class="l">{$ad.code.size}px</td>
+					<td class="l">{if $ad.code.size}{$ad.code.size}{else}默认{/if}</td>
 				</tr>
 			{/if}
 			</table></td>

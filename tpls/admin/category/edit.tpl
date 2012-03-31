@@ -47,7 +47,7 @@
 			</tr>
 		</tbody>
 		<tbody class="tpl">
-		{if $edit.pid}
+		{if $edit.pid || $edit.counts}
 			{loop $ctpls[$edit.ctype] $k $v}
 			<tr class="{$edit.ctype}">
 				<th>$v：</th>
@@ -112,7 +112,7 @@
 		if(val.length){
 			$('#editform .tab_title .tpl').show();
 			$('#editform .tab_body .tpl tr').hide().filter('.'+val).show();
-			$('#editform select[name=pid]').staged('{link ctrl=category method=json type=TYPE}'.replace('TYPE',val),{val:{$edit.pid}});
+			$('#editform select[name=pid]').staged('{link ctrl=category method=json type=TYPE}'.replace('TYPE',val),{val:{$edit.pid},not:{$edit.cat_id}});
 		}else{
 			$('#editform .tab_title .tpl').hide();
 		}

@@ -19,6 +19,10 @@
 				<td><textarea id="ckeditor" name="content">{$edit.content|text}</textarea><label for="ckeditor"/></td>
 			</tr>
 			<tr>
+				<th>来源：</th>
+				<td><input name="source" type="text" value="{$edit.source|html}" size="4" /></td>
+			</tr>
+			<tr>
 				<th>推荐：</th>
 				<td><input name="recommended" type="radio" value="1"{if $edit.recommended} checked{/if}/>是&nbsp;<input name="recommended" type="radio" value="0"{if !$edit.recommended} checked{/if}/>否</td>
 			</tr>

@@ -48,9 +48,11 @@
 					<input name="_ids[{$r.pic_id}]" type="hidden" value="{$r.order}"/>
 				</td>
 				<td>{$r.pic_id}</td>
-				<td class="l"><a href="{$r.url}" target="_blank">{$r.title}</a></td>
+				<td class="l">{$r.title}</td>
 				<td class="l"><img src="{thumb RES_UPLOAD_DIR.$r.url,50,50}"/></td>
 				<td>
+					<a href="{link proj=index method=picture id=$r.pic_id}" target="_blank" title="查看图片">查看</a>
+					<span class="split">|</span>
 					<a href="{link ctrl=picture method=edit id=$r.pic_id}" class="edit" title="编辑图片">编辑</a>
 					<span class="split">|</span>
 					<a href="{link ctrl=picture method=drop id=$r.pic_id}" class="drop" title="删除图片">删除</a>

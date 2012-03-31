@@ -1,5 +1,5 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlPosition extends CtrlBase{
@@ -25,14 +25,10 @@ class CtrlPosition extends CtrlBase{
 			$this->mod->order($ids);
 			$this->message('提交成功',URL(array('ctrl'=>'position','method'=>'list','id'=>$this->id)),true);
 		}else{
-			$this->setVar('list',$this->mod->get_list());
+			$this->setVar('list',$this->mod->get_list_by_where());
 			$this->setVar('listhash',$this->formhash('list'));
 			$this->display('position/list');
 		}
-	}
-	function onUpdate(){
-		$this->mod->update_counts();
-		$this->message('更新缓存成功',URL(array('ctrl'=>'position','method'=>'list')),true);
 	}
 	function onAdd(){
 		if($this->is_submit('add')){

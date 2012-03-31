@@ -95,20 +95,20 @@
 			<tr>
 				<td>/cache/</td>
 				<td><span class="right">可写</span></td>
-			{if L('io.dir')->writeable(ROOT_DIR.'/cache/')}
+			{if L('io.dir')->writeable(CACHE_DIR)}
 				<td><span class="right">可写</span></td>
-			{elseif is_dir(ROOT_DIR.'/cache/')}
+			{elseif is_dir(CACHE_DIR)}
 				<td><span class="wrong">只读</span></td>
 			{else}
 				<td><span class="wrong">无权限</span></td>
 			{/if}
 			</tr>
 			<tr>
-				<td>/source/config.php</td>
+				<td>{SRC_DIR}config.php</td>
 				<td><span class="right">可写</span></td>
-			{if file_exists(ROOT_DIR.'/source/config.php') && is_writeable(ROOT_DIR.'/source/config.php')}
+			{if file_exists(SRC_DIR.'config.php') && is_writeable(SRC_DIR.'config.php')}
 				<td><span class="right">可写</span></td>
-			{elseif file_exists(ROOT_DIR.'/source/config.php')}
+			{elseif file_exists(SRC_DIR.'config.php')}
 				<td><span class="right">只读</span></td>
 			{else}
 				<td><span class="wrong">无权限</span></td>
@@ -116,7 +116,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<center><button onclick="location.href='{link method=index}'">上一步</button><button id="nextStep" onclick="location.href='{link method=cfg}'">下一步</button></center>
+	<center><button onclick="location.href='install.php?method=index'">上一步</button><button id="nextStep" onclick="location.href='install.php?method=cfg'">下一步</button></center>
 	<script type="text/javascript">
 	$('#nextStep').attr('disabled',$('.formtable span.wrong').size()>0);
 	</script>

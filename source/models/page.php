@@ -1,11 +1,11 @@
 <?
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class ModelPage extends ModelBase{
 	protected $table='page';
 	protected $priKey='page_id';
-	protected $order='`order` desc,`page_id` desc';
+	protected $order='`order` desc,`page_id`';
 	protected $rules=array(
 		'cat_id'=>array(
 			'required'=>true,

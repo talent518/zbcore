@@ -178,7 +178,7 @@ $.fn.window=function(options){
 $.fn.getWindow=function(){
 	var winWrap=$(this).parents('.window-wrap');
 	var winChild=winWrap.children('.window-header,.window-content');
-	return(winChild.size()==2?winWrap.data('window'):false);
+	return(winChild.size()==2?winWrap.data('window'):false);//{options:{},init:function(){},open:function(){},resize:function(){},close:function(){},setOpt:function(){}}
 };
 
 })(jQuery);

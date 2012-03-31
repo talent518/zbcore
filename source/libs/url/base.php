@@ -1,38 +1,67 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class LibUrlBase{
-	private $get;
+	protected $get;
 	function LibUrlBase(){
+		$this->get=&$_GET;
 		if(isset($_GET['c'])){
 			$_GET['ctrl']=$_GET['c'];
 		}
 		if(isset($_GET['m'])){
 			$_GET['method']=$_GET['m'];
 		}
-		$this->get=&$_GET;
+		if(isset($_GET['q'])){
+			$this->decode($_GET['q']);
+		}
 	}
 	function get($key){
 		return $this->get[$key];
 	}
-	function link($args=array()){
-		$url=($args['proj']?$args['proj']:(IN_PROJ=='front'?'index':IN_PROJ)).'.php';
-		unset($args['proj']);
-		$q=array();
-		if(isset($args['ctrl'])){
-			$q[]='c='.urlencode($args['ctrl']);
-			unset($args['ctrl']);
+	function decode($url){
+		if($url{0}=='/'){
+			$url=substr($url,1);
 		}
-		if(isset($args['method'])){
-			$q[]='m='.urlencode($args['method']);
-			unset($args['method']);
+		$dot=strrpos($url,'.');
+		if($dot!==false){
+			$url=(in_array(substr($url,$dot),array(CFG()->urlSuffix,CFG()->shortUrlSuffix))?substr($url,0,$dot):$url);
 		}
-		foreach($args as $key=>$value){
-			$q[]=$key.'='.urlencode($value);
+		$rws = explode('/',$url);
+		if(count($rws))
+			$this->get['proj']=array_shift($rws);
+		if(count($rws))
+			$this->get['ctrl']=array_shift($rws);
+		if(count($rws))
+			$this->get['method']=array_shift($rws);
+		$get=$g=array();
+		for ($rw_i=0;$rw_i<count($rws);$rw_i=$rw_i+2) {
+			$get[]=$rws[$rw_i].'='.$rws[$rw_i+1];
+			//$this->get[$rws[$rw_i]] = urldecode(empty($rws[$rw_i+1])?'':$rws[$rw_i+1]);
 		}
-		if($q)
-			$url.='?'.implode('&',$q);
-		return ROOT_URL.$url;
+		parse_str(implode('&',$get),$g);
+		$this->get=array_merge($this->get,$g);
+		unset($get,$g);
+	}
+	function encode($args=array()){
+		$url='/'.($args['proj']?$args['proj']:(IN_PROJ=='front'?'index':IN_PROJ));
+		$url.='/'.($args['ctrl']?$args['ctrl']:IN_CTRL);
+		$url.='/'.($args['method']?$args['method']:IN_METHOD);
+
+		unset($args['proj'],$args['ctrl'],$args['method']);
+
+		foreach($args as $k=>$v){
+			$url.='/'.$k.'/'.urlencode($v);
+		}
+		if(strlen($url)>1)
+			$url.=CFG()->urlSuffix;
+		return $url;
+	}
+	function link($args){
+		if(is_array($args)){
+			return ROOT_URL.'?q='.$this->encode($args);
+		}else{
+			return ROOT_URL.'?q='.urlencode($args).CFG()->shortUrlSuffix;
+		}
 	}
 }

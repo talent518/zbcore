@@ -1,6 +1,5 @@
 <h1 class="head">
 	<a href="{link ctrl=position method=add}" class="add button" title="添加推荐位">添　加</a>
-	<a href="{link ctrl=position method=update}" class="button" title="更新缓存" onclick="$.post(this.href);return false;">更新缓存</a>
 	推荐位管理
 </h1>
 <form id="listform" class="formtable" action="{link ctrl=position method=list}" method="post">

@@ -65,6 +65,10 @@
 					<input name="config[isshowdebug]" type="radio" value="0"{if !$config.isshowdebug} checked{/if}/>否
 				</td>
 			</tr>
+			<tr>
+				<th>统计代码：</th>
+				<td><textarea name="config[statistics]" cols="80" rows="3">{$config.statistics}</textarea></td>
+			</tr>
 		</tbody>
 		<tfoot>
 			<tr>

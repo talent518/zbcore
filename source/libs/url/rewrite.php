@@ -1,36 +1,18 @@
 <?php
-if(!defined('IN_SITE'))
+if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class LibUrlRewrite{
-	private $get;
+class LibUrlRewrite extends LibUrlBase{
 	function LibUrlRewrite(){
 		$this->get=&$_GET;
-		$rws = explode('/', $_GET['rewrite']);
-		$get=$g=array();
-		for ($rw_i=0;$rw_i<count($rws);$rw_i=$rw_i+2){
-			$get[]=$rws[$rw_i].'='.$rws[$rw_i+1];
-		}
-		parse_str(implode('&',$get),$g);
-		$this->get=array_merge($this->get,$g);
-		unset($get,$g,$_GET['rewrite']);
+		$len=strpos($_SERVER['REQUEST_URI'],'?');
+		$this->decode($len===false?$_SERVER['REQUEST_URI']:substr($_SERVER['REQUEST_URI'],0,$len));
 	}
-	function get($key){
-		return $this->get[$key];
-	}
-	function link($args=array()){
-		$url=($args['proj']?$args['proj']:(IN_PROJ=='front'?'index':IN_PROJ));
-		$url.='/'.($args['ctrl']?$args['ctrl']:'index');
-		if($args['method'])
-			$url.='/'.$args['method'];
-		else
-			$url.='/index';
-		unset($args['proj'],$args['ctrl'],$args['method']);
-		foreach($args as $k=>$v){
-			$url.='/'.$k.'/'.urlencode($v);
+	function link($args){
+		if(is_array($args)){
+			return substr(ROOT_URL,0,-1).$this->encode($args);
+		}else{
+			return substr(ROOT_URL,0,-1).$args;
 		}
-		if(strlen($url)>1)
-			$url.='.html';
-		return ROOT_URL.$url;
 	}
 }

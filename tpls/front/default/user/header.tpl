@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{if $head.title}{$head.title} - {/if}{$config.sitetitle}</title>
+	<title>{if $head.title}{$head.title} - {/if}Powered by {ZBC_NAME}!</title>
 	<meta name="keywords" content="{if $head.keywords}{$head.keywords}{else}{$config.sitekeywords}{/if}" />
 	<meta name="description" content="{if $head.description}{$head.description}{else}{$config.sitedesription}{/if}" />
 	<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
