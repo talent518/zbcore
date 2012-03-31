@@ -41,7 +41,7 @@ class LibUrlBase{
 		}
 		parse_str(implode('&',$get),$g);
 		$this->get=array_merge($this->get,$g);
-		unset($get,$g);
+		$get=$g=null;
 	}
 	function encode($args=array()){
 		$url='/'.($args['proj']?$args['proj']:(IN_PROJ=='front'?'index':IN_PROJ));

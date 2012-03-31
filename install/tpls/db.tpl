@@ -16,7 +16,7 @@
 		<div class="stepstatbg stepstat3"></div>
 	</div>
 </div>
-<iframe name="license" class="license" width="100%" height="300" scrolling="yes" frameborder="0" style="padding:0px;overflow:auto;" src="install.php?method=db adm[email]=$adm.email adm[password]=$adm.password begin=1"></iframe>
+<iframe name="license" class="license" width="100%" height="300" scrolling="yes" frameborder="0" style="padding:0px;overflow:auto;" src="install.php?method=db&adm[email]={$adm.email}&adm[password]={$adm.password}&begin=1"></iframe>
 <script type="text/javascript">
 setInterval(function(){
 	license.document.body.scrollTop=license.document.body.scrollHeight-$('iframe.license').height();

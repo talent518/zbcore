@@ -42,7 +42,7 @@ class CtrlIndex extends CtrlBase{
 			}
 			CFG()->urlFormat='base';
 			if(L('io.file')->write(SRC_DIR.'config.php',$c))
-				$this->message('配置成功!',URL(array('method'=>'db','adm[email]'=>$_POST['adm']['email'],'adm[password]'=>$_POST['adm']['password'])),TRUE);
+				$this->message('配置成功!','install.php?method=db&adm[email]='.$_POST['adm']['email'].'&adm[password]='.$_POST['adm']['password'],TRUE);
 			else
 				$this->message('配置失败，可能是文件(/source/config.php)不可写!');
 		}else{

@@ -75,8 +75,8 @@ $('#editform select[name=cat_id]').staged('{link ctrl=category method=json type=
 $("#jqFileUpload").uploadify({
 	'uploader': '{SKIN_URL}images/uploadify.swf',
 	'cancelImg': '{SKIN_URL}images/wrong.gif',
-	'script': '{SITE_FULL_URL}admin.php',
-	'scriptData': {ctrl:'picture',method:'upload',auth:'{$auth}'},
+	'script': '{SITE_FULL_URL}index.php',
+	'scriptData': {proj:'{IN_PROJ}',ctrl:'picture',method:'upload',auth:'{$auth}'},
 	'method':'get',
 	'queueID':'jqFileUploadQueue',
 	'auto': true,

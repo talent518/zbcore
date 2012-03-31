@@ -2,10 +2,10 @@
 
 .wp{margin:0px auto;width:900px;overflow:hidden;}
 
-.welcome{text-align:center;padding:200px 0px;}
+.welcome{width:789px;text-align:center;padding:200px 0px;}
 .welcome .entry{font-size:14px;margin-top:50px;}
-.welcome p{clear:both;padding-top:50px;width:800px;margin:0px auto;line-height:30px;}
-.welcome p a{float:left;width:33%;border-right:1px #eee solid;text-align:center;font-size:14px;}
+.welcome p{clear:both;padding-top:50px;width:800px;overflow:hidden;margin:0px auto;line-height:30px;margin-right:-4px;}
+.welcome p a{float:left;padding:0 50px;border-right:1px #000 solid;text-align:center;font-size:14px;}
 
 #lt{float:left;width:250px;height:677px;overflow:hidden;background:url(images/bg_lt.gif) no-repeat;}
 #lt *{display:none;}

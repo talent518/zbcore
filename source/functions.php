@@ -61,7 +61,7 @@ function &C($ctrl){
 		if(class_exists($_ctrl,false)){
 			$ctrls[$ctrl]=new $_ctrl();
 		}else{
-			exit(IS_DEBUG?'class <b>'.$class.'</b> not exists!':0);
+			exit(IS_DEBUG?'class <b>'.$_ctrl.'</b> not exists!':0);
 		}
 	}
 	return $ctrls[$ctrl];
@@ -113,12 +113,7 @@ function &DB(){
 		$db->name=$cfg->name;
 		$db->pconnect=$cfg->pconnect;
 		$db->tablepre=$cfg->tablepre;
-		if(IN_PROJ!='install' && file_exists(ROOT_DIR.'install.php') && !($db->connect(true) && $db->sdb($cfg->name))){
-			header('Location:'.ROOT_URL.'install.php');
-			exit;
-		}else{
-			$db->connect();
-		}
+		$db->connect();
 	}
 	return $db;
 }
