@@ -25,5 +25,5 @@
 		<li><b>/install/</b></li>
 	</ul>
 </div>
-<center><button onclick="location.href='install.php?method=db}'">上一步</button><button onclick="location.href='index.php'">完成</button></center>
+<center><button onclick="location.href='install.php?method=db}'">上一步</button><button onclick="location.href='{ROOT_URL}'">完成</button></center>
 {template footer}

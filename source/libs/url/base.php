@@ -44,9 +44,13 @@ class LibUrlBase{
 		$get=$g=null;
 	}
 	function encode($args=array()){
-		$url='/'.($args['proj']?$args['proj']:(IN_PROJ=='front'?'index':IN_PROJ));
-		$url.='/'.($args['ctrl']?$args['ctrl']:IN_CTRL);
-		$url.='/'.($args['method']?$args['method']:IN_METHOD);
+		$proj=(IN_PROJ=='front'?'index':IN_PROJ);
+		$ctrl=IN_CTRL;
+		$method=IN_METHOD;
+
+		$url='/'.($args['proj']?$args['proj']:$proj);
+		$url.='/'.($args['ctrl']?$args['ctrl']:$ctrl);
+		$url.='/'.($args['method']?$args['method']:$method);
 
 		unset($args['proj'],$args['ctrl'],$args['method']);
 
@@ -57,11 +61,7 @@ class LibUrlBase{
 			$url.=CFG()->urlSuffix;
 		return $url;
 	}
-	function link($args){
-		if(is_array($args)){
-			return ROOT_URL.'?q='.$this->encode($args);
-		}else{
-			return ROOT_URL.'?q='.urlencode($args).CFG()->shortUrlSuffix;
-		}
+	function link($args=array()){
+		return ROOT_URL.'?q='.$this->encode($args);
 	}
 }

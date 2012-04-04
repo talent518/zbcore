@@ -8,11 +8,7 @@ class LibUrlRewrite extends LibUrlBase{
 		$len=strpos($_SERVER['REQUEST_URI'],'?');
 		$this->decode($len===false?$_SERVER['REQUEST_URI']:substr($_SERVER['REQUEST_URI'],0,$len));
 	}
-	function link($args){
-		if(is_array($args)){
-			return substr(ROOT_URL,0,-1).$this->encode($args);
-		}else{
-			return substr(ROOT_URL,0,-1).$args;
-		}
+	function link($args=array()){
+		return substr(ROOT_URL,0,-1).$this->encode($args);
 	}
 }
