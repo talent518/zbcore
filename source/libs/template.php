@@ -156,7 +156,7 @@ class LibTemplate{
 		//循环
 		for($i = 0; $i < 6; $i++){
 			$template = preg_replace("/\{loop\s+(\S+)\s+(\S+)\}(.+?)\{\/loop\}/es", "\$this->varPregTags(substr('\\1',0,1)=='\$'?'<?php if(is_array(\\1)){ foreach(\\1 as \\2){ ?>':'<?php \$_arrays=\\1;if(is_array(\$_arrays)){ foreach(\$_arrays as \\2){ ?>','\\3',substr('\\1',0,1)!='\$'?'<?php } }\$_arrays=null;unset(\$_arrays); ?>':'<?php } } ?>')", $template);
-			$template = preg_replace("/\{loops\s+(\S+)\s+(\S+)\}(.+?)\{\/loops\}/es", "\$this->varPregTags('<?php for(\\1=1;\\1<=\\2;\\1++){ ?>','\\3','<?php } ?>')", $template);
+			$template = preg_replace("/\{loops\s+(\S+)\s+(\S+)\s+(\S+)\}(.+?)\{\/loops\}/es", "\$this->varPregTags('<?php for(\\1=\\2;\\1<=\\3;\\1++){ ?>','\\4','<?php } ?>')", $template);
 			$template = preg_replace("/\{loop\s+(\S+)\s+(\S+)\s+(\S+)\}(.+?)\{\/loop\}/es", "\$this->varPregTags(substr('\\1',0,1)=='\$'?'<?php if(is_array(\\1)){ foreach(\\1 as \\2 => \\3){ ?>':'<?php \$_arrays=\\1;if(is_array(\$_arrays)){ foreach(\$_arrays as \\2 => \\3){ ?>','\\4',substr('\\1',0,1)!='\$'?'<?php } }\$_arrays=null;unset(\$_arrays); ?>':'<?php } } ?>')", $template);
 			$template = preg_replace("/\{if\s+(.+?)\}(.+?)\{\/if\}/es", "\$this->varPregTags('<?php if(\\1){ ?>','\\2','<?php } ?>')", $template);
 		}
