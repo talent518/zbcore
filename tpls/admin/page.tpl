@@ -14,4 +14,10 @@
 	<a href="{page|$page}">下一页</a>
 {/if}
 </div>
+<script type="text/javascript">
+$('.pages a').click(function(){
+	$('#bd').load(this.href);
+	return false;
+});
+</script>
 {/if}
