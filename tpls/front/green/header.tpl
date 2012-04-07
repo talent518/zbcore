@@ -14,6 +14,11 @@
 		</ol>
 		<p class="cf">ZHui365 Wisdom draw every day</p>
 	</div>
-	<div id="ad" class="wp"><a href="#"><img src="{SKIN_URL}images/ad.jpg"/></a></div>
+	{var $adcode=M('ad')->show("main-nav-banner-$catid");}
+	{if $adcode}
+		<div id="ad" class="wp">$adcode</div>
+	{else}
+		<php>{if $MEMBER.ismanage}<div id="ad" class="wp" style="text-align:center;font-size:30px;font-weight:bold;">&#123;ad:main-nav-banner-$catid}</div>{/if}</php>
+	{/if}
 	<div id="wp" class="wp">
 {/if}

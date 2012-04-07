@@ -182,7 +182,7 @@ class LibTemplate{
 		$template = preg_replace("/\{(\\\$[a-zA-Z0-9_\.:]+)\}/e", "\$this->varPregTags('<?=\\1?>')", $template);
 		$template = preg_replace("/\{(\\\$[a-zA-Z0-9_\.:]+)\|(\w+)\}/e", "\$this->varPregTags('<?=\$this->format(\\1,\\'\\2\\')?>')", $template);
 		$template = preg_replace("/\{(\\\$[a-zA-Z0-9_\-\+\=\[\]]+\;)\}/e", "\$this->varPregTags('<?php \\1 ?>')", $template);
-		$template = preg_replace("/\{var (\\\$.+?)\}/e", "\$this->varPregTags('<?php \\1 ?>')", $template);
+		$template = preg_replace("/\{var\s+(\\\$.+?\;)\}/e", "\$this->varPregTags('<?php \\1 ?>')", $template);
 		$template = preg_replace("/(\\\$[a-zA-Z0-9]+)/", "<?=\\1?>", $template);
 
 		//清除空白字符
@@ -263,7 +263,7 @@ class LibTemplate{
 		return $this->block_searchs[$this->block_i];
 	}
 	private function varPregTags($beginTag, $_return='',$endTag=''){
-		$beginTag=preg_replace("/(\\\$[a-zA-Z0-9_\.:]+)/e", "\$this->mkVar('\\1')", $beginTag);
+		$beginTag=preg_replace("/(\\\$[a-zA-Z0-9_\.:]+)/e", "\$this->mkVar('\\1')",str_replace('\\"','"',$beginTag));
 		$this->block_i++;
 		$this->block_searchs[$this->block_i] = '<!--BEGIN_TAG_'.$this->block_i.'-->';
 		$this->block_replaces[$this->block_i] = $beginTag;
@@ -273,7 +273,7 @@ class LibTemplate{
 		if($endTag){
 			$this->block_i++;
 			$this->block_searchs[$this->block_i] = '<!--END_TAG_'.$this->block_i.'-->';
-			$this->block_replaces[$this->block_i] = $endTag;
+			$this->block_replaces[$this->block_i] = str_replace('\\"','"',$endTag);
 			$return.=$this->block_searchs[$this->block_i];
 		}
 		return $return;

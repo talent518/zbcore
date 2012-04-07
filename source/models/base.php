@@ -63,7 +63,7 @@ class ModelBase{
 			return false;
 		}
 		if(!$isCheck || $this->check($data)){
-			DB()->update($this->table,$isString?saddslashes($data):$data,($id+0>0)?'`'.$this->priKey.'`='.($id+0):'1>0',$isString);
+			$this->update($isString?saddslashes($data):$data,$id,$isString);
 			return true;
 		}
 		return false;

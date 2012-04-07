@@ -11,6 +11,7 @@ class CtrlIndex extends CtrlBase{
 		$this->display('index',null,true);
 	}
 	function onDefault(){
+		$this->setVar('catid',0);
 		$this->display('default',null,true);
 	}
 	function onCategory(){

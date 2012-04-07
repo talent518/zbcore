@@ -162,7 +162,7 @@ class ModelAd extends ModelBase{
 	function add(&$data){
 		$this->rules['name']['query']=array('ad','pid='.$data['pid'].' AND `name`=\''.$data['name'].'\'');
 		if($this->check($data)){
-			$data['expired']=strtotime($data['expired']);
+			$data['expired']=($data['expired']?strtotime($data['expired']):0);
 			if(is_array($data['code']))
 				$data['code']=serialize($data['code']);
 			DB()->insert('ad',$data);
@@ -174,7 +174,14 @@ class ModelAd extends ModelBase{
 
 		$this->rules['name']['query']=array('ad','id<>'.$id.' AND pid='.$data['pid'].' AND `name`=\''.$data['name'].'\'');
 
-		return parent::edit($id,$data);
+		if($this->check($data)){
+			$data['expired']=($data['expired']?strtotime($data['expired']):0);
+			if(is_array($data['code']))
+				$data['code']=serialize($data['code']);
+			$this->update($data,$id);
+			return true;
+		}
+		return false;
 	}
 	function drop($id,$type){
 		if($ad=$this->get($id)){
@@ -198,6 +205,11 @@ class ModelAd extends ModelBase{
 			DB()->update('ad',array('order'=>intval($order)),'id='.intval($id));
 		}
 	}
+	function &get_by_where($where='',$order=''){
+		if($data=parent::get_by_where($where,$order))
+			$data['code']=(unserialize($data['code'])?unserialize($data['code']):$data['code']);
+		return $data;
+	}
 	function &get($id=0){
 		if($data=parent::get($id))
 			$data['code']=(unserialize($data['code'])?unserialize($data['code']):$data['code']);
@@ -218,10 +230,10 @@ class ModelAd extends ModelBase{
 		@extract($ad);
 		switch($type){
 			case 'flash':
-				$html='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="'.$size['width'].'" height="'.$size['height'].'"><param name="movie" value="'.UPLOAD_URL.$code.'" /><param name="quality" value="high" /><embed src="'.UPLOAD_URL.$code.'" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$size['width'].'" height="'.$size['height'].'"></embed></object>';
+				$html='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="'.$size['width'].'" height="'.$size['height'].'"><param name="movie" value="'.RES_UPLOAD_URL.$code.'" /><param name="quality" value="high" /><embed src="'.RES_UPLOAD_URL.$code.'" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$size['width'].'" height="'.$size['height'].'"></embed></object>';
 				break;
 			case 'image':
-				$html='<a href="'.$code['url'].'" title="'.$code['alt'].'"><img src="'.UPLOAD_URL.$code['src'].'" alt="'.$code['alt'].'" width="'.$size['width'].'" height="'.$size['height'].'" border="0"/></a>';
+				$html='<a href="'.$code['url'].'" title="'.$code['alt'].'"><img src="'.RES_UPLOAD_URL.$code['src'].'" alt="'.$code['alt'].'" width="'.$size['width'].'" height="'.$size['height'].'" border="0"/></a>';
 				break;
 			case 'text':
 				$text=$code['text'];
