@@ -8,18 +8,28 @@ function __autoload($class){
 	$dir=implode(DIR_SEP,$cls);
 	switch($type){
 		case 'ctrl':
-			include_once(CTRL_DIR.$dir.'.php');
+			import($dir,CTRL_DIR);
 			break;
 		case 'model':
-			include_once(MOD_DIR.$dir.'.php');
+			import($dir,MOD_DIR);
 			break;
 		case 'lib':
-			include_once(LIB_DIR.$dir.'.php');
+			import($dir,LIB_DIR);
+			break;
+		case 'widget':
+			import($dir,WID_DIR);
+			break;
+		case 'plugin':
+			import($dir,PLG_DIR);
 			break;
 	}
 	if(!class_exists($class,false)){
 		trigger_error("Unable to load class: $class", E_USER_WARNING);
 	}
+}
+
+function import($lib,$dir){
+	return @include_once(($dir?$dir:SRC_DIR).GD($lib).'.php');
 }
 
 function GD($dir){
@@ -35,11 +45,11 @@ function GN($dir){
 function &M($model){
 	static $models;
 	if(!$models){
-		@include_once(MOD_DIR.'base.php');
+		import('base',MOD_DIR);
 		$models=array();
 	}
 	if(!$models[$model]){
-		@include_once(MOD_DIR.GD($model).'.php');
+		import($model,MOD_DIR);
 		$class='Model'.GN($model);
 		if(class_exists($class,false)){
 			$models[$model]=new $class();
@@ -52,11 +62,11 @@ function &M($model){
 function &C($ctrl){
 	static $ctrls;
 	if(!$ctrls){
-		@include(CTRL_DIR.'base.php');
+		import('base',CTRL_DIR);
 		$ctrls=array();
 	}
 	if(!$ctrls[$ctrl]){
-		@include_once(CTRL_DIR.GD($ctrl).'.php');
+		import($ctrl,CTRL_DIR);
 		$_ctrl='Ctrl'.GN($ctrl);
 		if(class_exists($_ctrl,false)){
 			$ctrls[$ctrl]=new $_ctrl();
@@ -73,7 +83,7 @@ function &L($lib){
 		$libs=array();
 	}
 	if(!$libs[$lib]){
-		@include(LIB_DIR.GD($lib).'.php');
+		import($lib,LIB_DIR);
 		$class='Lib'.GN($lib);
 		if(class_exists($class,false)){
 			$libs[$lib]=new $class();
@@ -86,12 +96,12 @@ function &L($lib){
 function &W($wid){
 	static $wids;
 	if(!$wids){
-		@include(WID_DIR.'base.php');
+		import('base',LIB_DIR);
 		$wids=array();
 	}
 	if(!$wids[$wid]){
-		@include(WID_DIR.GD($wids).'.php');
-		$class='Widgets'.GN($wids);
+		import($wid,LIB_DIR);
+		$class='Widget'.GN($wid);
 		if(class_exists($class,false)){
 			$wids[$wid]=new $class();
 		}else{
@@ -99,6 +109,23 @@ function &W($wid){
 		}
 	}
 	return $wids[$wid];
+}
+function &P($pin){
+	static $pins;
+	if(!$pins){
+		import('base',PLG_DIR);
+		$pins=array();
+	}
+	if(!$pins[$pin]){
+		import($pin,PLG_DIR);
+		$class='Plugin'.GN($pin);
+		if(class_exists($class,false)){
+			$pins[$pin]=new $class();
+		}else{
+			exit(IS_DEBUG?'class <b>'.$class.'</b> not exists!':0);
+		}
+	}
+	return $pins[$pin];
 }
 
 function &DB(){
@@ -303,4 +330,41 @@ function thumb($image,$maxWidth=100,$maxHeight=100,$center=true,$bgcolor=0xFFFFF
 		return $thumburl;
 	 }
 	 return false;
+}
+
+//是否手机用户
+function is_wap(){
+	// 如果有HTTP_X_WAP_PROFILE则一定是移动设备
+	if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
+		return true;
+	}
+
+	//如果via信息含有wap则一定是移动设备,部分服务商会屏蔽该信息
+	if(isset($_SERVER['HTTP_VIA'])){
+		//找不到为flase,否则为true
+		return stristr($_SERVER['HTTP_VIA'],"wap") ? true : false;
+	}
+
+	//脑残法，判断手机发送的客户端标志,兼容性有待提高
+	if(isset($_SERVER['HTTP_USER_AGENT'])){
+		$clientkeywords = array('nokia','sony','ericsson','mot','samsung',
+			'htc','sgh','lg','sharp','sie-','philips','panasonic','alcatel',
+			'lenovo','iphone','ipod','blackberry','meizu','android','netfront',
+			'symbian','ucweb','windowsce','palm','operamini','operamobi',
+			'openwave','nexusone','cldc','midp','wap','mobile');
+		// 从HTTP_USER_AGENT中查找手机浏览器的关键字
+		if (preg_match("/(".implode('|',$clientkeywords).")/i",strtolower($_SERVER['HTTP_USER_AGENT']))){
+			return true;
+		}
+	}
+	 //协议法，因为有可能不准确，放到最后判断
+
+	if (isset($_SERVER['HTTP_ACCEPT'])) {
+		// 如果只支持wml并且不支持html那一定是移动设备
+		// 如果支持wml和html但是wml在html之前则是移动设备
+		if(preg_match("/^(text\/vnd.wap.wml|application\/vnd.wap.xhtml\+xml|application\/xhtml\+xml)/",$_SERVER['HTTP_ACCEPT'])){
+			return true;
+		}
+	}
+	return false;
 }

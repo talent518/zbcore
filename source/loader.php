@@ -59,6 +59,8 @@ if(!file_exists(SRC_DIR.'config.php')){
 include_once(SRC_DIR.'zbcore.php');//核心对象
 include_once(SRC_DIR.'functions.php');//核心函數
 
+define('IS_WAP',is_wap());
+
 CFG()->isCookie or session_start();
 
 if(!IS_MQ_GPC){

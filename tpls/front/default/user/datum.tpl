@@ -1,14 +1,31 @@
 <form id="datumform" class="formtable" action="{link ctrl=user method=datum}" method="post">
 	<table cellspacing="0" cellpadding="0" border="0">
 		<tbody>
+		{if $MEMBER.iscorp}
 			<tr>
 				<th>公司名：</th>
 				<td><input name="corpname" type="text" value="{$datum.corpname|html}" size="30" /></td>
 			</tr>
+		{/if}
+		{if $MEMBER.iscorp}
 			<tr>
-				<th>联系人：</th>
+				<th>公司介绍：</th>
+				<td><textarea name="introduce" type="text" cols="60" rows="5" >{$datum.introduce|html}</textarea><br/><label for="introduce"></label></td>
+			</tr>
+		{/if}
+			<tr>
+				<th>{if $MEMBER.iscorp}联系人{else}姓名{/if}：</th>
 				<td><input name="linkman" type="text" value="{$datum.linkman|html}" size="30" /></td>
 			</tr>
+		{if !$MEMBER.iscorp}
+			<tr>
+				<th>性别：</th>
+				<td>
+					<input name="sex" type="radio" value="1" size="30"{if $datum.sex} checked{/if}/>男&nbsp;
+					<input name="sex" type="radio" value="0" size="30"{if $datum.sex===0} checked{/if}/>女<label for="sex"></label>
+				</td>
+			</tr>
+		{/if}
 			<tr>
 				<th>通信地址：</th>
 				<td><input name="address" type="text" value="{$datum.address|html}" size="30" /></td>
@@ -29,6 +46,10 @@
 				<th>固定电话：</th>
 				<td><input name="phone" type="text" value="{$datum.phone}" size="30" /></td>
 			</tr>
+			<tr>
+				<th>传真：</th>
+				<td><input name="fax" type="text" value="{$datum.fax}" size="30" /></td>
+			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
@@ -42,11 +63,19 @@
 $('#datumform').validate({
 	rules:{
 		corpname:{
+			required:true,
 			chinese:true
 		},
 		linkman:{
 			required:true,
 			chinese:true
+		},
+		introduce:{
+			required:true,
+			minlength:30
+		},
+		sex:{
+			required:true
 		},
 		address:{
 			required:true,
@@ -63,6 +92,9 @@ $('#datumform').validate({
 			mobile:true
 		},
 		phone:{
+			phone:true
+		},
+		fax:{
 			phone:true
 		}
 	}

@@ -45,8 +45,12 @@ class LibUrlBase{
 	}
 	function encode($args=array()){
 		$proj=(IN_PROJ=='front'?'index':IN_PROJ);
-		$ctrl=IN_CTRL;
-		$method=IN_METHOD;
+		if(empty($args['proj']) || $proj==$args['proj']){
+			$ctrl=IN_CTRL;
+			$method=IN_METHOD;
+		}else{
+			$ctrl=$method='index';
+		}
 
 		$url='/'.($args['proj']?$args['proj']:$proj);
 		$url.='/'.($args['ctrl']?$args['ctrl']:$ctrl);

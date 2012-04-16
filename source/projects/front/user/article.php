@@ -2,13 +2,13 @@
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class CtrlArticle extends CtrlBase{
+class CtrlUserArticle extends CtrlBase{
 	var $id=0;
 	function __construct(){
 		parent::__construct();
 		$this->id=GET('id')+0;
 		$this->setVar('id',$this->id);
-		$this->mod=M('article');
+		$this->mod=M('user.article');
 	}
 	function onIndex(){
 		$this->onList();
@@ -20,19 +20,17 @@ class CtrlArticle extends CtrlBase{
 				if($_POST['_ids'][$id]!=$order)
 					$ids[$id]=$order;
 			$this->mod->order($this->id,$ids);
-			$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list','id'=>$this->id)),true);
+			$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
 		}else{
-			$this->setVar('catpos',M('category')->catpos($this->id));
-			$this->setVar('catlist',M('category')->get_list_by_where('ctype=\'article\' AND pid='.$this->id));
-			$this->setVar('list',$this->mod->get_list_by_where($this->id?$this->id:null,20,true));
+			$this->setVar('list',$this->mod->get_list_by_where($this->MEMBER['uid'],20,true));
 			$this->setVar('listhash',$this->formhash('list'));
-			$this->display('article/list');
+			$this->display('user/article/list');
 		}
 	}
 	function onAdd(){
 		if($this->is_submit('add')){
 			$data=array(
-				'cat_id'=>$_POST['cat_id'],
+				'uid'=>$this->MEMBER['uid'],
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
@@ -41,19 +39,18 @@ class CtrlArticle extends CtrlBase{
 				'order'=>$_POST['order'],
 			);
 			if($this->mod->add($data))
-				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list','id'=>$data['pid'])),true);
+				$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}else{
 			$this->setVar('add',array('cat_id'=>$this->id,'order'=>0));
 			$this->setVar('addhash',$this->formhash('add'));
-			$this->display('article/add');
+			$this->display('user/article/add');
 		}
 	}
 	function onEdit(){
 		if($this->is_submit('edit')){
 			$data=array(
-				'cat_id'=>$_POST['cat_id'],
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
@@ -61,8 +58,8 @@ class CtrlArticle extends CtrlBase{
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);
-			if($this->mod->edit($this->id,$data))
-				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list','id'=>$data['pid'])),true);
+			if(($article=$this->mod->get($this->id)) && $article['uid']==$this->MEMBER['uid'] && $this->mod->edit($this->id,$data))
+				$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}else{
@@ -71,20 +68,20 @@ class CtrlArticle extends CtrlBase{
 			$edit['seo']=unserialize($edit['seo']);
 			$this->setVar('edit',$edit);
 			$this->setVar('edithash',$this->formhash('edit'));
-			$this->display('article/edit');
+			$this->display('user/article/edit');
 		}
 	}
 	function onDrop(){
 		if($this->is_submit('drop')){
-			if($this->mod->drop(intval($_POST['id'])))
-				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list','id'=>$_POST['pid'])),true);
+			if(($article=$this->mod->get(intval($_POST['id']))) && $article['uid']==$this->MEMBER['uid'] && $this->mod->drop(intval($_POST['id'])))
+				$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}elseif($article=$this->mod->get($this->id)){
 			$edit['seo']=unserialize($article['seo']);
 			$this->setVar('article',$article);
 			$this->setVar('drophash',$this->formhash('drop'));
-			$this->display('article/drop');
+			$this->display('user/article/drop');
 		}else
 			$this->message('文章不存在！');
 	}

@@ -126,7 +126,7 @@ class CtrlUser extends CtrlBase{
 			$datum=M('user.datum')->get($this->MEMBER['uid']);
 		else
 			$datum=array();
-		foreach(array('corpname','linkman','address','qq','msn','mobile','phone') as $key)
+		foreach(array('corpname','linkman','address','qq','msn','mobile','phone','fax') as $key)
 			if(!$datum[$key])
 				$datum[$key]='-';
 		$this->setVar('datum',$datum);
@@ -138,13 +138,21 @@ class CtrlUser extends CtrlBase{
 		if($this->is_submit('datum')){
 			$data=array(
 				'corpname'=>$_POST['corpname'],
+				'introduce'=>$_POST['introduce'],
 				'linkman'=>$_POST['linkman'],
+				'sex'=>(int)$_POST['sex'],
 				'address'=>$_POST['address'],
 				'qq'=>$_POST['qq'],
 				'msn'=>$_POST['msn'],
 				'mobile'=>$_POST['mobile'],
 				'phone'=>$_POST['phone'],
+				'fax'=>$_POST['fax'],
 			);
+			if($this->MEMBER['iscorp']){
+				unset($data['sex']);
+			}else{
+				unset($data['corpname'],$data['fax']);
+			}
 			if(M('user.datum')->edit($this->MEMBER['uid'],$data))
 				$this->message('编辑资料成功！',URL(array('ctrl'=>'user','method'=>'welcome')),true);
 			else

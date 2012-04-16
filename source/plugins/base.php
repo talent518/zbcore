@@ -2,7 +2,7 @@
 if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
-class WidgetBase{
+class PluginBase{
 	function __construct(){
 	}
 }

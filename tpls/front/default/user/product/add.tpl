@@ -1,28 +1,18 @@
-<form id="addform" class="formtable" action="{link ctrl=picture method=add}" method="post">
+<form id="addform" class="formtable" action="{link ctrl=user.product method=add}" method="post">
 	<table cellspacing="0" cellpadding="0" border="0">
 		<tbody>
 			<tr>
-				<th>所属栏目：</th>
-				<td><select name="cat_id"></select></td>
-			</tr>
-			<tr>
-				<th>图片标题：</th>
+				<th>产品标题：</th>
 				<td><input name="title" type="text" value="{$add.title|html}" size="20" /></td>
 			</tr>
 			<tr>
-				<th>上传图片：</th>
+				<th>上传产品：</th>
 				<td>
 					<input id="jqFileUpload" name="url" type="text" value=""/>
 					<div id="jqFileUploadQueue"></div>
 					<div id="jqFileUploadResp"></div>
 				</td>
 			</tr>
-		{if $posList}
-			<tr>
-				<th>推荐：</th>
-				<td>{loop $posList $r}<input name="posids[]" type="checkbox" value="{$r.posid}"/>{$r.pname}&nbsp;&nbsp;{/loop}</td>
-			</tr>
-		{/if}
 			<tr>
 				<th>备注：</th>
 				<td><textarea name="remark" cols="40" rows="3">{$add.remark|html}</textarea></td>
@@ -43,10 +33,6 @@
 <script type="text/javascript">
 $('#addform').validate({
 	rules:{
-		cat_id:{
-			required:true,
-			min:1
-		},
 		title:{
 			required:true,
 			maxlength:50,
@@ -59,15 +45,14 @@ $('#addform').validate({
 			integer:true
 		}
 	},messages:{
-		cat_id:{min:'请选择'},url:{required:'请上传并选择默认图片'}
+		url:{required:'请上传并选择默认产品'}
 	}
 });
-$('#addform select[name=cat_id]').staged('{link ctrl=category method=json type=picture}',{val:{$add.cat_id}});
 $("#jqFileUpload").uploadify({
 	'uploader': '{SKIN_URL}images/uploadify.swf',
 	'cancelImg': '{SKIN_URL}images/wrong.gif',
 	'script': '{ROOT_URL}index.php',
-	'scriptData': {proj:'{IN_PROJ}',ctrl:'picture',method:'upload',auth:'{$auth}'},
+	'scriptData': {proj:'{IN_PROJ}',ctrl:'user.product',method:'upload',auth:'{$auth}'},
 	'method':'get',
 	'queueID':'jqFileUploadQueue',
 	'auto': true,
@@ -97,7 +82,7 @@ $("#jqFileUpload").uploadify({
 			ipt=$('<input type="text" size="4" style="margin-right:5px;"/>').appendTo(p);
 			ipt.attr('name','orderes['+msg.img_id+']');
 			ipt.val(0);
-			$('<a href="{link ctrl=picture method=drop.upload id=IMGID}"><img src="{SKIN_URL}images/wrong.gif"/></a>'.replace('IMGID',msg.img_id)).click(function(){
+			$('<a href="{link ctrl=user.product method=drop.upload id=IMGID}"><img src="{SKIN_URL}images/wrong.gif"/></a>'.replace('IMGID',msg.img_id)).click(function(){
 				var jp=$(this).parent('p');
 				$.getJson(this.href,function(status){
 					if(status==true){

@@ -5,6 +5,7 @@ exit('Access Denied');
 class ModelArticle extends ModelBase{
 	protected $table='article';
 	protected $priKey='art_id';
+	protected $forKey='cat_id';
 	protected $order='`order` desc,`art_id` desc';
 	protected $rules=array(
 		'cat_id'=>array(
