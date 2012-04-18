@@ -18,6 +18,10 @@ class ModelCount{
 
 	function &user($id){
 		return array(
+			'picture'=>DB()->count('user_picture','uid='.$id),
+			'product'=>DB()->count('user_product','uid='.$id),
+			'product_image'=>DB()->count('user_product_image','uid='.$id),
+			'article'=>DB()->count('user_article','uid='.$id),
 		);
 	}
 

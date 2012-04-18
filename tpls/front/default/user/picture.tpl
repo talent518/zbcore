@@ -33,16 +33,17 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="4"><input type="submit" value="提交"/><input name="listsubmit" type="hidden" value="1"/><input name="edithash" type="hidden" value="$listhash"/></td>
+				<td colspan="4"><input type="submit" value="提交"/><input name="listsubmit" type="hidden" value="1"/><input name="listhash" type="hidden" value="$listhash"/></td>
 			</tr>
 		</tfoot>
 	</table>
 </form>
 <script type="text/javascript">
+$('#listform').validate();
 $("#jqFileUpload").uploadify({
 	'uploader': '{SKIN_URL}images/uploadify.swf',
 	'cancelImg': '{SKIN_URL}images/wrong.gif',
-	'script': '{ROOT_URL}index.php',
+	'script': '{ROOT_URL}',
 	'scriptData': {proj:'{IN_PROJ}',ctrl:'{IN_CTRL}',method:'upload',auth:'{$auth}'},
 	'method':'get',
 	'queueID':'jqFileUploadQueue',

@@ -1,4 +1,4 @@
-<?
+<?php
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
@@ -15,6 +15,10 @@ class ModelUserProduct extends ModelBase{
 		'url'=>array(
 			'required'=>true
 		),
+		'price'=>array(
+			'required'=>true,
+			'ufloat'=>true,
+		),
 		'order'=>array(
 			'integer'=>true
 		),
@@ -27,6 +31,10 @@ class ModelUserProduct extends ModelBase{
 		),
 		'url'=>array(
 			'required'=>'请上传产品'
+		),
+		'price'=>array(
+			'required'=>'请输入价格',
+			'ufloat'=>'价格格式不合法',
 		),
 		'order'=>array(
 			'integer'=>'排序不是一个整数'

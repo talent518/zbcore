@@ -30,7 +30,7 @@ class CtrlIndex extends CtrlBase{
 				$this->message('mysql连接失败！');
 			if(!$db->sdb($_POST['db']['name']) && !$db->cdb($_POST['db']['name']))
 				$this->message('数据库不存在！');
-			$c=L('io.file')->read(SRC_DIR.'config.php');
+			$c=L('io.file')->read(file_exists(SRC_DIR.'config.php')?SRC_DIR.'config.php':SRC_DIR.'config.sample.php');
 			foreach($_POST['db'] as $k=>$v){
 				$v=eregi("^TRUE|FALSE$",$v)?"{$v}":"'{$v}'";
 				$c=preg_replace("/(var\s+\\\${$k}\s*\=\s*)[^\;]+\;/ie","'\\1'.\$v.';'",$c);
@@ -50,7 +50,7 @@ class CtrlIndex extends CtrlBase{
 		}
 	}
 	function onDb(){
-		if(GET('begin')){
+		if($_GET['begin']){
 			header('Content-Type:text/html; charset='.CFG()->charset);
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CFG()->charset?>" /><style type="text/css">
@@ -60,7 +60,7 @@ strong{margin-left:1em;color:red;font-weight:normal;padding-left:1em;background:
 </style>
 <?php
 			M('db')->import(CTRL_DIR.'db.sql',TRUE);
-			$adm=GET('adm');
+			$adm=$_GET['adm'];
 			$user=array('gid'=>1,'username'=>'admin','email'=>$adm['email'],'password'=>$adm['password']);
 			echo '<br/>管理设置';
 			echo M('user')->edit(1,$user)?'<b>成功!</b>':'<strong>失败!</strong>';
@@ -68,7 +68,7 @@ strong{margin-left:1em;color:red;font-weight:normal;padding-left:1em;background:
 			ob_flush();
 			flush();
 		}else{
-			$this->setVar('adm',GET('adm'));
+			$this->setVar('adm',$_GET['adm']);
 			$this->display('db');
 		}
 	}

@@ -1,5 +1,5 @@
 <form class="formtable" id="dropform" action="{link ctrl=ad method=drop}" method="post">
-<table class="list">
+<table cellspacing="0" cellpadding="0" border="0">
 {if $catpos}
 	<caption><b>当前位置：</b><a href="{link ctrl=ad}" class="list">广告管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=ad method=list id=$r.pid}" class="list">{$r.cname}</a>{/loop}</caption>
 {/if}

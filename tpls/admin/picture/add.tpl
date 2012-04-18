@@ -25,7 +25,7 @@
 		{/if}
 			<tr>
 				<th>备注：</th>
-				<td><textarea name="remark" cols="40" rows="3">{$add.remark|html}</textarea></td>
+				<td><textarea name="remark" cols="40" rows="3">{$add.remark|text}</textarea></td>
 			</tr>
 			<tr>
 				<th>排序：</th>
@@ -66,7 +66,7 @@ $('#addform select[name=cat_id]').staged('{link ctrl=category method=json type=p
 $("#jqFileUpload").uploadify({
 	'uploader': '{SKIN_URL}images/uploadify.swf',
 	'cancelImg': '{SKIN_URL}images/wrong.gif',
-	'script': '{ROOT_URL}index.php',
+	'script': '{ROOT_URL}',
 	'scriptData': {proj:'{IN_PROJ}',ctrl:'picture',method:'upload',auth:'{$auth}'},
 	'method':'get',
 	'queueID':'jqFileUploadQueue',

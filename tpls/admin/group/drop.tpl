@@ -1,5 +1,5 @@
 <form class="formtable" id="dropform" action="{link ctrl=group method=drop}" method="post">
-<table class="list">
+<table cellspacing="0" cellpadding="0" border="0">
 {if $catpos}
 	<caption><b>当前位置：</b><a href="{link ctrl=group}" class="list">用户组管理</a>{loop $catpos $r}<b class="gray">&gt;</b><a href="{link ctrl=group method=list id=$r.gid}" class="list">{$r.cname}</a>{/loop}</caption>
 {/if}

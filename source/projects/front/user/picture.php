@@ -16,7 +16,7 @@ class CtrlUserPicture extends CtrlBase{
 			foreach($_POST['remarkes'] as $k=>$v){
 				$idata['remark']=$v;
 				$idata['order']=$_POST['orderes'][$k];
-				M('picture.image')->edit($k,$idata,false);
+				M('user.picture')->edit($k,$idata,false);
 			}
 			$this->message('提交成功',URL(array('ctrl'=>'user.picture','method'=>'index')),true);
 		}else{

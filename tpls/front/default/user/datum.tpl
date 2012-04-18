@@ -10,7 +10,7 @@
 		{if $MEMBER.iscorp}
 			<tr>
 				<th>公司介绍：</th>
-				<td><textarea name="introduce" type="text" cols="60" rows="5" >{$datum.introduce|html}</textarea><br/><label for="introduce"></label></td>
+				<td><textarea name="introduce" cols="60" rows="5" >{$datum.introduce|text}</textarea><br/><label for="introduce"></label></td>
 			</tr>
 		{/if}
 			<tr>

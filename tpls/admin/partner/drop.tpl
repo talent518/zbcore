@@ -1,5 +1,5 @@
 <form class="formtable" id="dropform" action="{link ctrl=partner method=drop}" method="post">
-<table class="list">
+<table cellspacing="0" cellpadding="0" border="0">
 	<thead><tr><th>你确定要删除该栏目及栏目下的网址吗？</th></tr></thead>
 	<tbody>
 		<tr>

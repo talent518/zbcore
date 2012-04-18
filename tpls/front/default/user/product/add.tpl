@@ -3,7 +3,7 @@
 		<tbody>
 			<tr>
 				<th>产品标题：</th>
-				<td><input name="title" type="text" value="{$add.title|html}" size="20" /></td>
+				<td><input name="title" type="text" value="{$add.title|html}" size="30" /></td>
 			</tr>
 			<tr>
 				<th>上传产品：</th>
@@ -14,8 +14,12 @@
 				</td>
 			</tr>
 			<tr>
+				<th>价格：</th>
+				<td><input name="price" type="text" value="{$add.price|html}" size="14" /></td>
+			</tr>
+			<tr>
 				<th>备注：</th>
-				<td><textarea name="remark" cols="40" rows="3">{$add.remark|html}</textarea></td>
+				<td><textarea name="remark" cols="65" rows="5">{$add.remark|text}</textarea></td>
 			</tr>
 			<tr>
 				<th>排序：</th>
@@ -35,11 +39,14 @@ $('#addform').validate({
 	rules:{
 		title:{
 			required:true,
-			maxlength:50,
-			chinese:true
+			maxlength:50
 		},
 		url:{
 			required:true
+		},
+		price:{
+			required:true,
+			ufloat:true
 		},
 		order:{
 			integer:true
@@ -51,7 +58,7 @@ $('#addform').validate({
 $("#jqFileUpload").uploadify({
 	'uploader': '{SKIN_URL}images/uploadify.swf',
 	'cancelImg': '{SKIN_URL}images/wrong.gif',
-	'script': '{ROOT_URL}index.php',
+	'script': '{ROOT_URL}',
 	'scriptData': {proj:'{IN_PROJ}',ctrl:'user.product',method:'upload',auth:'{$auth}'},
 	'method':'get',
 	'queueID':'jqFileUploadQueue',

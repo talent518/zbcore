@@ -32,7 +32,7 @@
 		{if M('setup')->get('verify','frontregister')}
 			<tr>
 				<th>验证码：</th>
-				<td><input name="verify" type="text" value="" size="4" style="margin-right:10px;"/><img src="{link ctrl=user method=verify}" id="verifyImage" height="30" style="cursor:pointer"/><label for="verify"/></td>
+				<td><input name="verify" type="text" value="" size="4" style="margin-right:10px;"/><img src="" id="verifyImage" height="30" style="cursor:pointer"/><label for="verify"/></td>
 			</tr>
 		{/if}
 			<tr>
@@ -51,12 +51,9 @@
 </form>
 <script type="text/javascript">
 {if M('setup')->get('verify','frontregister')}
-$('#verifyImage').click(function(){
-	$('#registerForm input[name=verify]').val('');
-	var uri=$.URL2URI(this.src);
-	uri.querys.timestamp={TIMESTAMP};
-	uri.querys.rand=Math.floor(Math.random()*100000);
-	this.src=$.URI2URL(uri);
+	$('#verifyImage').click(function(){
+		$('#registerForm input[name=verify]').val('');
+		this.src='{link method=verify timesamp=TIMESTAMP rand=RANDOM}'.replace('TIMESTAMP',{TIMESTAMP}).replace('RANDOM',Math.random()*100000);
 		setTimeout(function(){$('#verifyImage').click();},60000);
 	}).click();
 {/if}

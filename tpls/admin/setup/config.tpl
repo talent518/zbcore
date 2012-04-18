@@ -15,7 +15,7 @@
 			</tr>
 			<tr>
 				<th>网站描述：</th>
-				<td><textarea name="config[sitedescription]" cols="80" rows="3">{$config.sitedescription}</textarea></td>
+				<td><textarea name="config[sitedescription]" cols="80" rows="3">{$config.sitedescription|html}</textarea></td>
 			</tr>
 			<tr>
 				<th>时区：</th>
@@ -67,7 +67,7 @@
 			</tr>
 			<tr>
 				<th>统计代码：</th>
-				<td><textarea name="config[statistics]" cols="80" rows="3">{$config.statistics}</textarea></td>
+				<td><textarea name="config[statistics]" cols="80" rows="3">{$config.statistics|html}</textarea></td>
 			</tr>
 		</tbody>
 		<tfoot>

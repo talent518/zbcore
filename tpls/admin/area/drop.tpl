@@ -1,5 +1,5 @@
 <form class="formtable" id="dropform" action="{link ctrl=area method=drop}" method="post">
-<table class="list">
+<table cellspacing="0" cellpadding="0" border="0">
 {if $areapos}
 	<caption><b>当前位置：</b><a href="{link ctrl=area}" class="list">地区管理</a>{loop $areapos $r}<b class="gray">&gt;</b><a href="{link ctrl=area method=list id=$r.id}" class="list">{$r.name}</a>{/loop}</caption>
 {/if}

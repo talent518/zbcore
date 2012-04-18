@@ -15,7 +15,7 @@
 			</tr>
 			<tr>
 				<th>描述：</th>
-				<td><textarea name="description" cols="40" rows="3">{$add.description}</textarea></td>
+				<td><textarea name="description" cols="40" rows="3">{$add.description|text}</textarea></td>
 			</tr>
 			<tr>
 				<th>排序：</th>

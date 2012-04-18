@@ -10,6 +10,7 @@
 				<th>ID</th>
 				<th class="l" width="100%">产品标题</th>
 				<th>缩略图</th>
+				<th>价格</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -25,6 +26,7 @@
 				<td>{$r.prod_id}</td>
 				<td class="l">{$r.title}</td>
 				<td class="l"><img src="{thumb RES_UPLOAD_DIR.$r.url,50,50}"/></td>
+				<td class="l">{$r.price|money}</td>
 				<td>
 					<a href="{link ctrl=space method=product id=$r.prod_id}" target="_blank" title="查看产品">查看</a>
 					<span class="split">|</span>
@@ -35,17 +37,17 @@
 			</tr>
 			{/loop}
 			{if PAGES>1}
-			<tr><td colspan="5">{pages ctrl=user.product method=list id=$id}</td></tr>
+			<tr><td colspan="6">{pages ctrl=user.product method=list id=$id}</td></tr>
 			{/if}
 		{else}
 			<tr>
-				<td colspan="5" class="c">您还没有添加产品！</td>
+				<td colspan="6" class="c">您还没有添加产品！</td>
 			</tr>
 		{/if}
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="5" class="l">
+				<td colspan="6" class="l">
 					<input name="listsubmit" type="submit" value="排序"/>
 					<input name="listhash" type="hidden" value="$listhash"/>
 				</td>

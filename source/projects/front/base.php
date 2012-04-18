@@ -6,8 +6,8 @@ class CtrlBase extends ZBCore{
 	var $MEMBER=array(),$LOGINED=0;
 	function __construct(){
 		parent::__construct();
-		$ftpl=M('setup')->get('template','fronttpl');
 		$tpl=L('template');
+		$ftpl=M('setup')->get('template','fronttpl');
 		$tpl->defdir=TPL_DIR.'front'.DIR_SEP.'default'.DIR_SEP;
 		$tpl->tpldir=TPL_DIR.'front'.DIR_SEP.$ftpl.DIR_SEP;
 		$tpl->cachedir=TPL_CACHE_DIR.'front'.DIR_SEP.$ftpl.DIR_SEP;

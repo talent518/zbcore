@@ -2,18 +2,28 @@
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class LibUrlBase{
+class LibRouter{
 	protected $get;
-	function LibUrlBase(){
+	function LibRouter(){
 		$this->get=&$_GET;
-		if(isset($_GET['c'])){
-			$_GET['ctrl']=$_GET['c'];
+		$decode=false;
+		switch(CFG()->urlFormat){
+			case 'base':
+				$decode=$_GET['q'];
+				break;
+			case 'phpinfo':
+				$decode=$_SERVER['PATH_INFO'];
+				break;
+			case 'rewrite':
+				$len=strpos($_SERVER['REQUEST_URI'],'?');
+				$rewrite=($len===false?$_SERVER['REQUEST_URI']:substr($_SERVER['REQUEST_URI'],0,$len));
+				if($rewrite!=$_SERVER['SCRIPT_NAME']){
+					$decode=((strlen(ROOT_URL)>1 && substr($rewrite,0,strlen(ROOT_URL))==ROOT_URL)?substr($rewrite,strlen(ROOT_URL)):$rewrite);
+				}
+				break;
 		}
-		if(isset($_GET['m'])){
-			$_GET['method']=$_GET['m'];
-		}
-		if(isset($_GET['q'])){
-			$this->decode($_GET['q']);
+		if($decode!==false){
+			$this->decode($decode);
 		}
 	}
 	function get($key){
@@ -52,9 +62,15 @@ class LibUrlBase{
 			$ctrl=$method='index';
 		}
 
-		$url='/'.($args['proj']?$args['proj']:$proj);
-		$url.='/'.($args['ctrl']?$args['ctrl']:$ctrl);
-		$url.='/'.($args['method']?$args['method']:$method);
+		foreach(array('proj','ctrl','method') as $var){
+			if(!isset($args[$var])){
+				$args[$var]=$$var;
+			}
+		}
+
+		$url='/'.$args['proj'];
+		$url.='/'.$args['ctrl'];
+		$url.='/'.$args['method'];
 
 		unset($args['proj'],$args['ctrl'],$args['method']);
 
@@ -66,6 +82,13 @@ class LibUrlBase{
 		return $url;
 	}
 	function link($args=array()){
-		return ROOT_URL.'?q='.$this->encode($args);
+		switch(CFG()->urlFormat){
+			case 'base':
+				return ROOT_URL.'?q='.$this->encode($args);
+			case 'phpinfo':
+				return ROOT_URL.'index.php'.$this->encode($args);
+			case 'rewrite':
+				return substr(ROOT_URL,0,-1).$this->encode($args);
+		}
 	}
 }

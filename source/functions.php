@@ -154,11 +154,11 @@ function &CFG(){
 }
 
 function GET($key){
-	return L('url.'.CFG()->urlFormat)->get($key);
+	return L('router')->get($key);
 }
 
 function URL($args=array()){
-	return L('url.'.CFG()->urlFormat)->link($args);
+	return L('router')->link($args);
 }
 
 function saddslashes($string) {

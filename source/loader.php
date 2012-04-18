@@ -17,7 +17,7 @@ define('MICROTIME',(float)$msec);$msec=null;unset($msec);
 define('IS_MQ_GPC',get_magic_quotes_gpc());
 define('DIR_SEP',DIRECTORY_SEPARATOR);
 
-define('SITE_URL',strtolower(substr($_SERVER['SERVER_PROTOCOL'],0,strpos($_SERVER['SERVER_PROTOCOL'],'/'))).'://'.$_SERVER['HTTP_HOST']);
+define('SITE_URL',strtolower(substr($_SERVER['SERVER_PROTOCOL'],0,strpos($_SERVER['SERVER_PROTOCOL'],'/'))).(in_array($_SERVER['SERVER_PORT'],array(80,443))?'://':':'.$_SERVER['SERVER_PORT'].'//').$_SERVER['HTTP_HOST']);
 define('SITE_FULL_URL',SITE_URL.ROOT_URL);
 
 define('SRC_DIR',dirname(__FILE__).DIR_SEP);
@@ -46,7 +46,7 @@ define('RES_THUMB_DIR',RES_DIR.'thumb'.DIR_SEP);//缩略图目录
 define('RES_THUMB_URL',RES_URL.'thumb/');//缩略图URL
 
 if(!file_exists(SRC_DIR.'config.php')){
-	if(IN_PROJ!='install'){
+	if(defined('IN_PROJ') && IN_PROJ!='install'){
 		header('Location:'.ROOT_URL.'install.php');
 		exit;
 	}else{
@@ -59,7 +59,7 @@ if(!file_exists(SRC_DIR.'config.php')){
 include_once(SRC_DIR.'zbcore.php');//核心对象
 include_once(SRC_DIR.'functions.php');//核心函數
 
-define('IS_WAP',is_wap());
+defined('IN_MIME') or define('IN_MIME','text/html');
 
 CFG()->isCookie or session_start();
 
@@ -71,9 +71,11 @@ if(!IS_MQ_GPC){
 	$_REQUEST	= saddslashes($_REQUEST);
 }
 
-$IN_AJAX=GET('inAjax');
-define('IN_AJAX',!empty($IN_AJAX));
-unset($IN_AJAX);
+if(!defined('IN_AJAX')){
+	$IN_AJAX=GET('inAjax');
+	define('IN_AJAX',!empty($IN_AJAX));
+	unset($IN_AJAX);
+}
 
 if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
 	$onlineip = getenv('HTTP_CLIENT_IP');
@@ -85,7 +87,7 @@ if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) 
 	$onlineip = $_SERVER['REMOTE_ADDR'];
 }
 
-if(!eregi("[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}",$onlineip))
+if(!preg_match("/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/",$onlineip))
 	$onlineip='unknown';
 
 define('CLIENT_IP',$onlineip);
@@ -100,11 +102,6 @@ function loader(){
 
 	define('IN_CTRL',strtolower($ctrl));
 	define('IN_METHOD',strtolower($method));
-
-	define('IN_URL_C',sprintf('/%s/%s',IN_PROJ,IN_CTRL));
-	define('IN_URL_M',sprintf('%s/%s',IN_URL_C,IN_METHOD));
-	define('IN_URL_CM',sprintf('%s/%s',IN_CTRL,IN_METHOD));
-	define('IN_URL',sprintf('%s/%s',IN_URL_M,CFG()->urlSuffix));
 
 	$method='on'.GN($method);
 

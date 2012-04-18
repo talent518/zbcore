@@ -33,6 +33,7 @@ class CtrlUserProduct extends CtrlBase{
 				'uid'=>$this->MEMBER['uid'],
 				'title'=>$_POST['title'],
 				'url'=>$_POST['url'],
+				'price'=>$_POST['price'],
 				'remark'=>$_POST['remark'],
 				'order'=>$_POST['order'],
 			);
@@ -57,8 +58,10 @@ class CtrlUserProduct extends CtrlBase{
 	function onEdit(){
 		if($this->is_submit('edit')){
 			$data=array(
+				'uid'=>$this->MEMBER['uid'],
 				'title'=>$_POST['title'],
 				'url'=>$_POST['url'],
+				'price'=>$_POST['price'],
 				'remark'=>$_POST['remark'],
 				'order'=>$_POST['order'],
 			);
@@ -122,7 +125,7 @@ class CtrlUserProduct extends CtrlBase{
 	function onDropUpload(){
 		$return=false;
 		$id=GET('id')+0;
-		if($get=M('user.product.image')->get($id) && $get['uid']==$this->MEMBER['uid']){
+		if(($get=M('user.product.image')->get($id)) && $get['uid']==$this->MEMBER['uid']){
 			@unlink(RES_UPLOAD_DIR.$get['url']);
 			M('user.product.image')->delete($id);
 			$return=true;

@@ -43,7 +43,7 @@ class LibCache{
 	public function getData(&$callback){
 		list($object,$name,$param)=$callback;
 		if(is_object($object)){
-			return call_user_method_array($name,$object,is_array($param)?$param:array(&$param));
+			return call_user_func_array(array(&$object,$name),is_array($param)?$param:array(&$param));
 		}else{
 			return call_user_func_array($object,is_array($name)?$name:array(&$name));
 		}

@@ -123,7 +123,7 @@ class ZBCore{
 			$content='<'.'?xml version="1.0" encoding="'.CFG()->charset.'"?><root><![CDATA['.$content.']]></root>';
 			$this->echoPage(array('Content-type'=>'text/xml; charset='.CFG()->charset),$content);
 		}else{
-			$this->echoPage(array('Content-type'=>'text/html; charset='.CFG()->charset),$content);
+			$this->echoPage(array('Content-type'=>IN_MIME.'; charset='.CFG()->charset),$content);
 		}
 	}
 	function echoPage($headers,$body,$isFile=false){

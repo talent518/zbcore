@@ -7,7 +7,7 @@
 			</tr>
 			<tr>
 				<th>备注：</th>
-				<td><textarea name="remark" cols="40" rows="3">{$add.remark|html}</textarea></td>
+				<td><textarea name="remark" cols="40" rows="3">{$add.remark|text}</textarea></td>
 			</tr>
 			<tr>
 				<th>受保护：</th>

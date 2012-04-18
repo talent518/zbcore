@@ -34,7 +34,6 @@ class CtrlUserArticle extends CtrlBase{
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
-				'source'=>$_POST['source'],
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);
@@ -54,7 +53,6 @@ class CtrlUserArticle extends CtrlBase{
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
-				'source'=>$_POST['source'],
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);
