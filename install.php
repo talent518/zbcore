@@ -1,5 +1,5 @@
 <?php
-define('IN_PROJ','install');
+define('IN_INSTALL',TRUE);
 define('CTRL_DIR',dirname(__FILE__).DIRECTORY_SEPARATOR.'install'.DIRECTORY_SEPARATOR);
 
 define('IN_ZBC',TRUE);

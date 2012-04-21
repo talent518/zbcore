@@ -46,7 +46,7 @@ define('RES_THUMB_DIR',RES_DIR.'thumb'.DIR_SEP);//缩略图目录
 define('RES_THUMB_URL',RES_URL.'thumb/');//缩略图URL
 
 if(!file_exists(SRC_DIR.'config.php')){
-	if(defined('IN_PROJ') && IN_PROJ!='install'){
+	if(!defined('IN_INSTALL')){
 		header('Location:'.ROOT_URL.'install.php');
 		exit;
 	}else{
