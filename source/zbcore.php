@@ -3,8 +3,8 @@ if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 define('ZBC_NAME','ZBCore');
-define('ZBC_VERSION','1.0.0');
-define('ZBC_RELEASE','20120331');
+define('ZBC_VERSION','1.1.0');
+define('ZBC_RELEASE','20120421');
 define('ZBC_DESCRIBE','<b>ZBCore</b>是一个简易<b>PHP框架</b>,<b>CMS系统</b>，适用于小中型站点的架设。<br/><b>功能包括：</b>广告，友情链接，栏目（单页，文章和图片），基本用户登录、注册与管理，邮件发送（注册，验证和改密码），可定制模板（后台，前台和邮件），完全Ajax技术(jQuery)，PHP采用MVC+LIB模式开发。');
 define('ZBC_AUTHOR','abao');
 define('ZBC_SITE','http://www.zbcore.com/');
@@ -90,7 +90,7 @@ class ZBCore{
 		}else{
 			$this->setCall();
 			is_array($message) && extract($message);
-			$this->setVar('head',array('title'=>$succes?'成功提醒':'失败提醒'));
+			$this->setVar('head',array('title'=>$status?'成功提醒':'失败提醒'));
 			$this->setVar('status',$status);
 			$this->setVar('message',$message);
 			$this->setVar('backurl',$backurl);

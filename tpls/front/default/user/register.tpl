@@ -8,7 +8,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td rowspan="7" width="150" class="t">
+				<td rowspan="8" width="150" class="t">
 					<h2>友情提示：</h2>
 					<p><b>1. 基本信息；</b></p>
 					<p>2. 基本资料；</p>
@@ -29,6 +29,10 @@
 				<th>电子邮件：</th>
 				<td><input name="email" type="text" value="" /></td>
 			</tr>
+			<tr>
+				<th>是否企业用户：</th>
+				<td><input name="iscorp" type="checkbox" value="1" /></td>
+			</tr>
 		{if M('setup')->get('verify','frontregister')}
 			<tr>
 				<th>验证码：</th>
@@ -37,7 +41,7 @@
 		{/if}
 			<tr>
 				<th class="hide">&nbsp;</th>
-				<td><input name="agree" type="checkbox" value="1"/>我已阅读并同意 <a href="#">用户服务协议</a><label for="agree"/></td>
+				<td><input name="agree" type="checkbox" value="1"/>&nbsp;我已阅读并同意 <a href="#">用户服务协议</a><label for="agree"/></td>
 			</tr>
 			<tr>
 				<th class="hide">&nbsp;</th>

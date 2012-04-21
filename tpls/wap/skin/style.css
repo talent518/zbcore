@@ -13,6 +13,14 @@ a{text-decoration:none;color:blue;}
 
 #ft{border-top:1px #09F solid;padding:6px 0;background:#EFF2FA;text-align:center;}
 
+.message{margin-bottom:10px;border:1px #0099ff solid;padding:6px;}
+.message img{margin-right:5px;}
+.message h1{font-size:12px;}
+.success h1{color:green;}
+.error h1{color:red;}
+.message h2{font-weight:normal;font-size:12px;text-align:center;}
+.message p{}
+
 dl.cat{border:1px #0099ff solid;padding:6px;}
 dl.cat dt{font-size:14px;line-height:30px;font-weight:bold;}
 dl.cat dd{margin:0px;}

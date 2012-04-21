@@ -9,6 +9,9 @@ class CtrlUserPicture extends CtrlBase{
 		$this->id=intval('0'.GET('id'));
 		$this->setVar('id',$this->id);
 		$this->mod=M('user.picture');
+		if(!$this->MEMBER['iscorp']){
+			$this->message('无权使用此功能');
+		}
 	}
 	function onIndex(){
 		if($this->is_submit('list')){

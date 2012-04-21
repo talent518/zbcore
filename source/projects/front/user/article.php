@@ -9,6 +9,9 @@ class CtrlUserArticle extends CtrlBase{
 		$this->id=GET('id')+0;
 		$this->setVar('id',$this->id);
 		$this->mod=M('user.article');
+		if(!$this->MEMBER['iscorp']){
+			$this->message('无权使用此功能');
+		}
 	}
 	function onIndex(){
 		$this->onList();

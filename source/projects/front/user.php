@@ -62,6 +62,7 @@ class CtrlUser extends CtrlBase{
 				'username'=>$_POST['username'],
 				'password'=>$_POST['password'],
 				'email'=>$_POST['email'],
+				'iscorp'=>(int)$_POST['iscorp']?1:0,
 			);
 			if($this->mod->register($data))
 				$this->message('注册成功！',URL(array('ctrl'=>'user')),true);

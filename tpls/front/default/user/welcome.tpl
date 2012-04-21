@@ -27,7 +27,6 @@
 	<dt>公司介绍</dt>
 	<dd>{if $datum.introduce}{$datum.introduce|html}{else}暂无{/if}</dd>
 </dl>
-{/if}
 <dl class="base">
 	<dt>统计信息</dt>
 	<dd>
@@ -37,6 +36,7 @@
 		<p>产品图片数：<b class="numeric">{$count.product_image}</b></p>
 	</dd>
 </dl>
+{/if}
 <script type="text/javascript">
 $('#bd .edit').window({width:600});
 {if !$MEMBER.hasdatum}
