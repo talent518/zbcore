@@ -16,7 +16,7 @@ class Config{
 
 	var $charset		= 'utf-8';		//页面字符集(可选 'gbk', 'big5', 'utf-8')
 	var $isGziped 		= TRUE;			//启用gzip
-	var $urlFormat		= 'base';		//url格式化('base','phpinfo','rewrite')
+	var $urlFormat		= 'base';		//url格式化('base','pathinfo','rewrite')
 
 	var $urlSuffix		= '.html';		//URL后缀
 	var $shortUrlSuffix	= '.shtml';		//短URL后缀

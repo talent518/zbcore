@@ -2,7 +2,7 @@
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class CtrlUserBase extends CtrlBase{
+abstract class CtrlUserBase extends CtrlBase{
 	function __construct(){
 		parent::__construct();
 		if(!$this->LOGINED)

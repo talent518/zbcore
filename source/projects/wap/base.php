@@ -2,7 +2,7 @@
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class CtrlBase extends ZBCore{
+abstract class CtrlBase extends ZBCore{
 	function __construct(){
 		parent::__construct();
 		$tpl=L('template');

@@ -17,7 +17,7 @@ define('MICROTIME',(float)$msec);$msec=null;unset($msec);
 define('IS_MQ_GPC',get_magic_quotes_gpc());
 define('DIR_SEP',DIRECTORY_SEPARATOR);
 
-define('SITE_URL',strtolower(substr($_SERVER['SERVER_PROTOCOL'],0,strpos($_SERVER['SERVER_PROTOCOL'],'/'))).(in_array($_SERVER['SERVER_PORT'],array(80,443))?'://':':'.$_SERVER['SERVER_PORT'].'//').$_SERVER['HTTP_HOST']);
+define('SITE_URL',strtolower(substr($_SERVER['SERVER_PROTOCOL'],0,strpos($_SERVER['SERVER_PROTOCOL'],'/'))).'://'.$_SERVER['HTTP_HOST'].(in_array($_SERVER['SERVER_PORT'],array(80,443))?null:':'.$_SERVER['SERVER_PORT']));
 define('SITE_FULL_URL',SITE_URL.ROOT_URL);
 
 define('SRC_DIR',dirname(__FILE__).DIR_SEP);

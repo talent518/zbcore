@@ -2,7 +2,7 @@
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class CtrlBase extends ZBCore{
+abstract class CtrlBase extends ZBCore{
 	var $MEMBER=array(),$LOGINED=0;
 	function __construct($login=0){
 		parent::__construct();

@@ -7,7 +7,7 @@ define('SQL_SELECT_ONLY',1);
 define('SQL_SELECT_LIST',2);
 define('SQL_SELECT_STRING',3);
 
-class LibDbBase{
+abstract class LibDbBase{
 	var $querys=array();
 	var $host,$user,$pwd,$name,$pconnect,$tablepre,$charset;
 
@@ -23,9 +23,9 @@ class LibDbBase{
 		}
 	}
 
-	function connect($silent=FALSE){exit('connect method no define');}
+	abstract function connect($silent=FALSE);
 
-	function sdb($name){exit('sdb method no define');}
+	abstract function sdb($name);
 
 	function cdb($name){
 		return $this->query('CREATE DATABASE `'.$name.'` DEFAULT CHARACTER SET '.$this->charset,TRUE) && $this->sdb($name);
@@ -136,25 +136,25 @@ class LibDbBase{
 		$this->query('DELETE FROM '.$this->tname($table).' WHERE '.$where);
 	}
 
-	function query($query,$silent=FALSE){exit('query method no define');}
+	abstract function query($query,$silent=FALSE);
 
-	function row($query){exit('row method no define');}
+	abstract function row($query);
 
-	function arows(){exit('arows method no define');}
+	abstract function arows();
 
-	function result($query,$row,$field=null){exit('result method no define');}
+	abstract function result($query,$row,$field=null);
 
-	function clean($query){exit('clean method no define');}
+	abstract function clean($query);
 
-	function insert_id(){exit('insert_id method no define');}
+	abstract function insert_id();
 
-	function version(){exit('version method no define');}
+	abstract function version();
 
-	function close(){exit('close method no define');}
+	abstract function close();
 
-	function error(){exit('error method no define');}
+	abstract function error();
 
-	function errno(){exit('errno method no define');}
+	abstract function errno();
 
 	function halt($message='',$sql=''){
 		if(!IS_DEBUG)

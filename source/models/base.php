@@ -2,7 +2,7 @@
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
-class ModelBase{
+abstract class ModelBase{
 	var $key,$error;
 
 	protected $table;

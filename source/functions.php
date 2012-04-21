@@ -28,8 +28,8 @@ function __autoload($class){
 	}
 }
 
-function import($lib,$dir){
-	return @include_once(($dir?$dir:SRC_DIR).GD($lib).'.php');
+function import($lib,$dir=false){
+	return @include_once((($dir!==false && is_dir($dir))?$dir:SRC_DIR).GD($lib).'.php');
 }
 
 function GD($dir){
@@ -145,10 +145,17 @@ function &DB(){
 	return $db;
 }
 
-function &CFG(){
+function &CFG($var=null,$value=null){
 	static $config;
 	if(!$config){
 		$config=new Config;
+	}
+	if($var!==null){
+		if($value===null){
+			return $config->$var;
+		}else{
+			$config->$var=$value;
+		}
 	}
 	return $config;
 }

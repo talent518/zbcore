@@ -7,7 +7,7 @@ if(!defined('IN_ZBC'))
  * @author Administrator
  *
  */
-class LibImageBase{
+abstract class LibImageBase{
 	var $info;
 
 	/**
@@ -40,7 +40,11 @@ class LibImageBase{
 	 */
 	function output($im,$type='png',$filename=''){
 		header("Content-type: image/".$type);
+		if($type=='bmp'){
+			import('image.gd_bmp_func',LIB_DIR);
+		}
 		$ImageFun='image'.$type;
+		function_exists($ImageFun) or die('function '.$ImageFun.' not exists.');
 		if(empty($filename)){
 			$ImageFun($im);
 		}else{

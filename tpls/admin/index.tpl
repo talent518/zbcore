@@ -19,6 +19,10 @@
 				<li><a href="{link method=aboutus}">关于我们</a></li>
 				<li><a href="{link ctrl=setup method=config}">网站设置</a></li>
 				<li>
+					<em><a href="{link ctrl=router method=add}" class="add" title="添加URL路由规则">添加</a></em>
+					<a href="{link ctrl=router}">URL路由规则管理</a>
+				</li>
+				<li>
 					<em><a href="{link ctrl=user method=add}" class="add" title="添加用户">添加</a></em>
 					<a href="{link ctrl=user}">用户管理</a>
 				</li>

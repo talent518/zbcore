@@ -69,7 +69,7 @@
 				<th>URL格式：</th>
 				<td>
 					<input name="cfg[urlFormat]" type="radio" value="base" checked/>普通
-					<input name="cfg[urlFormat]" type="radio" value="phpinfo"/>PHPINFO(SEO优化)
+					<input name="cfg[urlFormat]" type="radio" value="pathinfo"/>PATHINFO(SEO优化)
 					<input name="cfg[urlFormat]" type="radio" value="rewrite"/>REWRITE(SEO优化和安全)
 				</td>
 			</tr>

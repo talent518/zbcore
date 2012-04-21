@@ -21,7 +21,7 @@ class CtrlUser extends CtrlBase{
 	}
 	function onLogin(){
 		if($this->LOGINED)
-			$this->message('你已登录！',URL(array('ctrl'=>'user')));
+			$this->message('你已登录！',URL(array('ctrl'=>'user','method'=>'index')));
 		if($this->is_submit('login')){
 			if(M('setup')->get('verify','frontlogin') && L('cookie')->get('verify')!=$_POST['verify'])
 				$this->message('验证码不正确',URL(array('ctrl'=>'user','method'=>'login')));
@@ -50,7 +50,7 @@ class CtrlUser extends CtrlBase{
 	}
 	function onRegister(){
 		if($this->LOGINED)
-			$this->message('你已登录！',URL(array('ctrl'=>'user')));
+			$this->message('你已登录！',URL(array('ctrl'=>'user','method'=>'index')));
 		if($this->is_submit('register')){
 			if(empty($_POST['agree']))
 				$this->message('您未同意注册协议');
