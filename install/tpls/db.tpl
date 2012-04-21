@@ -17,10 +17,12 @@
 	</div>
 </div>
 <iframe name="license" class="license" width="100%" height="300" scrolling="yes" frameborder="0" style="padding:0px;overflow:auto;" src="install.php?method=db&adm[email]={$adm.email}&adm[password]={$adm.password}&begin=1"></iframe>
-<script type="text/javascript">
-setInterval(function(){
-	license.document.body.scrollTop=license.document.body.scrollHeight-$('iframe.license').height();
-},1);
-</script>
 <center><button onclick="location.href='install.php?method=cfg'">上一步</button><button onclick="location.href='install.php?method=finish'" id="nextStep" disabled>下一步</button></center>
+<script type="text/javascript">
+window.down_move_func=function(){
+	license.document.body.scrollTop=license.document.body.scrollHeight-$('iframe.license').height();
+	setTimeout(window.down_move_func,100);
+};
+down_move_func();
+</script>
 {template footer}
