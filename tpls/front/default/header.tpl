@@ -3,11 +3,16 @@
 	<div id="hd" class="wp">
 		<a href="{ROOT_URL}" class="fl"><img src="{SKIN_URL}images/logo.gif"/></a>
 	<php>
-	{if $LOGINED}
-		<h3 class="fr"><b>{$MEMBER.username}</b> <a href="{link ctrl=user method=index}">用户中心</a> <a href="{link ctrl=user method=logout}">退出</a></h3>
-	{else}
-		<h2 class="fr"><a href="{link ctrl=user method=login}">登录</a> <a href="{link ctrl=user method=register}">注册</a></h2>
-	{/if}
+		<h3 class="fr">
+		{if $LOGINED}
+			<b>{$MEMBER.username}</b>&nbsp;
+			<a href="{link proj=user}">用户中心</a>&nbsp;
+			{if $MEMBER.ismanage}<a href="{link proj=admin}" target="_blank">管理中心</a>&nbsp;{/if}
+			<a href="{link proj=user method=logout}">退出</a>
+		{else}
+			<a href="{link proj=user method=login}">登录</a>&nbsp;<a href="{link proj=user method=register}">注册</a>
+		{/if}
+		</h3>
 	</php>
 	</div>
 	<div id="wp" class="wp">

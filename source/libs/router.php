@@ -53,12 +53,12 @@ class LibRouter{
 		}
 		$rws=null;
 	}
-	function encode($args=array()){
+	function encode(&$args=array()){
 		defined('IN_PROJ') or define('IN_PROJ','front');
 		defined('IN_CTRL') or define('IN_PROJ','index');
 		defined('IN_METHOD') or define('IN_PROJ','index');
 
-		$proj=(IN_PROJ=='front'?'index':IN_PROJ);
+		$proj=IN_PROJ;
 		if(empty($args['proj']) || $proj==$args['proj']){
 			$ctrl=IN_CTRL;
 			$method=IN_METHOD;
@@ -72,7 +72,7 @@ class LibRouter{
 			}
 		}
 
-		$url='/'.$args['proj'];
+		$url='/'.($args['proj']=='front'?'index':$args['proj']);
 		$url.='/'.$args['ctrl'];
 		$url.='/'.$args['method'];
 
@@ -83,6 +83,7 @@ class LibRouter{
 		}else{
 			foreach($args as $k=>$v){
 				$url.='/'.$k.'/'.urlencode($v);
+				unset($args[$k]);
 			}
 			$url.=CFG()->urlSuffix;
 		}
@@ -100,13 +101,24 @@ class LibRouter{
 			$path=str_replace($_SERVER['HTTP_HOST'],$path,SITE_FULL_URL);
 			$q=substr($q,$pos);
 		}
+		if(count($args)){
+			$ext='';
+			foreach($args as $k=>$v){
+				if($ext!=''){
+					$ext.='&';
+				}
+				$ext.=$k.'='.urlencode($v);
+			}
+		}else{
+			$ext=false;
+		}
 		switch(CFG()->urlFormat){
 			case 'base':
-				return $path.'?q='.$q;
+				return $path.'?q='.$q.($ext?'&'.$ext:null);
 			case 'pathinfo':
-				return $path.'index.php'.$q;
+				return $path.'index.php'.$q.($ext?'?'.$ext:null);
 			case 'rewrite':
-				return substr($path,0,-1).$q;
+				return substr($path,0,-1).$q.($ext?'?'.$ext:null);
 		}
 	}
 }

@@ -76,13 +76,17 @@ class ModelRouter extends ModelBase{
 		return $cache->get();
 	}
 
-	function encode($pcm,$args=array()){
+	function encode($pcm,&$args=array()){
 		$rts=$this->get_array_by_key();
 		foreach($rts as $src=>$dest){
 			// 别名与参数规则
 			if($src==$pcm){
 				foreach($args as $k=>$v){
+					$_dest=$dest;
 					$dest=str_replace("[{$k}]",$v,$dest);
+					if($dest!=$_dest){
+						unset($args[$k]);
+					}
 				}
 				return preg_replace("/\/\[[^\]]+\]/",'',$dest);
 			}
@@ -98,7 +102,23 @@ class ModelRouter extends ModelBase{
 				}
 				list($args['proj'],$args['ctrl'],$args['method'])=explode('/',substr($pcm,1));
 				foreach($args as $k=>$v){
+					$_dest=$dest;
 					$dest=str_replace("[{$k}]",$v,$dest);
+					if($dest!=$_dest){
+						unset($args[$k]);
+					}
+				}
+				$src_arg_len=count(explode('/',$src))-1;
+				switch($src_arg_len){
+					case 1:
+						unset($args['proj']);
+						break;
+					case 2:
+						unset($args['proj'],$args['ctrl']);
+						break;
+					case 3:
+						unset($args['proj'],$args['ctrl'],$args['method']);
+						break;
 				}
 				return preg_replace("/\/\[[^\]]+\]/",'',$dest);
 			}
