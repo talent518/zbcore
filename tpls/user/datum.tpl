@@ -6,8 +6,6 @@
 				<th>公司名：</th>
 				<td><input name="corpname" type="text" value="{$datum.corpname|html}" size="30" /></td>
 			</tr>
-		{/if}
-		{if $MEMBER.iscorp}
 			<tr>
 				<th>公司介绍：</th>
 				<td><textarea name="introduce" cols="60" rows="5" >{$datum.introduce|text}</textarea><br/><label for="introduce"></label></td>

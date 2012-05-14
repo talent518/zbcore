@@ -5,7 +5,7 @@ if(!defined('IN_ZBC'))
 class CtrlProduct extends CtrlBase{
 	var $id=0;
 	function __construct(){
-		parent::__construct(IN_METHOD=='upload');
+		parent::__construct(IN_METHOD!=='upload');
 		$this->id=intval('0'.GET('id'));
 		$this->setVar('id',$this->id);
 		$this->mod=M('user.product');
@@ -23,7 +23,7 @@ class CtrlProduct extends CtrlBase{
 				if($_POST['_ids'][$id]!=$order)
 					$ids[$id]=$order;
 			$this->mod->order($ids);
-			$this->message('提交成功',URL(array('ctrl'=>'user.product','method'=>'list','id'=>$this->id)),true);
+			$this->message('提交成功',URL(array('ctrl'=>'product','method'=>'list','id'=>$this->id)),true);
 		}else{
 			$this->setVar('list',$this->mod->get_list_by_where($this->MEMBER['uid'],20));
 			$this->setVar('listhash',$this->formhash('list'));
@@ -48,7 +48,7 @@ class CtrlProduct extends CtrlBase{
 					$idata['order']=$_POST['orderes'][$k];
 					M('user.product.image')->edit($k,$idata,false);
 				}
-				$this->message('提交成功',URL(array('ctrl'=>'user.product','method'=>'list')),true);
+				$this->message('提交成功',URL(array('ctrl'=>'product','method'=>'list')),true);
 			}else
 				$this->message($this->mod->error);
 		}else{
@@ -76,7 +76,7 @@ class CtrlProduct extends CtrlBase{
 					$idata['order']=$_POST['orderes'][$k];
 					M('user.product.image')->edit($k,$idata,false);
 				}
-				$this->message('提交成功',URL(array('ctrl'=>'user.product','method'=>'list')),true);
+				$this->message('提交成功',URL(array('ctrl'=>'product','method'=>'list')),true);
 			}else
 				$this->message($this->mod->error);
 		}else{
@@ -91,7 +91,7 @@ class CtrlProduct extends CtrlBase{
 	function onDrop(){
 		if($this->is_submit('drop')){
 			if($this->mod->drop(intval($_POST['id']),$this->MEMBER['uid']))
-				$this->message('提交成功',URL(array('ctrl'=>'user.product','method'=>'list')),true);
+				$this->message('提交成功',URL(array('ctrl'=>'product','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}elseif($product=$this->mod->get($this->id)){

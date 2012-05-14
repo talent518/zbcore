@@ -13,12 +13,10 @@
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}ie.css" />
 	<![endif]-->
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery.js"></script>
-	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-global.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-md5.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-float.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-ui_core.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-ui_draggable.js"></script>
-	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-window.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-dialog.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-validate.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-datepick.js"></script>
@@ -27,6 +25,8 @@
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-staged.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}swfobject.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-uploadify.js"></script>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-global.js"></script>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-window.js"></script>
 </head>
 <body>
 <div id="wpl">{/if}

@@ -21,6 +21,16 @@ html,body{overflow:hidden;}
 
 #loading{position:fixed;_position:absolute;z-index:9999;height:58px;line-height:58px;overflow:hidden;padding:0px 0px 0px 40px;background:url(images/loading.gif) left center no-repeat;font-size:20px;font-weight:bold;color:#419639;}
 
+#message{margin:0px auto;width:500px;overflow:hidden;border:1px #d3d3d3 solid;color:#333;-moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
+#message h1{border-bottom:1px #d3d3d3 solid;line-height:30px;text-indent:1em;background:#efefef;-moz-border-radius:5px 5px 0px 0px; -khtml-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; border-radius:5px 5px 0px 0px;}
+#message h2{clear:right;padding:30px 20px;font-weight:normal;}
+#message p{clear:both;text-align:right;padding-bottom:5px;}
+#message em.icon{float:left;width:90px;height:90px;overflow:hidden;}
+#message.success h1{color:#0c0;}
+#message.success em.icon{background:url(images/message-icons.gif) no-repeat;}
+#message.error h1{color:#c00;}
+#message.error em.icon{background:url(images/message-icons.gif) left -90px no-repeat;}
+
 #loginForm{margin:150px auto;width:625px;overflow:hidden;padding:0px 20px;border:1px #d3d3d3 solid;-moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
 #loginForm ul{float:left;width:370px;overflow:hidden;padding-right:30px;background:url(images/bg_login.gif) right center no-repeat;}
 #loginForm h1{height:50px;background:url(images/login_title.gif) left bottom no-repeat;text-indent:-1000em;}

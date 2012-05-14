@@ -21,18 +21,16 @@ class CtrlIndex extends CtrlBase{
 	}
 	function onLogin(){
 		if($this->LOGINED)
-			$this->message('你已登录！',URL(array('ctrl'=>'user','method'=>'index')));
+			$this->message('你已登录！',URL(array('method'=>'index')));
 		if($this->is_submit('login')){
 			if(M('setup')->get('verify','frontlogin') && L('cookie')->get('verify')!=$_POST['verify'])
-				$this->message('验证码不正确',URL(array('ctrl'=>'user','method'=>'login')));
+				$this->message('验证码不正确',URL(array('method'=>'login')));
 			$status=$this->mod->login($_POST['username'],$_POST['password']);
 			switch($status){
 				case 1:
-					$this->message('登录成功！',URL(array('ctrl'=>'user','method'=>'index')),true);
-				case 0:
-					$this->message('用户不存在！',URL(array('ctrl'=>'user','method'=>'login')));
-				case -1:
-					$this->message('密码不正确！',URL(array('ctrl'=>'user','method'=>'login')));
+					$this->message('登录成功！',URL(array('method'=>'index')),true,0);
+				default:
+					$this->message('用户或密码不正确！',URL(array('method'=>'login')));
 			}
 		}else{
 			$this->setVar('head',array(
@@ -46,28 +44,28 @@ class CtrlIndex extends CtrlBase{
 	}
 	function onLogout(){
 		$this->mod->logout();
-		$this->message('退出成功！',URL(array('ctrl'=>'user','method'=>'login')),true);
+		$this->message('退出成功！',URL(array('method'=>'login')),true);
 	}
 	function onRegister(){
 		if($this->LOGINED)
-			$this->message('你已登录！',URL(array('ctrl'=>'user','method'=>'index')));
+			$this->message(array('message'=>'你已登录！','callback'=>'return;'),URL(array('method'=>'index')));
 		if($this->is_submit('register')){
 			if(empty($_POST['agree']))
-				$this->message('您未同意注册协议');
+				$this->message(array('message'=>'您未同意注册协议','callback'=>'return;'));
 			if($_POST['passsword']!=$_POST['confirm_passsword'])
-				$this->message('您输入的俩次密码不一样！');
+				$this->message(array('message'=>'您输入的俩次密码不一样！','callback'=>'return;'));
 			if(M('setup')->get('verify','frontregister') && L('cookie')->get('verify')!=$_POST['verify'])
-				$this->message('验证码不正确',URL(array('ctrl'=>'user','method'=>'login')));
+				$this->message(array('message'=>'验证码不正确','callback'=>'return;'),URL(array('method'=>'login')));
 			$data=array(
 				'username'=>$_POST['username'],
 				'password'=>$_POST['password'],
 				'email'=>$_POST['email'],
 				'iscorp'=>(int)$_POST['iscorp']?1:0,
 			);
-			if($this->mod->register($data))
-				$this->message('注册成功！',URL(array('ctrl'=>'user')),true);
+			if(($status=$this->mod->register($data))!==false)
+				$this->message(array('message'=>'注册成功！','function'=>'location.href=this.backurl'),URL(array('method'=>'index')),true);
 			else
-				$this->message($this->mod->error);
+				$this->message(array('message'=>$this->mod->error,'callback'=>'return;'));
 		}else{
 			$this->setVar('head',array(
 				'title'=>'用户注册',
@@ -97,7 +95,7 @@ class CtrlIndex extends CtrlBase{
 				'email'=>$_POST['email'],
 			);
 			if($this->mod->edit($this->MEMBER['uid'],$data))
-				$this->message('账户修改成功',URL(array('ctrl'=>'user','method'=>'welcome')),true);
+				$this->message('账户修改成功',URL(array('method'=>'welcome')),true);
 			else
 				$this->message($this->mod->error);
 		}else{
@@ -111,7 +109,7 @@ class CtrlIndex extends CtrlBase{
 	function onSvmail(){
 		$this->checkLogin();
 		if(M('user')->svmail())
-			$this->message('已成功发送！',URL(array('ctrl'=>'user')),true);
+			$this->message('已成功发送！',URL(array('method'=>'index')),true);
 		else
 			$this->message(M('user')->error);
 	}
@@ -154,10 +152,10 @@ class CtrlIndex extends CtrlBase{
 			if($this->MEMBER['iscorp']){
 				unset($data['sex']);
 			}else{
-				unset($data['corpname'],$data['fax']);
+				unset($data['corpname'],$data['introduce'],$data['fax']);
 			}
-			if(M('user.datum')->edit($this->MEMBER['uid'],$data))
-				$this->message('编辑资料成功！',URL(array('ctrl'=>'user','method'=>'welcome')),true);
+			if(M('user.datum')->edit($this->MEMBER['uid'],$data,$this->MEMBER['iscorp']))
+				$this->message('编辑资料成功！',URL(array('method'=>'welcome')),true);
 			else
 				$this->message(M('user.datum')->error);
 		}else{

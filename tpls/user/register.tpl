@@ -88,7 +88,11 @@ $('#registerForm').validate({
 		agree:{
 			required:true
 		}
-	},submitQuiet:false
+	},messages:{
+		agree:{
+			required:'还没有同意'
+		}
+	}
 });
 </script>
 {template footer}

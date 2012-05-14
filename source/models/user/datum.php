@@ -53,7 +53,9 @@ class ModelUserDatum extends ModelBase{
 			'phone'=>'传真格式不正确',
 		),
 	);
-	function edit($id,&$data){
+	function edit($id,$data,$iscorp){
+		if($iscorp)
+			$this->rules['corpname']['required']=$this->rules['introduce']['required']=true;
 		if($this->check($data)){
 			if($this->get($id))
 				parent::edit($id,$data);
@@ -61,6 +63,7 @@ class ModelUserDatum extends ModelBase{
 				$data['uid']=$id;
 				parent::add($data);
 			}
+			M('user')->update(array('hasdatum'=>1),$id);
 			return true;
 		}
 		return false;

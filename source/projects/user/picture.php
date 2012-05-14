@@ -5,7 +5,7 @@ if(!defined('IN_ZBC'))
 class CtrlPicture extends CtrlBase{
 	var $id=0;
 	function __construct(){
-		parent::__construct(IN_METHOD=='upload');
+		parent::__construct(IN_METHOD!=='upload');
 		$this->id=intval('0'.GET('id'));
 		$this->setVar('id',$this->id);
 		$this->mod=M('user.picture');
@@ -21,7 +21,7 @@ class CtrlPicture extends CtrlBase{
 				$idata['order']=$_POST['orderes'][$k];
 				M('user.picture')->edit($k,$idata,false);
 			}
-			$this->message('提交成功',URL(array('ctrl'=>'user.picture','method'=>'index')),true);
+			$this->message('提交成功',URL(array('ctrl'=>'picture','method'=>'index')),true);
 		}else{
 			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
 			$this->setVar('list',$this->mod->get_list_by_where($this->MEMBER['uid'],20));

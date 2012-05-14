@@ -23,7 +23,7 @@ class CtrlArticle extends CtrlBase{
 				if($_POST['_ids'][$id]!=$order)
 					$ids[$id]=$order;
 			$this->mod->order($this->id,$ids);
-			$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
+			$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list')),true);
 		}else{
 			$this->setVar('list',$this->mod->get_list_by_where($this->MEMBER['uid'],20,true));
 			$this->setVar('listhash',$this->formhash('list'));
@@ -41,7 +41,7 @@ class CtrlArticle extends CtrlBase{
 				'order'=>$_POST['order'],
 			);
 			if($this->mod->add($data))
-				$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
+				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}else{
@@ -60,7 +60,7 @@ class CtrlArticle extends CtrlBase{
 				'order'=>$_POST['order'],
 			);
 			if(($article=$this->mod->get($this->id)) && $article['uid']==$this->MEMBER['uid'] && $this->mod->edit($this->id,$data))
-				$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
+				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}else{
@@ -75,7 +75,7 @@ class CtrlArticle extends CtrlBase{
 	function onDrop(){
 		if($this->is_submit('drop')){
 			if(($article=$this->mod->get(intval($_POST['id']))) && $article['uid']==$this->MEMBER['uid'] && $this->mod->drop(intval($_POST['id'])))
-				$this->message('提交成功',URL(array('ctrl'=>'user.article','method'=>'list')),true);
+				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list')),true);
 			else
 				$this->message($this->mod->error);
 		}elseif($article=$this->mod->get($this->id)){

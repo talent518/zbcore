@@ -22,7 +22,13 @@ class CtrlIndex extends CtrlBase{
 			switch($status){
 				case 1:
 					M('user')->login($_POST['username'],$_POST['password'],0);
-					$this->message(array('message'=>'登录成功！','callback'=>'$("#loginForm").getWindow().close();return;'),URL(array('method'=>'index')),true);
+					$messageData=array('message'=>'登录成功！');
+					if(empty($_POST['isRefer'])){
+						$messageData['function']='location.href=this.backurl';
+					}else{
+						$messageData['callback']='$("#loginForm").getWindow().close();return;';
+					}
+					$this->message($messageData,URL(array('method'=>'index')),true);
 					break;
 				case 0:
 					$this->message(array('message'=>'用户不存在！','callback'=>'return;'),URL(array('method'=>'login')));

@@ -375,63 +375,63 @@ function sprintf(){
 })(jQuery);
 
 (function($){
+	if(isIE)
+		$('<iframe id="ie-select-bug" scrolling="no" border="0"/>').appendTo(document.body).width($(window).width()).height($(window).height()).css({position:isIE6?'absolute':'fixed',left:0,top:0,zIndex:666}).fadeTo(0,0);
+	$('<div id="loading">加载中…</div>').appendTo(document.body).ajaxStart(function(){
+		$(this).float('center').show();
+	}).ajaxSend(function(){
+		$(this).float('center').show();
+	}).ajaxStop(function(){
+		$(this).hide();
+	}).ajaxError(function(e,xhr,s){
+		$.dialog.error('请求地址【'+s.url+'】错误！');
+		$(this).hide();
+	}).hide();
+	if(isIE6){
+		$(window).resize(function(){
+			$('#loading').float('center');
+		});
+		$('input[type=button]').addClass('button');
+		$('input[type=submit]').addClass('submit');
+	}
+	if($.validator && $.fn.ajaxSubmit){
+		var $ajaxSubmit=$.fn.ajaxSubmit;
+		$.fn.ajaxSubmit=function(options){
+			if($.isFunction(options)){
+				options={success:options};
+			}
+			return $ajaxSubmit.call(this,$.extend(true,{beforeSerialize:function(form,options){
+				options.url=$.xURL(options.url);
+			}},options));
+		};
+		$.validator.setDefaults({
+			submitQuiet:true,
+			submitHandler:function(form){
+				var settings=this.settings;
+				$(form).ajaxSubmit(function(xml){
+					if(settings.submitQuiet){
+						var win=$(form).getWindow();
+						xml=$.sXML(xml,function(){
+							if(this.status && win){
+								win.close();
+							}
+						});
+					}else{
+						xml=$.XML(xml);
+					}
+					if(xml){
+						if($.isFunction(callback))
+							callback(xml);
+						else
+							$.debug(xml);
+					}
+				});
+				return false;
+			}
+		});
+	}
 	$(function(){
 		$(window).resize();
-		if(isIE)
-			$('<iframe id="ie-select-bug" scrolling="no" border="0"/>').appendTo(document.body).width($(window).width()).height($(window).height()).css({position:isIE6?'absolute':'fixed',left:0,top:0,zIndex:666}).fadeTo(0,0);
 		$.scroll(true);
-		$('<div id="loading">加载中…</div>').appendTo(document.body).ajaxStart(function(){
-			$(this).float('center').show();
-		}).ajaxSend(function(){
-			$(this).float('center').show();
-		}).ajaxStop(function(){
-			$(this).hide();
-		}).ajaxError(function(e,xhr,s){
-			$.dialog.error('请求地址【'+s.url+'】错误！');
-			$(this).hide();
-		}).hide();
-		if(isIE6){
-			$(window).resize(function(){
-				$('#loading').float('center');
-			});
-			$('input[type=button]').addClass('button');
-			$('input[type=submit]').addClass('submit');
-		}
-		if($.validator && $.fn.ajaxSubmit){
-			var $ajaxSubmit=$.fn.ajaxSubmit;
-			$.fn.ajaxSubmit=function(options){
-				if($.isFunction(options)){
-					options={success:options};
-				}
-				return $ajaxSubmit.call(this,$.extend(true,{beforeSerialize:function(form,options){
-					options.url=$.xURL(options.url);
-				}},options));
-			};
-			$.validator.setDefaults({
-				submitQuiet:true,
-				submitHandler:function(form){
-					var settings=this.settings;
-					$(form).ajaxSubmit(function(xml){
-						if(settings.submitQuiet){
-							var win=$(form).getWindow();
-							xml=$.sXML(xml,function(){
-								if(this.status && win){
-									win.close();
-								}
-							});
-						}else{
-							xml=$.XML(xml);
-						}
-						if(xml){
-							if($.isFunction(callback))
-								callback(xml);
-							else
-								$.debug(xml);
-						}
-					});
-					return false;
-				}
-			});
-		}
 	});
 })(jQuery);

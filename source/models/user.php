@@ -51,16 +51,15 @@ class ModelUser extends ModelBase{
 	);
 	private $cookie='auth',$timeout=1440;
 	var $MEMBER=array();
-	function register(&$data){
+	function register($data){
 		$data['gid']=M('setup')->get('user','gid');
 		if($this->add($data)){
-			$this->login($data['username'],$data['password']);
-			return true;
+			return $this->login($data['username'],$data['password']);
 		}
 		return false;
 	}
 
-	function add(&$data){
+	function add($data){
 		if($this->check($data)){
 			extract($data);
 			$data['salt']=L('string')->rand(12,STRING_RAND_BOTH);
@@ -88,7 +87,7 @@ class ModelUser extends ModelBase{
 		}
 		return false;
 	}
-	function edit($id,&$data){
+	function edit($id,$data){
 		if(!$user=$this->get_by_uid($id)){
 			$this->error='编辑的用户不存在！';
 			return false;
