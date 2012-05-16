@@ -326,7 +326,7 @@ function thumb($image,$maxWidth=100,$maxHeight=100,$center=true,$bgcolor=0xFFFFF
 		$thumbfile=substr($_image,0,strrpos($_image,'.')).'_'.$maxWidth.'x'.$maxHeight.($center?'_'.$bgcolor:'').'.'.L('io.file')->ext($image);
 		$thumburl=RES_THUMB_URL.(DIR_SEP=='/'?$thumbfile:str_replace('\\','/',$thumbfile));
 		$path=dirname(RES_THUMB_DIR.$thumbfile);
-		is_dir($path) or mkdir($path,777,true);
+		L('io.dir')->mkdirs($path,0777,true);
 		$_image=$info=$path=null;
 		unset($_image,$info,$path);
 		if(file_exists(RES_THUMB_DIR.$thumbfile))

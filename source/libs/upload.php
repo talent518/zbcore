@@ -35,9 +35,8 @@ class LibUpload{
 				}
 				$this->file=RES_UPLOAD_DIR.str_replace('/',DIR_SEP,$this->url);
 				if(!is_dir(RES_UPLOAD_DIR.$path))
-					@mkdir(RES_UPLOAD_DIR.$path,777,true);
+					L('io.dir')->mkdirs(RES_UPLOAD_DIR.$path,0777,true);
 				if(L('io.file')->move($file['tmp_name'],$this->file)){
-					@chmod($target,777);
 					return true;
 				}else{
 					return false;

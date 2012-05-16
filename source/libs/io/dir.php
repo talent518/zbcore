@@ -23,6 +23,22 @@ class LibIoDir{
 		return $dirs;
 	}
 
+	function mkdirs($dir,$mode=0777,$recursive=false){
+		if(is_null($dir) || $dir===""){
+			return FALSE;
+		}
+		if(is_dir($dir) || $dir==="/"){
+			return TRUE;
+		}
+		if($this->mkdirs(dirname($dir), $mode, $recursive)){
+			$_umask=umask(0);
+			$ret=@mkdir($dir,$mode);
+			umask($_umask);
+			return $ret;
+		}
+		return FALSE;
+	}
+
 	function drop($dir,$ischild=false){
 		if(!is_dir($dir)){
 			return false;
@@ -45,9 +61,7 @@ class LibIoDir{
 
 	function writeable($dir){
 		$writeable=FALSE;
-		if(!is_dir($dir)){
-			@mkdir($dir,777) or die('Create directory failed'.(IS_DEBUG?':'.$dir.'.':'!'));
-		}
+		$this->mkdirs($dir,0777,true);
 		if(is_dir($dir)){
 			if($fp=@fopen($dir.DIR_SEP.'test.txt','w')){
 				@fclose($fp);

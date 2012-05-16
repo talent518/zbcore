@@ -8,7 +8,7 @@ class CtrlDb extends CtrlBase{
 	var $id=0;
 	function __construct(){
 		parent::__construct();
-		is_dir(DB_CACHE_DIR) or mkdir(DB_CACHE_DIR,777,true);
+		L('io.dir')->mkdirs(DB_CACHE_DIR,0777,true);
 	}
 	function onIndex(){
 		$this->onList();
@@ -27,9 +27,9 @@ class CtrlDb extends CtrlBase{
 	}
 	function onBackup(){
 		if(M('db')->export(DB_CACHE_DIR.sgmdate('YmdHis').'.sql'))
-			$this->message('数据库备份成功',URL(array('ctrl'=>'db','method'=>'list')),true);
+			$this->message('数据库还原成功',URL(array('ctrl'=>'db','method'=>'list')),true);
 		else
-			$this->message('数据库备份失败，或目录“'.DB_CACHE_DIR.'”不可写','',false);
+			$this->message('数据库还原失败，或文件不存在','',false);
 	}
 	function onRestore(){
 		$fn=DB_CACHE_DIR.GET('fn').'.sql';

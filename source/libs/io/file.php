@@ -10,10 +10,13 @@ class LibIoFile{
 
 	function move($source,$target){
 		if(@rename($source,$target)){
+			@chmod($target,0777);
 			return true;
 		}elseif(function_exists('move_uploaded_file') && @move_uploaded_file($source,$target)){
+			@chmod($target,0777);
 			return true;
 		}elseif(@copy($source,$target)){
+			@chmod($target,0777);
 			@unlink($source);
 			return true;
 		}else{
@@ -31,9 +34,7 @@ class LibIoFile{
 
 	function write($file,$content){
 		$path=pathinfo($file,PATHINFO_DIRNAME);
-		if(!is_dir($path)){
-			mkdir($path,777,true) or die('Create directory failed'.(IS_DEBUG?':'.$path.'.':'!'));
-		}
+		L('io.dir')->mkdirs($path,0777,true);
 
 		if($fp=@fopen($file,'w')){
 			flock($fp,2);
