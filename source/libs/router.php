@@ -15,9 +15,13 @@ class LibRouter{
 				$decode=$_SERVER['PATH_INFO'];
 				break;
 			case 'rewrite':
-				$len=strpos($_SERVER['REQUEST_URI'],'?');
-				$rewrite=($len===false?$_SERVER['REQUEST_URI']:substr($_SERVER['REQUEST_URI'],0,$len));
-				$decode=((strlen(ROOT_URL)>1 && substr($rewrite,0,strlen(ROOT_URL))==ROOT_URL)?substr($rewrite,strlen(ROOT_URL)):$rewrite);
+				if(isset($_GET['rewrite'])){
+					$decode=$_GET['rewrite'];
+				}else{
+					$len=strpos($_SERVER['REQUEST_URI'],'?');
+					$rewrite=($len===false?$_SERVER['REQUEST_URI']:substr($_SERVER['REQUEST_URI'],0,$len));
+					$decode=((strlen(ROOT_URL)>1 && substr($rewrite,0,strlen(ROOT_URL))==ROOT_URL)?substr($rewrite,strlen(ROOT_URL)):$rewrite);
+				}
 				break;
 		}
 		if($decode!==false){

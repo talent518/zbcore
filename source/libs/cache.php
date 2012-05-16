@@ -50,10 +50,6 @@ class LibCache{
 	}
 	//文件
 	private function file(){
-		if(!(CFG()->isEncrypt && is_dir(DATA_DIR.$this->dir))){
-			@mkdir(DATA_DIR.$this->dir,777,true);
-			@chmod(DATA_DIR.$this->dir,777);
-		}
 		$file=($this->dir?$this->dir.'/':null).$this->name;
 		return DATA_DIR.(CFG()->isEncrypt?md5($file):$file).'.php';
 	}
