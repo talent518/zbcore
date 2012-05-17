@@ -30,11 +30,8 @@ class CtrlIndex extends CtrlBase{
 					}
 					$this->message($messageData,URL(array('method'=>'index')),true);
 					break;
-				case 0:
-					$this->message(array('message'=>'用户不存在！','callback'=>'return;'),URL(array('method'=>'login')));
-					break;
-				case -1:
-					$this->message(array('message'=>'密码不正确！','callback'=>'return;'),URL(array('method'=>'login')));
+				default:
+					$this->message(array('message'=>'用户或密码不正确！','callback'=>'return;'),URL(array('method'=>'login')));
 					break;
 			}
 		}else{

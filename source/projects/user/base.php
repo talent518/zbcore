@@ -22,7 +22,11 @@ abstract class CtrlBase extends ZBCore{
 	}
 	function checkLogin($checkDatum=false){
 		if(!$this->LOGINED)
-			$this->message('你还未登录！',URL(array('method'=>'login')));
+			$this->message(array(
+				'message'=>IN_AJAX?'用户登录':'您还未登录或登录超时！',
+				'function'=>'$.window({title:this.message,url:this.backurl,width:669})'
+			),URL(array('ctrl'=>'index','method'=>'login')),false,0
+			);
 		if(M('setup')->get('user','verifyemail') && !$this->MEMBER['verifyemail'])
 			$this->message('您的EMail还未通过验证！请查询我们给您发的验证邮件，你的EMail地址是'.$this->MEMBER['email'].'<br/><a href="'.URL(array('method'=>'svmail')).'"><font color="red">重新发送</font></a>验证邮件！');
 		if($checkDatum && !$this->MEMBER['hasdatum'])

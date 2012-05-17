@@ -32,6 +32,7 @@ html,body{overflow:hidden;}
 #message.error em.icon{background:url(images/message-icons.gif) left -90px no-repeat;}
 
 #loginForm{margin:150px auto;width:625px;overflow:hidden;padding:0px 20px;border:1px #d3d3d3 solid;-moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;}
+.window-wrap #loginForm{border:none;margin:0px;}
 #loginForm ul{float:left;width:370px;overflow:hidden;padding-right:30px;background:url(images/bg_login.gif) right center no-repeat;}
 #loginForm h1{height:50px;background:url(images/login_title.gif) left bottom no-repeat;text-indent:-1000em;}
 #loginForm li{padding-top:10px;padding-bottom:30px;line-height:20px;text-indent:2em;}

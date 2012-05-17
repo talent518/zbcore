@@ -1,4 +1,4 @@
-	</div>
+{if !IN_AJAX}	</div>
 </div>
 </body>
-</html>
+</html>{/if}

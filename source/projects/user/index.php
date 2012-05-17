@@ -21,16 +21,24 @@ class CtrlIndex extends CtrlBase{
 	}
 	function onLogin(){
 		if($this->LOGINED)
-			$this->message('你已登录！',URL(array('method'=>'index')));
+			$this->message(array('message'=>'你已登录！','callback'=>'return;'),URL(array('method'=>'index')));
 		if($this->is_submit('login')){
 			if(M('setup')->get('verify','frontlogin') && L('cookie')->get('verify')!=$_POST['verify'])
-				$this->message('验证码不正确',URL(array('method'=>'login')));
-			$status=$this->mod->login($_POST['username'],$_POST['password']);
+				$this->message(array('message'=>'验证码不正确','callback'=>'return;'),URL(array('method'=>'login')));
+			$status=M('user')->login($_POST['username'],$_POST['password'],0);
 			switch($status){
 				case 1:
-					$this->message('登录成功！',URL(array('method'=>'index')),true,0);
+					$messageData=array('message'=>'登录成功！');
+					if(empty($_POST['isRefer'])){
+						$messageData['function']='location.href=this.backurl';
+					}else{
+						$messageData['callback']='$("#loginForm").getWindow().close();return;';
+					}
+					$this->message($messageData,URL(array('method'=>'index')),true);
+					break;
 				default:
-					$this->message('用户或密码不正确！',URL(array('method'=>'login')));
+					$this->message(array('message'=>'用户或密码不正确！','callback'=>'return;'),URL(array('method'=>'login')));
+					break;
 			}
 		}else{
 			$this->setVar('head',array(

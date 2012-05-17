@@ -11,14 +11,12 @@
 		<dd style="position:relative;"><label>验证码：</label><input name="verify" type="text" value="" style="width:42px;"/><img src="" id="verifyImage" height="30" style="cursor:pointer"/></dd>
 	{/if}
 		<dd><input name="loginsubmit" type="submit" value="登&nbsp;录"/><input name="loginhash" type="hidden" value="$loginhash"/></dd>
-	</dl>
+	</dl><input name="isRefer" type="hidden" value="{IN_AJAX}"/>
 </form>
 <script type="text/javascript">
 $('#loginForm input[name=username]').fblur('请输入用户名/邮箱');
 $('#loginForm input[name=password]').fblur('请输入密码');
-{if IN_AJAX}
-	$('#loginForm').validate();
-{/if}
+$('#loginForm').validate();
 {if M('setup')->get('verify','frontlogin')}
 	$('#loginForm input[name=verify]').fblur('验证码');
 	$('#verifyImage').click(function(){
