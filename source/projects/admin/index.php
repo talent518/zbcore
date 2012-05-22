@@ -41,7 +41,7 @@ class CtrlIndex extends CtrlBase{
 				if(!$this->MEMBER['ismanage'])
 					$this->message('您没有权限登录管理中心',URL(array('method'=>'index')));
 			}else{
-				$this->message('前台尚未登录！',URL(array('proj'=>'index','ctrl'=>'user')));
+				$this->message('前台尚未登录！',URL(array('proj'=>'user')));
 			}
 			$this->formhash('login');
 			$this->display('login');
