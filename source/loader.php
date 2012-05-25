@@ -3,7 +3,7 @@ if(!defined('IN_ZBC'))
 	exit;
 
 set_time_limit(0);
-set_magic_quotes_runtime(0);
+@set_magic_quotes_runtime(0);
 date_default_timezone_set('PRC');
 
 define('IS_DEBUG',TRUE);
@@ -63,12 +63,12 @@ defined('IN_MIME') or define('IN_MIME','text/html');
 
 CFG()->isCookie or session_start();
 
-if(!IS_MQ_GPC){
-	$_GET		= saddslashes($_GET);
-	$_POST		= saddslashes($_POST);
-    $_COOKIE	= saddslashes($_COOKIE);
-    $_FILES		= saddslashes($_FILES);
-	$_REQUEST	= saddslashes($_REQUEST);
+if(IS_MQ_GPC){
+	$_GET		= sstripslashes($_GET);
+	$_POST		= sstripslashes($_POST);
+    $_COOKIE	= sstripslashes($_COOKIE);
+    $_FILES		= sstripslashes($_FILES);
+	$_REQUEST	= sstripslashes($_REQUEST);
 }
 
 if(!defined('IN_AJAX')){

@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2010, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -56,6 +56,9 @@ class CKFinder_Connector_CommandHandler_FileUpload extends CKFinder_Connector_Co
 
         $sUnsafeFileName = CKFinder_Connector_Utils_FileSystem::convertToFilesystemEncoding(CKFinder_Connector_Utils_Misc::mbBasename($uploadedFile['name']));
         $sFileName = str_replace(array(":", "*", "?", "|", "/"), "_", $sUnsafeFileName);
+        if ($_config->getDisallowUnsafeCharacters()) {
+          $sFileName = str_replace(";", "_", $sFileName);
+        }
         if ($_config->forceAscii()) {
             $sFileName = CKFinder_Connector_Utils_FileSystem::convertToAscii($sFileName);
         }
@@ -150,7 +153,17 @@ class CKFinder_Connector_CommandHandler_FileUpload extends CKFinder_Connector_Co
 
                 $iErrorNumber = CKFINDER_CONNECTOR_ERROR_UPLOADED_FILE_RENAMED;
             } else {
-                if (false === move_uploaded_file($uploadedFile['tmp_name'], $sFilePath)) {
+				$source=$uploadedFile['tmp_name'];
+				$target=$sFilePath;
+				if(@rename($source,$target)){
+					@chmod($target,0777);
+				}elseif(function_exists('move_uploaded_file') && @move_uploaded_file($source,$target)){
+					@chmod($target,0777);
+				}elseif(@copy($source,$target)){
+					@chmod($target,0777);
+					@unlink($source);
+				}
+                if (false === file_exists($sFilePath)) {
                     $iErrorNumber = CKFINDER_CONNECTOR_ERROR_ACCESS_DENIED;
                 }
                 else {

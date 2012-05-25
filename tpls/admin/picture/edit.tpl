@@ -76,7 +76,7 @@ $("#jqFileUpload").uploadify({
 	'uploader': '{SKIN_URL}images/uploadify.swf',
 	'cancelImg': '{SKIN_URL}images/wrong.gif',
 	'script': '{ROOT_URL}',
-	'scriptData': {proj:'{IN_PROJ}',ctrl:'picture',method:'upload',auth:'{$auth}'},
+	'scriptData': {proj:'{IN_PROJ}',ctrl:'{IN_CTRL}',method:'upload',auth:'{$auth}'},
 	'method':'get',
 	'queueID':'jqFileUploadQueue',
 	'auto': true,

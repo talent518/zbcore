@@ -53,6 +53,7 @@ class CtrlArticle extends CtrlBase{
 	function onEdit(){
 		if($this->is_submit('edit')){
 			$data=array(
+				'uid'=>$this->MEMBER['uid'],
 				'title'=>$_POST['title'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
