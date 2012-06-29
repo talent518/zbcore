@@ -27,7 +27,7 @@ class ModelCount{
 
 	function &runtime(){
 		$dbsize = 0;
-		$query=DB()->query("SHOW TABLE STATUS LIKE '{DB()->tablepre}%'");
+		$query=DB()->query('SHOW TABLE STATUS LIKE \''.DB()->tablepre.'%\'');
 		while($table=DB()->row($query)){
 			$dbsize+=$table['Data_length']+$table['Index_length'];
 		}
