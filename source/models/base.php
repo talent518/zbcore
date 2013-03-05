@@ -41,10 +41,16 @@ abstract class ModelBase{
 			),SQL_SELECT_ONLY);
 	}
 	function get_list_by_where($where='',$limit=0,$spages=false){
+		if(is_numeric($where)){
+			$where=$this->forKey.'='.($where+0);
+		}
+		if(is_array($where)){
+			$where=$this->forKey.' IN ('.iimplode($where).')';
+		}
 		return DB()->select(array(
 				'table'=>$this->table,
 				'field'=>'*',
-				'where'=>is_int($where)?$this->forKey.'='.$where:$where,
+				'where'=>$where,
 				'order'=>$this->order,
 				'limit'=>$limit,
 				'spages'=>$spages,

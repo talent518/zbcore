@@ -66,7 +66,9 @@ class CtrlPartner extends CtrlBase{
 			elseif(L('upload')->error)
 				$this->message(L('upload')->error);
 			if($this->mod->edit($this->id,$data)){
-				@unlink(RES_UPLOAD_DIR.$_POST['logo']);
+				if($_POST['_logo'] && $data['logo']!=$_POST['_logo']){
+					@unlink(RES_UPLOAD_DIR.$_POST['_logo']);
+				}
 				$this->message('提交成功',URL(array('ctrl'=>'partner','method'=>'list')),true);
 			}else{
 				@unlink(L('upload')->file);

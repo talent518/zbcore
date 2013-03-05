@@ -34,16 +34,23 @@ class CtrlArticle extends CtrlBase{
 			$data=array(
 				'cat_id'=>$_POST['cat_id'],
 				'title'=>$_POST['title'],
+				'thumb'=>$_POST['thumb'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
 				'source'=>$_POST['source'],
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);
+			if(L('upload')->saveImage($_FILES['thumb'],'partner'))
+				$data['thumb']=L('upload')->url;
+			elseif(L('upload')->error)
+				$this->message(L('upload')->error);
 			if($this->mod->add($data))
 				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list','id'=>$data['pid'])),true);
-			else
+			else{
+				@unlink(L('upload')->file);
 				$this->message($this->mod->error);
+			}
 		}else{
 			$this->setVar('add',array('cat_id'=>$this->id,'order'=>0));
 			$this->setVar('addhash',$this->formhash('add'));
@@ -55,16 +62,26 @@ class CtrlArticle extends CtrlBase{
 			$data=array(
 				'cat_id'=>$_POST['cat_id'],
 				'title'=>$_POST['title'],
+				'thumb'=>$_POST['_thumb'],
 				'seo'=>serialize(sstripslashes($_POST['seo'])),
 				'content'=>$_POST['content'],
 				'source'=>$_POST['source'],
 				'recommended'=>intval($_POST['recommended']),
 				'order'=>$_POST['order'],
 			);
-			if($this->mod->edit($this->id,$data))
+			if(L('upload')->saveImage($_FILES['thumb'],'article'))
+				$data['thumb']=L('upload')->url;
+			elseif(L('upload')->error)
+				$this->message(L('upload')->error);
+			if($this->mod->edit($this->id,$data)){
+				if($_POST['_thumb'] && $data['thumb']!=$_POST['_thumb']){
+					@unlink(RES_UPLOAD_DIR.$_POST['_thumb']);
+				}
 				$this->message('提交成功',URL(array('ctrl'=>'article','method'=>'list','id'=>$data['pid'])),true);
-			else
+			}else{
+				@unlink(L('upload')->file);
 				$this->message($this->mod->error);
+			}
 		}else{
 			if(!$edit=$this->mod->get($this->id))
 				$this->message('你要编辑的文章不存在！');

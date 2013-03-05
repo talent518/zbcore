@@ -1,4 +1,4 @@
-<form id="addform" class="formtable" action="{link ctrl=article method=add}" method="post">
+<form id="addform" class="formtable" action="{link ctrl=article method=add}" method="post" enctype="multipart/form-data">
 	<ul class="tab_title">
 		<li class="active">基本选项</li>
 		<li>SEO设置</li>
@@ -13,6 +13,10 @@
 			<tr>
 				<th>文章名称：</th>
 				<td><input name="title" type="text" value="{$add.title|html}" size="40" /></td>
+			</tr>
+			<tr>
+				<th>缩略图：</th>
+				<td><input name="thumb" type="file" value="" size="28" /></td>
 			</tr>
 			<tr>
 				<th>文章内容：</th>
@@ -44,13 +48,11 @@
 				<th>SEO描述：</th>
 				<td><input name="seo[description]" type="text" value="{$add.seo.description|html}" size="50" /></td>
 			</tr>
-		<!--tbody>
-		</tbody-->
 		</tbody>
 		<tfoot>
 			<tr>
 				<th class="hide">&nbsp;</th>
-				<td><input name="addsubmit" type="submit" value="提交"/><input name="addhash" type="hidden" value="$addhash"/></td>
+				<td><input type="submit" value="提交"/><input name="addsubmit" type="hidden" value="1"/><input name="addhash" type="hidden" value="$addhash"/></td>
 			</tr>
 		</tfoot>
 	</table>

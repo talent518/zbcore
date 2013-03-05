@@ -63,9 +63,7 @@
 #pv #nv a{display:block;}
 #pv #bd{float:right;width:718px;overflow:hidden;padding:10px;}
 #pv #bd .title{font-size:18px;margin-bottom:10px;}
-#pv #bd .content{line-height:1.5em;}
-#pv #bd .content p{padding:6px 0;text-indent:2em;}
-#pv #bd .content{color:#333;font-size:14px;font-family:Arial,Verdana,sans-serif;}
+#pv #bd .content{line-height:1.5em;color:#333;font-size:14px;font-family:Arial,Verdana,sans-serif;}
 #pv #bd .content h1,#pv #bd .content h2,#pv #bd .content h3,#pv #bd .content h4,#pv #bd .content h5,#pv #bd .content h6{font-family:'微软雅黑','黑体',Arial,Verdana,sans-serif;}
 #pv #bd .content h1{font-size:2em;padding:1em 0;color:#000;}
 #pv #bd .content h2{font-size:1.5em;padding:0.85em 0;color:#111;}
@@ -85,7 +83,7 @@
 
 .art_view .title{font-size:30px;text-align:center;font-family:'微软雅黑','黑体';font-weight:normal;}
 .art_view .stitle{color:#333;font-weight:normal;margin:10px 0px;text-align:center;}
-.art_view .content{color:#333;font-size:14px;font-family:Arial,Verdana,sans-serif;}
+.art_view .content{line-height:1.5em;color:#333;font-size:14px;font-family:Arial,Verdana,sans-serif;}
 .art_view .content h1,.art_view .content h2,.art_view .content h3,.art_view .content h4,.art_view .content h5,.art_view .content h6{font-family:'微软雅黑','黑体',Arial,Verdana,sans-serif;}
 .art_view .content h1{font-size:2em;padding:1em 0;color:#000;}
 .art_view .content h2{font-size:1.5em;padding:0.85em 0;color:#111;}

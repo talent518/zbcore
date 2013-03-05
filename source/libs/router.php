@@ -65,7 +65,11 @@ class LibRouter{
 		$proj=IN_PROJ;
 		if(empty($args['proj']) || $proj==$args['proj']){
 			$ctrl=IN_CTRL;
-			$method=IN_METHOD;
+			if($ctrl==$args['ctrl']){
+				$method=IN_METHOD;
+			}else{
+				$method='index';
+			}
 		}else{
 			$ctrl=$method='index';
 		}

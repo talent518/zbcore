@@ -51,8 +51,8 @@ class ModelAdp extends ModelBase{
 		foreach($ids as $id=>$order)
 			DB()->update('adp',array('porder'=>intval($order)),'pid='.intval($id));
 	}
-	function &get($id=0){
-		if($data=parent::get($id))
+	function &get_by_where($where='',$order=''){
+		if($data=parent::get_by_where($where,$order))
 			$data['size']=unserialize($data['size']);
 		return $data;
 	}
@@ -75,9 +75,9 @@ class ModelAdp extends ModelBase{
 		$html='';
 		$adp=(is_int($id)?$this->get($id):$this->get_by_where('pname=\''.addslashes($id).'\''));
 
-		$ads=M('ad')->get_list_by_where($adp['pid']);
+		$ads=M('ad')->get_list_by_where('`enable`=1 AND pid='.$adp['pid']);
 		foreach($ads as $id=>$ad){
-			$ad['code']=(unserialize($ad['code'])?unserialize($ad['code']):$ad['code']);
+			$ad['code']=(($code=unserialize($ad['code']))?$code:$ad['code']);
 			if($isCode){
 				if($html && $delimiter)
 					$html.=$delimiter;

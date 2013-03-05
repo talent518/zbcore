@@ -5,6 +5,7 @@ exit('Access Denied');
 class ModelPage extends ModelBase{
 	protected $table='page';
 	protected $priKey='page_id';
+	protected $forKey='cat_id';
 	protected $order='`order` desc,`page_id`';
 	protected $rules=array(
 		'cat_id'=>array(
@@ -88,7 +89,7 @@ class ModelPage extends ModelBase{
 				$pos=M('category')->get($page['cat_id']);
 				$ids=explode(',',$pos['pids']);
 				$ids[]=$page['cat_id'];
-				M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
+				M('category')->update(array('counts'=>'counts-1'),'counts>0 AND cat_id in ('.iimplode($ids).')',false);
 				$pos=M('category')->get($data['cat_id']);
 				$ids=explode(',',$pos['pids']);
 				$ids[]=$data['cat_id'];
@@ -103,7 +104,7 @@ class ModelPage extends ModelBase{
 		$pos=M('category')->get($page['cat_id']);
 		$ids=explode(',',$pos['pids']);
 		$ids[]=$page['cat_id'];
-		M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
+		M('category')->update(array('counts'=>'counts-1'),'counts>0 AND cat_id in ('.iimplode($ids).')',false);
 		return parent::drop($id);
 	}
 	function order($pid,$ids){

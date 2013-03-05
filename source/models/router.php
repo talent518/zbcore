@@ -77,7 +77,10 @@ class ModelRouter extends ModelBase{
 	}
 
 	function encode($pcm,&$args=array()){
-		$rts=$this->get_array_by_key();
+		static $rts;
+		if(!is_array($rts)){
+			$rts=$this->get_array_by_key();
+		}
 		foreach($rts as $src=>$dest){
 			// 别名与参数规则
 			if($src==$pcm){
@@ -127,7 +130,10 @@ class ModelRouter extends ModelBase{
 	}
 
 	function decode($router){
-		$rts=$this->get_array_by_key();
+		static $rts;
+		if(!is_array($rts)){
+			$rts=$this->get_array_by_key();
+		}
 		for($i=0;$i<2;$i++){
 			$_router=($i==0?substr($router,strpos($router,'/')):$router);
 			foreach($rts as $src=>$dest){

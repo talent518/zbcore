@@ -217,7 +217,7 @@ class ModelAd extends ModelBase{
 	}
 	function show($id,$isCode=true){
 		$ad=(is_int($id)?$this->get($id):$this->get_by_where('`name`=\''.addslashes($id).'\''));
-		if($isCode){
+		if($isCode && $ad['enable']){
 			$adp=M('adp')->get($ad['pid']);
 			return $this->get_code($adp,$ad);
 		}else{
@@ -233,7 +233,17 @@ class ModelAd extends ModelBase{
 				$html='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="'.$size['width'].'" height="'.$size['height'].'"><param name="movie" value="'.RES_UPLOAD_URL.$code.'" /><param name="quality" value="high" /><embed src="'.RES_UPLOAD_URL.$code.'" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$size['width'].'" height="'.$size['height'].'"></embed></object>';
 				break;
 			case 'image':
-				$html='<a href="'.$code['url'].'" title="'.$code['alt'].'"><img src="'.RES_UPLOAD_URL.$code['src'].'" alt="'.$code['alt'].'" width="'.$size['width'].'" height="'.$size['height'].'" border="0"/></a>';
+				$appendAttr='';
+				if($size['alt']){
+					$appendAttr.=' alt="'.$code['alt'].'"';
+				}
+				if($size['width']){
+					$appendAttr.=' width="'.$size['width'].'"';
+				}
+				if($size['height']){
+					$appendAttr.=' height="'.$size['height'].'"';
+				}
+				$html='<a href="'.$code['url'].'"'.($code['alt']?' title="'.$code['alt'].'"':'').'><img src="'.RES_UPLOAD_URL.$code['src'].'"'.$appendAttr.' border="0"/></a>';
 				break;
 			case 'text':
 				$text=$code['text'];

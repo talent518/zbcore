@@ -8,7 +8,10 @@
 					<th class="r">文章名称：</th><td class="l">{$article.title}</td>
 				</tr>
 				<tr>
-					<th class="r">文章内容：</th><td class="l" style="position:relative;width:360px;height:220px;overflow:hidden;"><div style="position:absolute;border:1px #d8ecff solid;width:100%;height:100%;overflow:auto;left:0px;top:0px;">{$article.content}</div></td>
+					<th class="r">缩略图：</th><td class="l">{if $article.thumb}<img src="{RES_UPLOAD_URL}{$article.thumb}"/>{/if}</td>
+				</tr>
+				<tr>
+					<th class="r">文章内容：</th><td class="l" style="position:relative;width:360px;height:220px;overflow:hidden;"><div style="position:absolute;width:100%;height:100%;overflow:auto;left:0px;top:0px;">{$article.content}</div></td>
 				</tr>
 				<tr>
 					<th>来源：</th>

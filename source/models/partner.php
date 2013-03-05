@@ -36,13 +36,23 @@ class ModelPartner extends ModelBase{
 	}
 	function edit($id,&$data){
 		if(!$partner=$this->get($id)){
-			$this->error='编辑的栏目不存在！';
+			$this->error='编辑的友情链接不存在！';
 			return false;
 		}
 		$data['haslogo']=empty($data['logo'])===false;
 		$this->rules['name']['query']=array('partner','id<>'.$id.' AND name=\''.$data['name'].'\'');
 
 		return parent::edit($id,$data);
+	}
+	function drop($id){
+		if(!($partner=$this->get($id))){
+			$this->error='删除的友情链接不存在！';
+			return false;
+		}
+		if($partner['logo']){
+			@unlink(RES_UPLOAD_DIR.$partner['logo']);
+		}
+		return parent::drop($id,$data);
 	}
 	function order($ids){
 		foreach($ids as $id=>$order)

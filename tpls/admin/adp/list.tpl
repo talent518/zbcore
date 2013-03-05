@@ -42,13 +42,13 @@
 			{/loop}
 		{else}
 			<tr>
-				<td colspan="7" class="c">您还没有添加广告位！</td>
+				<td colspan="8" class="c">您还没有添加广告位！</td>
 			</tr>
 		{/if}
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="7" class="l">
+				<td colspan="8" class="l">
 					<input name="listsubmit" type="submit" value="排序"/>
 					<input name="listhash" type="hidden" value="$listhash"/>
 				</td>

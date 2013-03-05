@@ -21,7 +21,7 @@
 		<tbody class="type html">
 			<tr>
 				<th>广告代码：</th>
-				<td><textarea rows="10" style="width:98%;" name="code[html]">{$edit.code.html|html}</textarea></td>
+				<td><textarea rows="10" style="width:98%;" name="code[html]">{$edit.code.html|text}</textarea></td>
 			</tr>
 		</tbody>
 		<tbody class="type flash">

@@ -8,6 +8,8 @@ class CtrlIndex extends CtrlBase{
 		parent::__construct();
 	}
 	function onIndex(){
+		$this->setVar('catid',0);
+		$this->formhash('join');
 		$this->display('index',null,true);
 	}
 	function onDefault(){

@@ -172,8 +172,7 @@ class LibTemplate{
 		$template = preg_replace("/\{ad\s+(.+?)\}/e", "\$this->varPregTags('<?=M(\\'ad\\')->show(\\1)?>')", $template);
 		$template = preg_replace("/\{ad:(.+?)\}/e", "\$this->varPregTags('<?=M(\\'ad\\')->show(\"\\1\")?>')", $template);
 		$template = preg_replace("/\{adp\s+(.+?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\\1)?>')", $template);
-		$template = preg_replace("/\{adp:(.+?)\|(.+?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\"\\1\",\"\\2\")?>')", $template);
-		$template = preg_replace("/\{adp:([^\|]?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\"\\1\")?>')", $template);
+		$template = preg_replace("/\{adp:(.+?)\}/e", "\$this->varPregTags('<?=M(\\'adp\\')->show(\"\\1\")?>')", $template);
 		$template = preg_replace("/\{link\s+(.+?)\}/e", "\$this->linkTags('\\1')", $template);
 
 		//变量

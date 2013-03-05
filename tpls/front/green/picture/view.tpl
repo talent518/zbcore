@@ -1,5 +1,5 @@
 {template header}
-<div class="scat">{template sidecat}</div>
+{template sidecat}
 <div class="pic_view mcat">
 	<h1 class="title">{$picture.title}</h1>
 	<h2 class="stitle">发布时间：<span>{date 'Y年m月d日',$picture.addtime}</span>&nbsp-&nbsp;浏览次数：<span id="viewPicture">{$picture.views}</span></h2>

@@ -5,6 +5,7 @@ exit('Access Denied');
 class ModelPicture extends ModelBase{
 	protected $table='picture';
 	protected $priKey='pic_id';
+	protected $forKey='cat_id';
 	protected $order='`order` desc,pic_id desc';
 	protected $rules=array(
 		'cat_id'=>array(
@@ -82,7 +83,7 @@ class ModelPicture extends ModelBase{
 				$pos=$this->mod->get($picture['cat_id']);
 				$ids=explode(',',$pos['pids']);
 				$ids[]=$data['cat_id'];
-				M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
+				M('category')->update(array('counts'=>'counts-1'),'counts>0 AND cat_id in ('.iimplode($ids).')',false);
 				$pos=$this->mod->get($data['cat_id']);
 				$ids=explode(',',$pos['pids']);
 				$ids[]=$data['cat_id'];
@@ -90,7 +91,7 @@ class ModelPicture extends ModelBase{
 			}
 			if($news){
 				if($outs=array_diff($olds,$news)){//删除
-					DB()->update('position',array('counts'=>'counts-1'),'posid IN ('.iimplode($outs).')',false);
+					DB()->update('position',array('counts'=>'counts-1'),'counts>0 AND posid IN ('.iimplode($outs).')',false);
 					DB()->delete('picture_position','id='.$id.' AND posid IN ('.iimplode($outs).')');
 				}
 				if($ins=array_diff($news,$olds)){//不存在，插入
@@ -102,7 +103,7 @@ class ModelPicture extends ModelBase{
 				}
 			}elseif($olds){
 				DB()->delete('picture_position','id='.$id);
-				DB()->update('position',array('counts'=>'counts-1'),'posid in ('.iimplode($olds).')',false);
+				DB()->update('position',array('counts'=>'counts-1'),'counts>0 AND posid in ('.iimplode($olds).')',false);
 			}
 			return true;
 		}
@@ -111,7 +112,7 @@ class ModelPicture extends ModelBase{
 	function drop($id=0){
 		if($picture=$this->get($id)){
 			$pos=$this->mod->get($picture['cat_id']);
-			DB()->update('category',array('counts'=>'counts-1'),'cat_id in ('.($pos['pids']?$pos['pids'].',':'').$picture['cat_id'].')',false);
+			DB()->update('category',array('counts'=>'counts-1'),'counts>0 AND cat_id in ('.($pos['pids']?$pos['pids'].',':'').$picture['cat_id'].')',false);
 			$this->delete('pic_id='.$id);
 			DB()->delete('picture_position','id='.$id);
 			foreach(M('picture.image')->get_list_by_where('pic_id='.$id) as $r){
@@ -119,7 +120,7 @@ class ModelPicture extends ModelBase{
 			}
 			M('picture.image')->delete('pic_id='.$id);
 			if($picture['posids'])
-				DB()->update('position',array('counts'=>'counts-1'),'posid in ('.$picture['posids'].')',false);
+				DB()->update('position',array('counts'=>'counts-1'),'counts>0 AND posid in ('.$picture['posids'].')',false);
 			return true;
 		}else{
 			$this->error='图片不存在！';

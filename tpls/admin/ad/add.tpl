@@ -20,8 +20,8 @@
 		</body>
 		<tbody class="type html">
 			<tr>
-				<th>广告代码：</th>
-				<td><textarea rows="10" style="width:98%;" name="code[html]">{$add.code.html|html}</textarea></td>
+				<th>HTML代码：</th>
+				<td><textarea rows="10" style="width:98%;" name="code[html]">{$add.code.html|text}</textarea></td>
 			</tr>
 		</tbody>
 		<tbody class="type flash">

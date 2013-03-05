@@ -59,28 +59,10 @@ $('#addform').validate({
 			required:true
 		},
 		'size[width]':{
-			required:function(elem){
-				if($.inArray($('[name=type]:checked',elem.form).val(),['flash','image'])!=-1){
-					return true;
-				}else{
-					elem.value='';
-					return false;
-				}
-			},
-			integer:true,
-			min:1
+			integer:true
 		},
 		'size[height]':{
-			required:function(elem){
-				if($.inArray($('[name=type]:checked',elem.form).val(),['flash','image'])!=-1){
-					return true;
-				}else{
-					elem.value='';
-					return false;
-				}
-			},
-			integer:true,
-			min:1
+			integer:true
 		},
 		pcount:{
 			required:true,

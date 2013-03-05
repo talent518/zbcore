@@ -14,7 +14,7 @@ class ModelArticle extends ModelBase{
 		),
 		'title'=>array(
 			'required'=>true,
-			'maxlength'=>20,
+			'maxlength'=>50,
 			'query'=>'article'
 		),
 		'content'=>array(
@@ -64,7 +64,7 @@ class ModelArticle extends ModelBase{
 				$pos=M('category')->get($article['cat_id']);
 				$ids=explode(',',$pos['pids']);
 				$ids[]=$article['cat_id'];
-				M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
+				M('category')->update(array('counts'=>'counts-1'),'counts>0 AND cat_id in ('.iimplode($ids).')',false);
 				$pos=M('category')->get($data['cat_id']);
 				$ids=explode(',',$pos['pids']);
 				$ids[]=$data['cat_id'];
@@ -75,11 +75,17 @@ class ModelArticle extends ModelBase{
 		return false;
 	}
 	function drop($id=0){
-		$article=$this->get($id);
+		if(!($article=$this->get($id))){
+			$this->error='删除的文章不存在！';
+			return false;
+		}
 		$pos=M('category')->get($article['cat_id']);
 		$ids=explode(',',$pos['pids']);
 		$ids[]=$article['cat_id'];
-		M('category')->update(array('counts'=>'counts-1'),'cat_id in ('.iimplode($ids).')',false);
+		M('category')->update(array('counts'=>'counts-1'),'counts>0 AND cat_id in ('.iimplode($ids).')',false);
+		if($article['thumb']){
+			@unlink(RES_UPLOAD_DIR.$article['thumb']);
+		}
 		return parent::drop($id);
 	}
 	function order($pid,$ids){

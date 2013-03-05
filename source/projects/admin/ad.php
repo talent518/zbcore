@@ -144,10 +144,9 @@ class CtrlAd extends CtrlBase{
 			$this->message('广告不存在！');
 	}
 	function onShow(){
-		$ad=$this->mod->get($this->id);
-		$adp=$this->pmod->get($ad['pid']);
-		if($ad && $adp)
-			$this->echoPage(array('Content-type'=>'text/html; charset='.CFG()->charset),$this->mod->show($adp,$ad));
+		$adcode=$this->mod->show($this->id);
+		if($adcode)
+			$this->echoPage(array('Content-type'=>'text/html; charset='.CFG()->charset),$adcode);
 		else
 			$this->message('广告不存在');
 	}

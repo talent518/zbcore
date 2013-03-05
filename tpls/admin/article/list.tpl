@@ -47,7 +47,7 @@
 					<input name="_ids[{$r.art_id}]" type="hidden" value="{$r.order}"/>
 				</td>
 				<td>{$r.art_id}</td>
-				<td class="l">{$r.title}</td>
+				<td class="l">{$r.title}{if $r.thumb}&nbsp;<font color="red">图片</font>{/if}</td>
 				<td>
 					<a href="{link proj=index method=article id=$r.art_id}" title="查看文章" target="_blank">查看</a>
 					<span class="split">|</span>
@@ -78,7 +78,7 @@
 </form>
 <script type="text/javascript">
 $('h1.head a.add,#listform a.add,#listform a.edit').window({width:1000});
-$('#listform a.drop').window({width:500});
+$('#listform a.drop').window({width:650});
 $('#listform a.list').click(function(){
 	$('#bd').load(this.href);
 	return false;

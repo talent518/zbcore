@@ -5,6 +5,7 @@ exit('Access Denied');
 class ModelCategory extends ModelBase{
 	protected $table='category';
 	protected $priKey='cat_id';
+	protected $forKey='pid';
 	protected $order='`corder` desc,`cat_id`';
 	protected $rules=array(
 		'pid'=>array(
@@ -88,7 +89,7 @@ class ModelCategory extends ModelBase{
 			$count=$this->{'drop'.ucfirst($cat['ctype'])}($cat_ids);
 			$this->delete($this->priKey.' in('.iimplode($cat_ids).')');
 			if($count>0 && $cat['pid']>0)
-				$this->update(array('counts'=>'counts-'.$count),$this->priKey.' in ('.$cat['pids'].')',false);
+				$this->update(array('counts'=>'counts-'.$count),$this->priKey.' in ('.$cat['pids'].') AND counts>0',false);
 			$cache=L('cache');
 			$cache->dir='';
 			$cache->name='category_id_tree';
@@ -105,29 +106,30 @@ class ModelCategory extends ModelBase{
 		return $count;
 	}
 	function dropArticle($cat_ids){
-		$count=DB()->count('aritlce',$this->priKey.' in('.iimplode($cat_ids).')');
+		$count=DB()->count('article',$this->priKey.' in('.iimplode($cat_ids).')');
 		$sids=DB()->select(array(
-			'table'=>'aritlce_position p',
+			'table'=>'article_position p',
 			'field'=>'p.posid,count(p.id) as `counts`',
-			'join'=>array('aritlce s'=>'s.art_id=p.id'),
+			'join'=>array('article s'=>'s.art_id=p.id'),
 			'where'=>'s.cat_id in('.iimplode($cat_ids).')',
 			'group'=>'p.posid'
-		),-1,'posid','counts');
+		),SQL_SELECT_LIST,'posid','counts');
 
 		if($sids){
 			foreach($sids as $posid=>$counts)
-				DB()->update('position',array('counts'=>'counts-'.$counts),'posid='.$posid,false);
+				DB()->update('position',array('counts'=>'counts-'.$counts),'counts>0 AND posid='.$posid,false);
 		}
 
 		$ids=DB()->select(array(
-			'table'=>'aritlce',
-			'field'=>'id',
+			'table'=>'article',
+			'field'=>'art_id',
 			'where'=>'cat_id in('.iimplode($cat_ids).')'
-		),-1,'','id');
-		if($ids)
-			DB()->delete('aritlce_position','id in('.iimplode($ids).')');
+		),SQL_SELECT_LIST,'','art_id');
+		if($ids){
+			DB()->delete('article_position','id in('.iimplode($ids).')');
+		}
 
-		DB()->delete('aritlce','cat_id in('.iimplode($cat_ids).')');
+		DB()->delete('article','cat_id in('.iimplode($cat_ids).')');
 		return $count;
 	}
 	function dropPicture($cat_ids){
@@ -138,18 +140,18 @@ class ModelCategory extends ModelBase{
 			'join'=>array('picture s'=>'s.pic_id=p.id'),
 			'where'=>'s.cat_id in('.iimplode($cat_ids).')',
 			'group'=>'p.posid'
-		),-1,'posid','counts');
+		),SQL_SELECT_LIST,'posid','counts');
 
 		if($sids){
 			foreach($sids as $posid=>$counts)
-				DB()->update('position',array('counts'=>'counts-'.$counts),'posid='.$posid,false);
+				DB()->update('position',array('counts'=>'counts-'.$counts),'counts>0 AND posid='.$posid,false);
 		}
 
 		$ids=DB()->select(array(
 			'table'=>'picture',
-			'field'=>'id',
+			'field'=>'pic_id',
 			'where'=>'cat_id in('.iimplode($cat_ids).')'
-		),-1,'','id');
+		),SQL_SELECT_LIST,'','id');
 		if($ids)
 			DB()->delete('picture_position','id in('.iimplode($ids).')');
 
