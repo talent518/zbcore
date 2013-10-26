@@ -32,7 +32,7 @@ class CtrlIndex extends CtrlBase{
 			$head['description']=$cat['cat_name'];
 		$this->setVar('head',$head);
 		$page=GET('page')+0;
-		if($cat['ctype']!='page' && M('category')->get_child($id,array())){
+		if($cat['ctype']!='page' && M('category')->get_child($id)){
 			$tpl=$ctpl['cate'];
 		}else{
 			$tpl=$ctpl['list'];

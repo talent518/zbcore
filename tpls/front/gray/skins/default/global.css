@@ -1,0 +1,52 @@
+*{word-wrap:break-word;word-break:break-all;}
+
+body,form,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dd,pre{margin:0px;padding:0px;}
+
+ul,ol,li{list-style-type:none;}
+
+body{font-size:12px;color:#333;}
+
+h1,h2{font-size:14px;}
+h3,h4{font-size:12px;}
+h5,h6{font-size:12px;font-weight:normal;}
+
+select,textarea,input,button{vertical-align:middle;margin:0px 5px;padding:0px;}
+
+img{vertical-align:middle;border:none;}
+a,a:visited{color:#000;text-decoration:none;}
+a:hover{color:#5c8627;}
+a:focus{border:none;}
+
+hr{width:100%;height:0px;overflow:hidden;margin:0px;border:none;border-top:1px #eee solid;}
+
+.submit,input[type=submit]{display:-moz-inline-box;display:inline-block;width:60px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left -25px no-repeat;color:#234f8d;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
+
+button,.button,input[type=button]{display:-moz-inline-box;display:inline-block;width:71px;height:23px;overflow:hidden;margin:0px 5px;padding:0px;background:url(images/icons.gif) left top repeat-x;color:#fff;font-size:12px;text-align:center;line-height:23px;vertical-align:middle;}
+
+.numeric{font-family:Georgia;font-size:1.4em;color:#F60!important;}
+.split{color:#999!important;padding:0px 5px;}
+
+.gray{color:#999!important;}
+
+.cb{clear:both;}
+.cf{display:block;float:none;clear:both;width:100%;height:0px;overflow:hidden;}
+.fl{float:left !important;}
+.fr{float:right !important;}
+
+input.radio,input.checkbox{border:none;background:none;}
+input.checkbox{height:14px;}
+
+textarea,input[type=text],input[type=password]{border:1px #b0d3ee solid;background:#f4f9ff;height:22px;line-height:22px;padding:0px 3px;}
+textarea{height:auto;}
+button,input.button,input[type=submit],input[type=button]{cursor:pointer;border:medium none;}
+
+.focusb{color:#000;}
+.fblur{color:#999;}
+
+.pages{text-align:center;}
+
+#pd{margin-top:10px;background:#fff;}
+#pd .base{text-align:center;line-height:20px;cursor:pointer;}
+#pd .detail{padding:5px;}
+
+#loading{position:fixed;_position:absolute;z-index:9999;height:58px;line-height:58px;overflow:hidden;padding:0px 0px 0px 40px;background:url(images/loading.gif) left center no-repeat;font-size:20px;font-weight:bold;color:#419639;}
