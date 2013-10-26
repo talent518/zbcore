@@ -25,7 +25,7 @@ class LibIoFile{
 	}
 
 	function read($file){
-		if($fp=@fopen($file, 'r')){
+		if($fp=@fopen($file, 'rb')){
 			$content=@fread($fp, filesize($file));
 			@fclose($fp);
 		}
@@ -36,7 +36,7 @@ class LibIoFile{
 		$path=pathinfo($file,PATHINFO_DIRNAME);
 		L('io.dir')->mkdirs($path,0777,true);
 
-		if($fp=@fopen($file,'w')){
+		if($fp=@fopen($file,'wb')){
 			flock($fp,2);
 			fwrite($fp,$content);
 			fclose($fp);

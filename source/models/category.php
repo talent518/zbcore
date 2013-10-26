@@ -173,19 +173,19 @@ class ModelCategory extends ModelBase{
 		$pos[]=$cat;
 		return $pos;
 	}
-	function &get_child($id,$list=false){
+	function get_child($id,&$list=false){
 		$tree=$this->get_id_by_tree();
 		if(!is_array($list))
 			$list=array($id);
 		if($tree[$id]){
 			foreach($tree[$id] as $_id){
 				$list[]=$_id;
-				$this->get_child($_id,&$list);
+				$this->get_child($_id,$list);
 			}
 		}
 		return $list;
 	}
-	function &get($id=0){
+	function get($id=0){
 		if(!$id)
 			return;
 		static $ids;
@@ -203,7 +203,7 @@ class ModelCategory extends ModelBase{
 		$cache->callback=array(&$this,'get_tree',array('id'));
 		return $cache->get();
 	}
-	function &get_tree($key='',$type=''){
+	function get_tree($key='',$type=''){
 		static $trees;
 		if(!is_array($trees)){
 			$trees=array();
@@ -213,7 +213,7 @@ class ModelCategory extends ModelBase{
 			$trees[$k]=$this->_get_tree($key,$type);
 		return $trees[$k];
 	}
-	private function &_get_tree($key='',$type=''){
+	private function _get_tree($key='',$type=''){
 		$mapTree=array();
 		$q=DB()->select(array(
 			'table'=>'category',

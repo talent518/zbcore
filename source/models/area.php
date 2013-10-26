@@ -80,19 +80,19 @@ class ModelArea extends ModelBase{
 		$pos[]=$area;
 		return $pos;
 	}
-	function &get_child($id,$list=false){
+	function get_child($id,&$list=false){
 		$tree=$this->get_tree('id');
 		if(!is_array($list))
 			$list=array($id);
 		if($tree[$id]){
 			foreach($tree[$id] as $_id){
 				$list[]=$_id;
-				$this->get_child($_id,&$list);
+				$this->get_child($_id,$list);
 			}
 		}
 		return $list;
 	}
-	function &get_tree(){
+	function get_tree(){
 		$mapTree=array();
 		$q=DB()->select(array(
 			'table'=>'area',

@@ -74,6 +74,9 @@ class ModelAdp extends ModelBase{
 	function show($id,$delimiter='',$isCode=true){
 		$html='';
 		$adp=(is_int($id)?$this->get($id):$this->get_by_where('pname=\''.addslashes($id).'\''));
+		if(!$adp){
+			return;
+		}
 
 		$ads=M('ad')->get_list_by_where('`enable`=1 AND pid='.$adp['pid']);
 		foreach($ads as $id=>$ad){

@@ -43,8 +43,7 @@ class LibIoDir{
 		if(!is_dir($dir)){
 			return false;
 		}
-		if($ischild){
-			$handle=@opendir($dir);
+		if($ischild && ($handle=@opendir($dir))){
 			while(($file=@readdir($handle))!==false){
 				if(!in_array($file,array('.','..'))){
 					$_dir=$dir.DIR_SEP.$file;
@@ -63,7 +62,8 @@ class LibIoDir{
 		$writeable=FALSE;
 		$this->mkdirs($dir,0777,true);
 		if(is_dir($dir)){
-			if($fp=@fopen($dir.DIR_SEP.'test.txt','w')){
+			if($fp=@fopen($dir.DIR_SEP.'test.txt','wb')){
+				@fwrite($fp,__FILE__);
 				@fclose($fp);
 				@unlink($dir.DIR_SEP.'test.txt');
 				$writeable=TRUE;
