@@ -28,7 +28,7 @@
 				<td class="l"><img src="{thumb RES_UPLOAD_DIR.$r.url,50,50}"/></td>
 				<td class="l">{$r.price|money}</td>
 				<td>
-					<a href="{link proj=index ctrl=space method=product id=$r.prod_id uid=$r.uid}" target="_blank" title="查看产品">查看</a>
+					<a href="{link proj=wap ctrl=space method=product id=$r.prod_id uid=$r.uid}" target="_blank" title="查看产品">查看</a>
 					<span class="split">|</span>
 					<a href="{link ctrl=product method=edit id=$r.prod_id}" class="edit" title="编辑产品">编辑</a>
 					<span class="split">|</span>
