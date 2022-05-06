@@ -42,8 +42,8 @@
 				<a href="{link method=login}">登录</a> | <a href="{link method=register}">注册</a>
 			{/if}
 			</php>
-			<span class="split">|</span><a href="{link proj=wap ctrl=index}" class="gray">个人空间</a>
 			<span class="split">|</span><a href="{ROOT_URL}" class="gray">返回首页</a>
+			<span class="split">|</span><a href="{link proj=wap ctrl=space method=index uid=$MEMBER.uid}">{if $MEMBER.iscorp}公司{else}个人{/if}WAP</a>
 		</p>
 	</div>
 	<div id="wp" class="wp">
