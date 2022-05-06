@@ -104,7 +104,7 @@ strong{margin-left:1em;color:red;font-weight:normal;padding-left:1em;background:
 			parent.document.getElementById("nextStep").disabled=false;
 			parent.window.down_move_func=function(){};
 			</script>';
-			// ob_flush();
+			ob_flush();
 			flush();
 		} else {
 			$this->setVar('adm', $_GET['adm']);
