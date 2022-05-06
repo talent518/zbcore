@@ -3,7 +3,7 @@ if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class LibIoDir{
-	//��ȡĿ¼
+	//获取目录
 	function gets($pdir,$exts=array(),$nots=array()){
 		$dirs = array();
 		if($dh = @opendir($pdir)) {

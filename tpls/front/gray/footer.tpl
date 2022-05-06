@@ -2,7 +2,7 @@
 			<div class="cf"></div>
 		</div>
 		<div id="ft" class="wp">
-			<p><b>案例速览：</b>{adp:foot-casus|<span class=\"split\">|</span>}</p>
+			<p><b>案例速览：</b>{adp:foot-casus","<span class=\"split\">|</span>}</p>
 			<p>
 				<b>介绍智绘：</b>
 			{$i=0;}

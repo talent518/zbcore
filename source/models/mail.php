@@ -1,36 +1,43 @@
 <?php
-if(!defined('IN_ZBC'))
-exit('Access Denied');
+if(! defined('IN_ZBC'))
+	exit('Access Denied');
 
-class ModelMail extends ModelBase{
-	var $cfg,$error;
-	function getBody($tpl,array $data){
+class ModelMail extends ModelBase {
+
+	public $cfg, $error;
+
+	function getBody($tpl, array $data) {
 		static $_tpl;
-		if(!$_tpl){
-			$_tpl=clone L('template');
-			$_tpl->tpldir=TPL_DIR.'mail'.DIR_SEP;
-			$_tpl->cachedir=TPL_CACHE_DIR.'mail'.DIR_SEP;
-			$_tpl->datadir='mail'.DIR_SEP;
+		if(! $_tpl) {
+			$_tpl = clone L('template');
+			$_tpl->tpldir = TPL_DIR . 'mail' . DIR_SEP;
+			$_tpl->cachedir = TPL_CACHE_DIR . 'mail' . DIR_SEP;
+			$_tpl->datadir = 'mail' . DIR_SEP;
 			$_tpl->setCall();
-			//define('MAIL_TPL_URL',SITE_URL.TPL_URL.'mail/');
-			define('MAIL_SKIN_URL',SITE_URL.TPL_URL.'mail/skin/');
+			// define('MAIL_TPL_URL',SITE_URL.TPL_URL.'mail/');
+			define('MAIL_SKIN_URL', SITE_URL . TPL_URL . 'mail/skin/');
 		}
-		foreach($data as $key=>$value)
-			$_tpl->setVar($key,$value);
+		foreach($data as $key => $value)
+			$_tpl->setVar($key, $value);
 		$_tpl->display($tpl);
-		$body=ob_get_contents();ob_end_clean();ob_start();
+		$body = ob_get_contents();
+		ob_end_clean();
+		ob_start();
 		return $body;
 	}
 
-	function send($email,$subject,$body,$attachments=array()){
-		return $this->sends(array($email),$subject,$body,$attachments);
+	function send($email, $subject, $body, $attachments = array()) {
+		return $this->sends(array(
+			$email
+		), $subject, $body, $attachments);
 	}
-	function sends($emails,$subject,$body,$attachments=array()){
-		$cfg=M('setup')->get('email');
-		$mail=L('net.smtp');
-		$mail->CharSet=CFG()->charset;
-		$mail->Encoding='base64';
-		$mail->Mailer=$cfg['type']; // Ê¹ÓÃSMTP
+
+	function sends($emails, $subject, $body, $attachments = array()) {
+		$cfg = M('setup')->get('email');
+		$mail = L('net.smtp');
+		$mail->CharSet = CFG()->charset;
+		$mail->Encoding = 'base64';
+		$mail->Mailer = $cfg['type']; // ä½¿ç”¨SMTP
 		$mail->SMTPSecure = $cfg['secure'];
 		$mail->Host = $cfg['host'];
 		$mail->Port = $cfg['port'];
@@ -39,30 +46,31 @@ class ModelMail extends ModelBase{
 		$mail->Password = $cfg['password'];
 		$mail->From = $cfg['from'];
 		$mail->FromName = $cfg['fromname'];
-		foreach($emails as $email){
+		foreach($emails as $email) {
 			if(is_array($email))
 				extract($email);
 			else
-				$name='';
-			$mail->AddAddress($email,$name);//ÊÕ¼þÈËemailºÍÃû×Ö
+				$name = '';
+			$mail->AddAddress($email, $name); // æ”¶ä»¶äººemailå’Œåå­—
 		}
 		if($cfg['reply'])
-			$mail->AddReplyTo($cfg['reply'],$cfg['replyname']);
-		$mail->WordWrap = 50; // Éè¶¨ word wrap
+			$mail->AddReplyTo($cfg['reply'], $cfg['replyname']);
+		$mail->WordWrap = 50; // è®¾å®š word wrap
 		foreach($attachments as $attachment)
-			$mail->AddAttachment($attachment);//¸½¼þ
-		$mail->IsHTML(true); // ÒÔHTML·¢ËÍ
+			$mail->AddAttachment($attachment); // é™„ä»¶
+		$mail->IsHTML(true); // ä»¥HTMLå‘é€
 		$mail->Subject = $subject;
-		$mail->Body = (is_array($body)?call_user_method_array('getBody',&$this,$body):$body); //HTML Body
-		$mail->AltBody = "This is the body when user views in plain text format"; //´¿ÎÄ×ÖÊ±µÄBody
-		if(!$mail->Send()){
-			$this->error=$mail->ErrorInfo;
+		$mail->Body = (is_array($body) ? call_user_method_array('getBody', $this, $body) : $body); // HTML Body
+		$mail->AltBody = "This is the body when user views in plain text format"; // çº¯æ–‡å­—æ—¶çš„Body
+		if(! $mail->Send()) {
+			$this->error = $mail->ErrorInfo;
 			return false;
-		}else{
-			$this->error='';
+		} else {
+			$this->error = '';
 			return true;
 		}
 	}
-	function queue(){
+
+	function queue() {
 	}
 }

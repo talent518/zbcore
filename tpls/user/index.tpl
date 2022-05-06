@@ -1,6 +1,5 @@
 {template header}
-<script type="text/javascript" src="{RES_SCRIPT_URL}swfobject.js"></script>
-<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-uploadify.js"></script>
+<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-uploadifive.js"></script>
 <script type="text/javascript" src="{RES_URL}ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="{RES_URL}ckeditor/adapters/jquery.js"></script>
 <script type="text/javascript" src="{RES_URL}ckfinder/ckfinder.js"></script>

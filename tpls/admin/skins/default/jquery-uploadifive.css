@@ -1,0 +1,80 @@
+/*
+UploadiFive
+Copyright (c) 2012 Reactive Apps, Ronnie Garcia
+*/
+
+.uploadifive-button {
+	background-color: #309cef;
+	background-image: linear-gradient(bottom, #309cef 0%, #b0d3ee 100%);
+	background-image: -o-linear-gradient(bottom, #309cef 0%, #b0d3ee 100%);
+	background-image: -moz-linear-gradient(bottom, #309cef 0%, #b0d3ee 100%);
+	background-image: -webkit-linear-gradient(bottom, #309cef 0%, #b0d3ee 100%);
+	background-image: -ms-linear-gradient(bottom, #309cef 0%, #b0d3ee 100%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, #309cef),
+		color-stop(1, #b0d3ee)
+	);
+	background-position: center top;
+	background-repeat: no-repeat;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #309cef;
+	color: #FFF;
+	font: normal 16px Arial, Helvetica, sans-serif;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	text-transform: uppercase;
+	width: 100%;
+}
+.uploadifive-button input {
+	cursor: pointer;
+}
+.uploadifive-button:hover {
+	background-color: #b0d3ee;
+	background-image: linear-gradient(top, #b0d3ee 0%, #309cef 100%);
+	background-image: -o-linear-gradient(top, #b0d3ee 0%, #309cef 100%);
+	background-image: -moz-linear-gradient(top, #b0d3ee 0%, #309cef 100%);
+	background-image: -webkit-linear-gradient(top, #b0d3ee 0%, #309cef 100%);
+	background-image: -ms-linear-gradient(top, #b0d3ee 0%, #309cef 100%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, #b0d3ee),
+		color-stop(1, #309cef)
+	);
+	background-position: center bottom;
+}
+.uploadifive-queue-item {
+	background-color: #F5F5F5;
+	border-bottom: 1px dotted #D5D5D5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font: 12px Arial, Helvetica, Sans-serif;
+	margin-top: 3px;
+	padding: 15px;
+}
+.uploadifive-queue-item .close {
+	background: url('images/wrong.png') 0 0 no-repeat;
+	display: block;
+	float: right;
+	height: 16px;
+	text-indent: -9999px;
+	width: 16px;
+}
+.uploadifive-queue-item .progress {
+	border: 1px solid #D0D0D0;
+	height: 3px;
+	margin-top: 5px;
+	width: 100%;
+}
+.uploadifive-queue-item .progress-bar {
+	background-color: #0072BC;
+	height: 3px;
+	width: 0;
+}

@@ -10,9 +10,11 @@
  * modifying or distribute this file or part of its contents. The contents of
  * this file is part of the Source Code of CKFinder.
  */
-if (!defined('IN_CKFINDER')) exit;
+if(! defined('IN_CKFINDER'))
+	exit();
 
 /**
+ *
  * @package CKFinder
  * @subpackage Core
  * @copyright CKSource - Frederico Knabben
@@ -25,43 +27,37 @@ if (!defined('IN_CKFINDER')) exit;
  * @subpackage Core
  * @copyright CKSource - Frederico Knabben
  */
-class CKFinder_Connector_Core_Factory
-{
-    /**
-     * Initiate factory
-     * @static
-     */
-    function initFactory()
-    {
-        $GLOBALS['CKFinder_Connector_Factory']=array();
-    }
+class CKFinder_Connector_Core_Factory {
 
-    /**
-     * Get instance of specified class
-     * Short and Long class names are possible
-     * <code>
-     * $obj1 =& CKFinder_Connector_Core_Factory::getInstance("Ckfinder_Connector_Core_Xml");
-     * $obj2 =& CKFinder_Connector_Core_Factory::getInstance("Core_Xml");
-     * </code>
-     *
-     * @param string $className class name
-     * @static
-     * @access public
-     * @return object
-     */
-    function &getInstance($className)
-    {
-        $namespace = "CKFinder_Connector_";
+	/**
+	 * Initiate factory
+	 *
+	 * @static
+	 */
+	function initFactory() {
+		$GLOBALS['CKFinder_Connector_Factory'] = array();
+	}
 
-        $baseName = str_replace($namespace,"",$className);
+	/**
+	 * Get instance of specified class Short and Long class names are possible <code> $obj1 =& CKFinder_Connector_Core_Factory::getInstance("Ckfinder_Connector_Core_Xml"); $obj2 =& CKFinder_Connector_Core_Factory::getInstance("Core_Xml"); </code>
+	 *
+	 * @param string $className class name
+	 * @static
+	 * @access public
+	 * @return object
+	 */
+	function &getInstance($className) {
+		$namespace = "CKFinder_Connector_";
 
-        $className = $namespace.$baseName;
+		$baseName = str_replace($namespace, "", $className);
 
-        if (!isset($GLOBALS['CKFinder_Connector_Factory'][$className])) {
-            require_once CKFINDER_CONNECTOR_LIB_DIR . "/" . str_replace("_","/",$baseName).".php";
-            $GLOBALS['CKFinder_Connector_Factory'][$className] =& new $className;
-        }
+		$className = $namespace . $baseName;
 
-        return $GLOBALS['CKFinder_Connector_Factory'][$className];
-    }
+		if(! isset($GLOBALS['CKFinder_Connector_Factory'][$className])) {
+			require_once CKFINDER_CONNECTOR_LIB_DIR . "/" . str_replace("_", "/", $baseName) . ".php";
+			$GLOBALS['CKFinder_Connector_Factory'][$className] = new $className();
+		}
+
+		return $GLOBALS['CKFinder_Connector_Factory'][$className];
+	}
 }

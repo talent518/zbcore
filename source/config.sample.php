@@ -6,7 +6,7 @@ class Config{
 	var $timeout		= 5;			//缓存超时(单位：分钟)，推荐范围5-30
 
 	var $tplSuffix		= '.tpl';		//模版文件后缀
-	var $tplClearWhite	= TRUE;			//是否清除空白
+	var $tplClearWhite	= FALSE;			//是否清除空白
 
 	var $isEncrypt		= FALSE;		//缓存文件名是否加密
 

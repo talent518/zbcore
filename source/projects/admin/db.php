@@ -27,9 +27,9 @@ class CtrlDb extends CtrlBase{
 	}
 	function onBackup(){
 		if(M('db')->export(DB_CACHE_DIR.sgmdate('YmdHis').'.sql'))
-			$this->message('数据库还原成功',URL(array('ctrl'=>'db','method'=>'list')),true);
+			$this->message('数据库备份成功',URL(array('ctrl'=>'db','method'=>'list')),true);
 		else
-			$this->message('数据库还原失败，或文件不存在','',false);
+			$this->message('数据库备份失败，或文件不存在','',false);
 	}
 	function onRestore(){
 		$fn=DB_CACHE_DIR.GET('fn').'.sql';

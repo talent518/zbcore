@@ -16,7 +16,6 @@
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-cookie.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-md5.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-float.js"></script>
-	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-ui_core.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-ui_draggable.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-dialog.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-validate.js"></script>

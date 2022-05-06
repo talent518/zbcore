@@ -322,18 +322,17 @@ $.fn.ajaxSubmit = function(options) {
 						var pre = doc.getElementsByTagName('pre')[0];
 						if (pre)
 							xhr.responseText = pre.innerHTML;
-					}			  
+					}
 				}
 				else if (opts.dataType == 'xml' && !xhr.responseXML && xhr.responseText != null) {
 					xhr.responseXML = toXml(xhr.responseText);
 				}
-				data = $.httpData(xhr, opts.dataType);
-			}
-			catch(e){
+				data = $.httpData(xhr, opts.dataType, opts);
+			} catch(e) {
 				ok = false;
-				$.handleError(opts, xhr, 'error', e);
+				$.event.trigger('ajaxError', [xhr, opts, e]);
 			}
-
+			
 			// ordering of these callbacks/triggers is odd, but that's how $.ajax does it
 			if (ok) {
 				opts.success(data, 'success');
@@ -355,9 +354,9 @@ $.fn.ajaxSubmit = function(options) {
 				doc = new ActiveXObject('Microsoft.XMLDOM');
 				doc.async = 'false';
 				doc.loadXML(s);
-			}
-			else
+			} else {
 				doc = (new DOMParser()).parseFromString(s, 'text/xml');
+			}
 			return (doc && doc.documentElement && doc.documentElement.tagName != 'parsererror') ? doc : null;
 		};
 	};

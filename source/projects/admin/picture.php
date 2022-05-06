@@ -1,11 +1,11 @@
-<?
+<?php
 if(!defined('IN_ZBC'))
 exit('Access Denied');
 
 class CtrlPicture extends CtrlBase{
 	var $id=0;
 	function __construct(){
-		parent::__construct(IN_METHOD=='upload');
+		parent::__construct();
 		$this->CtrlPicture();
 	}
 	function CtrlPicture(){
@@ -57,7 +57,6 @@ class CtrlPicture extends CtrlBase{
 				$this->message($this->mod->error);
 		}else{
 			$this->setVar('add',array('cat_id'=>$this->id,'order'=>0));
-			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
 			$this->setVar('posList',M('position')->get_list_by_where());
 			$this->setVar('addhash',$this->formhash('add'));
 			$this->display('picture/add');
@@ -88,7 +87,6 @@ class CtrlPicture extends CtrlBase{
 			if(!$edit=$this->mod->get($this->id,true))
 				$this->message('你要编辑的图片不存在！');
 			$this->setVar('edit',$edit);
-			$this->setVar('auth',encodestr($this->MEMBER['uid']."|".$this->MEMBER['password']));
 			$this->setVar('posList',M('position')->get_list_by_where());
 			$this->setVar('edithash',$this->formhash('edit'));
 			$this->display('picture/edit');
@@ -109,13 +107,6 @@ class CtrlPicture extends CtrlBase{
 			$this->message('图片不存在！');
 	}
 	function onUpload(){
-		@list($uid,$password)=explode("|",decodestr(str_replace(' ','+',GET('auth'))));
-		$uid=intval($uid);
-		$password=addslashes($password);
-		$logined=($uid && $password && DB()->count('user',"`uid`=$uid AND `password`='$password'"));
-		if(!$logined)
-			$this->echoJson($uid.' '.$password.' 管理员没有登录，不允许上传！');
-
 		if(L('upload')->saveImage($_FILES['Filedata'],'picture')){
 			$data=array(
 				'url'=>L('upload')->url,

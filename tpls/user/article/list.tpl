@@ -49,7 +49,7 @@
 				<td>{$r.art_id}</td>
 				<td class="l">{$r.title}</td>
 				<td>
-					<a href="{link proj=index ctrl=space method=article id=$r.art_id uid=$r.uid}" title="查看文章" target="_blank">查看</a>
+					<a href="{link proj=wap ctrl=space method=article id=$r.art_id uid=$r.uid}" title="查看文章" target="_blank">查看</a>
 					<span class="split">|</span>
 					<a href="{link ctrl=article method=edit id=$r.art_id}" class="edit" title="编辑文章">编辑</a>
 					<span class="split">|</span>

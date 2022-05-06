@@ -7,14 +7,9 @@ body{background:url(images/index_02.jpg)}
 
 #hd{padding-bottom:20px;border-bottom:2px #898989 solid;}
 #hd ol{margin:20px 0 40px;overflow:hidden;height:46px;line-height:46px;}
-#hd li{display:inline;float:left;width:201px;}
-#hd li a{display:block;overflow:hidden;background:url(images/nv-bg.png) no-repeat;text-indent:-100em;color:#666;font-size:14px;font-weight:800;text-align:center;color:white;}
-#hd li.about a{background-position-x:0px;}
-#hd li.works a{background-position-x:-201px;}
-#hd li.information a{background-position-x:-402px;}
-#hd li.contact a{background-position-x:-603px;}
-#hd li.concern a{background-position-x:-804px;}
-#hd li a:hover,#hd li.active a{background-position-y:-46px;}
+#hd li{display:inline-block;}
+#hd li a{display:inline-block;width:100%;overflow:hidden;background:#737272;color:#666;font-size:14px;font-weight:800;text-align:center;color:white;}
+#hd li a:hover,#hd li.active a{background:#a0c332;}
 #hd li.active{background:url(images/bg_nv.jpg) center bottom no-repeat;}
 
 #wp{padding:20px 0px;}

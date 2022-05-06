@@ -54,7 +54,7 @@ function handler(event) {
 	// Add events and delta to the front of the arguments
 	args.unshift(event, delta);
 
-	return $.event.handle.apply(this, args);
+	return $.event.handlers.apply(this, args);
 }
 
 })(jQuery);

@@ -37,7 +37,7 @@ img {border:0px}
 .bigDiv {width:1002px;background:#eee;margin:0px auto}
 .headDiv {width:970px;height:87px;background:url(images/topBj.jpg) repeat-x;margin:0px auto}
 .menuDiv {width:930px;height:35px;line-height:35px;background:url(images/nav01.jpg) repeat-x;margin:0px auto;padding:0px 20px}
-.menuDiv a {display:inline-block;width:103px;height:35px;line-height:35px;color:#fff;font-size:14px;font-weight:bold;text-decoration:none;text-align:center;background:url(images/nav00.jpg) no-repeat right 0px}
+.menuDiv a {display:inline-block;width:102px;height:35px;line-height:35px;color:#fff;font-size:14px;font-weight:bold;text-decoration:none;text-align:center;background:url(images/nav00.jpg) no-repeat right 0px}
 .menuDiv a:hover,.menuDiv a.active {display:inline-block;width:103px;height:35px;line-height:35px;color:#ffff00;font-size:14px;font-weight:bold;text-decoration:none;text-align:center;background:url(images/nav11.jpg) no-repeat}
 .tyDiv {width:970px;height:7px;margin:0px auto;background:url(images/nav03.jpg) repeat-x}
 .adDiv {width:970px;margin:0px auto;}

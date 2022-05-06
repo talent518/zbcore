@@ -1,10 +1,82 @@
-var isIE=$.browser.msie,
-	isIE6=isIE && $.browser.version=='6.0',
-	isIE7=isIE && $.browser.version=='7.0',
-	isIE8=isIE && $.browser.version=='8.0';
-var isOpera=$.browser.opera;
-var isMoz=$.browser.mozilla;
-var isSafari=$.browser.safari;
+(function($) {
+	$.browser = {};
+	$.browser.mozilla = false;
+	$.browser.webkit = false;
+	$.browser.opera = false;
+	$.browser.msie = false;
+	$.browser.safari = false;
+
+	var nAgt = navigator.userAgent;
+	$.browser.name = navigator.appName;
+	$.browser.fullVersion = '' + parseFloat(navigator.appVersion);
+	$.browser.majorVersion = parseInt(navigator.appVersion, 10);
+	var nameOffset, verOffset, ix;
+
+	// In Opera, the true version is after "Opera" or after "Version"   
+	if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+		$.browser.opera = true;
+		$.browser.name = "Opera";
+		$.browser.fullVersion = nAgt.substring(verOffset + 6);
+		if ((verOffset = nAgt.indexOf("Version")) != -1)
+			$.browser.fullVersion = nAgt.substring(verOffset + 8);
+	}
+	// In MSIE, the true version is after "MSIE" in userAgent   
+	else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+		$.browser.msie = true;
+		$.browser.name = "Microsoft Internet Explorer";
+		$.browser.fullVersion = nAgt.substring(verOffset + 5);
+	}
+	// In Chrome, the true version is after "Chrome"   
+	else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+		$.browser.webkit = true;
+		$.browser.name = "Chrome";
+		$.browser.fullVersion = nAgt.substring(verOffset + 7);
+	}
+	// In Safari, the true version is after "Safari" or after "Version"   
+	else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+		$.browser.safari = true;
+		$.browser.webkit = true;
+		$.browser.name = "Safari";
+		$.browser.fullVersion = nAgt.substring(verOffset + 7);
+		if ((verOffset = nAgt.indexOf("Version")) != -1)
+			$.browser.fullVersion = nAgt.substring(verOffset + 8);
+	}
+	// In Firefox, the true version is after "Firefox"   
+	else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+		$.browser.mozilla = true;
+		$.browser.name = "Firefox";
+		$.browser.fullVersion = nAgt.substring(verOffset + 8);
+	}
+	// In most other browsers, "name/version" is at the end of userAgent   
+	else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
+		(verOffset = nAgt.lastIndexOf('/'))) {
+		$.browser.name = nAgt.substring(nameOffset, verOffset);
+		$.browser.fullVersion = nAgt.substring(verOffset + 1);
+		if ($.browser.name.toLowerCase() == $.browser.name.toUpperCase()) {
+			$.browser.name = navigator.appName;
+		}
+	}
+	// trim the fullVersion string at semicolon/space if present   
+	if ((ix = $.browser.fullVersion.indexOf(";")) != -1)
+		$.browser.fullVersion = $.browser.fullVersion.substring(0, ix);
+	if ((ix = $.browser.fullVersion.indexOf(" ")) != -1)
+		$.browser.fullVersion = $.browser.fullVersion.substring(0, ix);
+
+	$.browser.majorVersion = parseInt('' + $.browser.fullVersion, 10);
+	if (isNaN($.browser.majorVersion)) {
+		$.browser.fullVersion = '' + parseFloat(navigator.appVersion);
+		$.browser.majorVersion = parseInt(navigator.appVersion, 10);
+	}
+	$.browser.version = $.browser.majorVersion;
+})(jQuery);
+
+const isIE = $.browser.msie,
+	isIE6 = isIE && $.browser.version=='6.0',
+	isIE7 = isIE && $.browser.version=='7.0',
+	isIE8 = isIE && $.browser.version=='8.0';
+const isOpera = $.browser.opera;
+const isMoz = $.browser.mozilla;
+const isSafari = $.browser.safari;
 
 String.prototype.left=function(len){
 	if(len<=0) return this;
@@ -53,7 +125,7 @@ function sprintf(){
 	});
 };
 
-;(function($){
+(function($){
 	$.mapArray=function(arrays,callback){
 		var newArray=new Array(),key,value;
 		for(key in arrays){
@@ -348,6 +420,20 @@ function sprintf(){
 			else
 				$.debug(xml);
 		}
+	};
+	$.httpData = function(xhr, type, s) {
+		var ct = xhr.getResponseHeader('content-type'),
+			xml = type == 'xml' || !type && ct && ct.indexOf('xml') >= 0,
+			data = xml ? xhr.responseXML : xhr.responseText;
+
+		if(xml && data.documentElement.tagName == 'parsererror') throw 'parsererror';
+		if(s && s.dataFilter) data = s.dataFilter(data, type);
+
+		if(typeof data === 'string') {
+			if (type == 'script') jQuery.globalEval(data);
+			if (type == 'json') data = window["eval"]('(' + data + ')');
+		}
+		return data;
 	};
 })(jQuery);
 

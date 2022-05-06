@@ -18,7 +18,7 @@
 	{if $adcode}
 		<div id="ad" class="wp">$adcode</div>
 	{else}
-		<php>{if $MEMBER.ismanage}<div id="ad" class="wp" style="text-align:center;font-size:30px;font-weight:bold;">&#123;ad:main-nav-banner-$catid}</div>{/if}</php>
+		<php>{if $MEMBER.ismanage}<div id="ad" class="wp" style="text-align:center;font-size:30px;font-weight:bold;">{ad:main-nav-banner-$catid}</div>{/if}</php>
 	{/if}
 	<div id="wp" class="wp">
 {/if}

@@ -1,47 +1,38 @@
 <?php
-if(!defined('IN_ZBC'))
-exit('Access Denied');
+if(! defined('IN_ZBC'))
+	exit('Access Denied');
 
-class LibIoFile{
-	//µÃµ½ÎÄ¼þÃû.
+class LibIoFile {
+
+	// å¾—åˆ°æ–‡ä»¶å.
 	function ext($filename) {
-		return strtolower(pathinfo($filename,PATHINFO_EXTENSION));
+		return strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 	}
 
-	function move($source,$target){
-		if(@rename($source,$target)){
-			@chmod($target,0777);
+	function move($source, $target) {
+		if(@rename($source, $target)) {
+			@chmod($target, 0777);
 			return true;
-		}elseif(function_exists('move_uploaded_file') && @move_uploaded_file($source,$target)){
-			@chmod($target,0777);
+		} elseif(function_exists('move_uploaded_file') && @move_uploaded_file($source, $target)) {
+			@chmod($target, 0777);
 			return true;
-		}elseif(@copy($source,$target)){
-			@chmod($target,0777);
+		} elseif(@copy($source, $target)) {
+			@chmod($target, 0777);
 			@unlink($source);
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function read($file){
-		if($fp=@fopen($file, 'rb')){
-			$content=@fread($fp, filesize($file));
-			@fclose($fp);
-		}
-		return($content);
+	function read($file) {
+		return file_get_contents($file);
 	}
 
-	function write($file,$content){
-		$path=pathinfo($file,PATHINFO_DIRNAME);
-		L('io.dir')->mkdirs($path,0777,true);
+	function write($file, $content) {
+		$path = dirname($file);
+		L('io.dir')->mkdirs($path, 0777, true);
 
-		if($fp=@fopen($file,'wb')){
-			flock($fp,2);
-			fwrite($fp,$content);
-			fclose($fp);
-			return true;
-		}else
-			return false;
+		return @file_put_contents($file, $content) !== false;
 	}
 }

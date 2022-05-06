@@ -10,5 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<link rel="stylesheet" type="text/css" href="{SKIN_URL}{if $head.style}{$head.style}{else}style{/if}.css" />
 	<link rel="shortcut icon" href="{ROOT_URL}favicon.ico"/>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery.js"></script>
 </head>
 <body>

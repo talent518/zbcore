@@ -20,12 +20,12 @@ class ModelRouter extends ModelBase{
 	);
 	protected $messages=array(
 		'src'=>array(
-			'required'=>'Ô´¹æÔò²»ÄÜÎª¿Õ',
-			'minlength'=>'Ô´¹æÔòÌ«¶Ì',
+			'required'=>'æºè§„åˆ™ä¸èƒ½ä¸ºç©º',
+			'minlength'=>'æºè§„åˆ™å¤ªçŸ­',
 		),
 		'dest'=>array(
-			'required'=>'Ä¿±ê¹æÔò²»ÄÜÎª¿Õ',
-			'minlength'=>'Ä¿±ê¹æÔòÌ«¶Ì',
+			'required'=>'ç›®æ ‡è§„åˆ™ä¸èƒ½ä¸ºç©º',
+			'minlength'=>'ç›®æ ‡è§„åˆ™å¤ªçŸ­',
 		)
 	);
 
@@ -82,7 +82,7 @@ class ModelRouter extends ModelBase{
 			$rts=$this->get_array_by_key();
 		}
 		foreach($rts as $src=>$dest){
-			// ±ğÃûÓë²ÎÊı¹æÔò
+			// åˆ«åä¸å‚æ•°è§„åˆ™
 			if($src==$pcm){
 				foreach($args as $k=>$v){
 					$_dest=$dest;
@@ -93,7 +93,7 @@ class ModelRouter extends ModelBase{
 				}
 				return preg_replace("/\/\[[^\]]+\]/",'',$dest);
 			}
-			// *ºÅ¹æÔò
+			// *å·è§„åˆ™
 			$len=strlen($src);
 			if($src{$len-1}=='*' && substr($src,0,$len-1)==substr($pcm,0,$len-1)){
 				if(substr($dest,-1)=='*'){
@@ -137,11 +137,11 @@ class ModelRouter extends ModelBase{
 		for($i=0;$i<2;$i++){
 			$_router=($i==0?substr($router,strpos($router,'/')):$router);
 			foreach($rts as $src=>$dest){
-				// ±ğÃû¹æÔò
+				// åˆ«åè§„åˆ™
 				if($dest==$_router){
 					return $src;
 				}
-				// *¹æÔò
+				// *è§„åˆ™
 				$len=strlen($dest);
 				if($dest{$len-1}=='*' && substr($dest,0,$len-2)==substr($_router,0,$len-2)){
 					if(substr($src,-1)=='*'){

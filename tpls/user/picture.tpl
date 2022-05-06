@@ -40,49 +40,37 @@
 </form>
 <script type="text/javascript">
 $('#listform').validate();
-$("#jqFileUpload").uploadify({
-	'uploader': '{SKIN_URL}images/uploadify.swf',
-	'cancelImg': '{SKIN_URL}images/wrong.gif',
-	'script': '{ROOT_URL}',
-	'scriptData': {proj:'{IN_PROJ}',ctrl:'{IN_CTRL}',method:'upload',auth:'{$auth}'},
-	'method':'get',
-	'queueID':'jqFileUploadQueue',
-	'auto': true,
-	'multi': true,
-	'displayData': 'speed',
-	'fileDesc': 'Image(*.jpg;*.gif;*.png)',
-	'fileExt': '*.jpg;*.jpeg;*.gif;*.png',
-	onComplete: function (evt, queueID, fileObj, response, data) {
-		var msg;
-		try{
-			msg=window["eval"]("("+response+")");
-		}catch(e){
-			alert(response);
-		}
-		if(typeof(msg)=='string'){
-			alert('“'+fileObj.name+'”'+msg);
-		}else{
-			var tds=$('<tr><td></td><td class="l"></td><td></td><td></td></tr>').appendTo('#jqFileUploadResp').find('td');
-			$('<img class="thumb" height="30"/>').data('url',msg.url).attr('src',msg.src).appendTo(tds.eq(0));
-			var ipt=$('<input type="text" size="40"/>').appendTo(tds.eq(1));
-			ipt.attr('name','remarkes['+msg.img_id+']');
-			ipt.val(msg.remark);
-			ipt=$('<input type="text" size="4"/>').appendTo(tds.eq(2));
-			ipt.attr('name','orderes['+msg.img_id+']');
-			ipt.val(0);
-			$('<a href="{link method=drop id=IMGID}"><img src="{SKIN_URL}images/wrong.gif"/></a>'.replace('IMGID',msg.img_id)).click(function(){
-				var jp=$(this).parent().parent();
-				$.getJson(this.href,function(status){
-					if(status==true){
-						jp.remove();
-					}
-				});
-				return false;
-			}).appendTo(tds.eq(3));
-		}
-		$('#'+queueID).remove();
+$("#jqFileUpload").uploadifive({
+	uploadScript: '{link method=upload}',
+	method: 'post',
+	queueID: 'jqFileUploadQueue',
+	auto: true,
+	multi: true,
+	buttonText: '上传图片',
+	fileType: '.jpg,.jpeg,.gif,.png',
+	onUploadComplete: function (file, msg) {
+		msg = JSON.parse(msg);
+		var tds=$('<tr><td></td><td class="l"></td><td></td><td></td></tr>').appendTo('#jqFileUploadResp').find('td');
+		$('<img class="thumb" height="30"/>').data('url',msg.url).attr('src',msg.src).appendTo(tds.eq(0));
+		var ipt=$('<input type="text" size="40"/>').appendTo(tds.eq(1));
+		ipt.attr('name','remarkes['+msg.img_id+']');
+		ipt.val(msg.remark);
+		ipt=$('<input type="text" size="4"/>').appendTo(tds.eq(2));
+		ipt.attr('name','orderes['+msg.img_id+']');
+		ipt.val(0);
+		$('<a href="{link method=drop id=IMGID}"><img src="{SKIN_URL}images/wrong.gif"/></a>'.replace('IMGID',msg.img_id)).click(function(){
+			var jp=$(this).parent().parent();
+			$.getJson(this.href,function(status){
+				if(status==true){
+					jp.remove();
+				}
+			});
+			return false;
+		}).appendTo(tds.eq(3));
+
+		file.queueItem.remove();
 	},
-	onAllComplete:function(){
+	onQueueComplete: function(){
 	}
 });
 $('#jqFileUploadResp a').click(function(){
