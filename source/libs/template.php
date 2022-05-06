@@ -127,7 +127,9 @@ class LibTemplate {
 				ob_start();
 				if($this->php_i > 0)
 					$c = str_replace($this->php_searchs, $this->php_replaces, $c);
-				L('io.file')->write($this->getCacheFile(true), $this->with($c, true));
+				$file = $this->getCacheFile(true);
+				L('io.file')->write($file, $this->with($c, true));
+				opcache_invalidate($file);
 				$c = null;
 			}
 			include ($this->getCacheFile(true));
@@ -292,7 +294,9 @@ class LibTemplate {
 				'</php>' => ''
 			]);
 		}
-		L('io.file')->write($this->getCacheFile(), $this->with($template)) or die('Template : Cache file "' . $this->getCacheFile() . '" cannot write.');
+		$file = $this->getCacheFile();
+		L('io.file')->write($file, $this->with($template)) or die('Template : Cache file "' . $this->getCacheFile() . '" cannot write.');
+		opcache_invalidate($file);
 		$template = null;
 	}
 
