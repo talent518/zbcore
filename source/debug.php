@@ -3,21 +3,18 @@ if(!defined('IN_ZBC'))
 	exit('Access Denied');
 
 ?><style type="text/css">
-	.tclass, .tclass2 {
-	text-align:left;width:100%;border:0;border-collapse:collapse;margin-bottom:5px;table-layout: fixed; word-wrap: break-word;background:#FFF;}
-	.tclass table, .tclass2 table {width:100%;border:0; word-wrap: break-word;}
-	.tlast{margin-bottom:0px;}
-	.tclass table td, .tclass2 table td {border-bottom:0;border-right:0;border-color: #ADADAD;}
-	.tclass th, .tclass2 th {border:1px solid #000;background:#CCC;padding: 2px;font-family: Courier New, Arial;font-size: 11px;}
-	.tclass td, .tclass2 td {border:1px solid #000;background:#FFFCCC;padding: 2px;font-family: Courier New, Arial;font-size: 11px;}
-	.tclass2 th {background:#D5EAEA;}
-	.tclass2 td {background:#FFFFFF;}
-	.tclass td.t, .tclass2 td.t {white-space:nowrap;}
-	.firsttr td {border-top:0;}
-	.firsttd {border-left:none !important;}
-	.bold {font-weight:bold;}
+	.debug-detail{margin:10px 0 0;}
+	.debug-detail table {width:100%;border:0;margin:10px 0 0;text-align:left;width:100%;border:0;border-collapse:collapse;background:#FFF;}
+	.debug-detail table:first-child{margin:0;}
+	.debug-detail th, .debug-detail td {border:1px solid #000;background:#CCC;padding:3px;font-family: Courier New, Arial;font-size:12px;}
+	.debug-detail td {background:#FFFCCC;}
+	.debug-detail .tclass2 th {background:#D5EAEA;}
+	.debug-detail .tclass2 td {background:#FFFFFF;}
+	.debug-detail td.t {white-space:nowrap;}
+	.debug-detail .bold {font-weight:bold;}
+	.debug-detail pre{word-break:break-all;white-space:pre-wrap;}
 </style>
-<div class="detail" style="display:none;"><?php
+<div class="detail debug-detail" style="display:none;"><?php
 $class = 'tclass2';
 foreach (DB()->querys as $dkey => $debug) {
 	$class = ($class == 'tclass'?'tclass2':'tclass');
@@ -26,11 +23,10 @@ foreach (DB()->querys as $dkey => $debug) {
 		echo '<tr><td>Info</th><td>'.$debug['info'].'</td></tr>';
 	}
 	if(!empty($debug['explain'])) {
-		echo '<tr><td class="t">Explain</td><td><table cellspacing="0"><tr class="firsttr"><td width="5%" class="firsttd">id</td><td width="10%">select_type</td><td width="12%">table</td><td width="5%">type</td><td width="20%">possible_keys</td><td width="10%">key</td><td width="8%">key_len</td><td width="5%">ref</td><td width="5%">rows</td><td width="20%">Extra</td></tr><tr>';
-		foreach ($debug['explain'] as $ekey => $explain) {
-			($ekey == 'id')?$tdclass = ' class="firsttd"':$tdclass='';
+		echo '<tr><td class="t">Explain</td><td><table cellspacing="0"><tr><th width="5%">id</td><th width="10%">select_type</td><th width="12%">table</td><th width="5%">type</td><th width="20%">possible_keys</td><th width="10%">key</td><th width="8%">key_len</td><th width="5%">ref</td><th width="5%">rows</td><th width="20%">Extra</td></tr><tr>';
+		foreach ($debug['explain'] as $explain) {
 			if(empty($explain)) $explain = '-';
-			echo '<td'.$tdclass.'>'.$explain.'</td>';
+			echo '<td>'.$explain.'</td>';
 		}
 		echo '</tr></table></td></tr>';
 	}
