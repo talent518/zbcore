@@ -43,12 +43,11 @@ class LibRouter{
 			$url=$decode;
 		}
 
-		$rws = explode('/',$url{0}=='/'?substr($url,1):$url);
-
-		if(count($rws)<3){
-			return;
+		$rws = preg_split('/[\/]+/', $url, -1, PREG_SPLIT_NO_EMPTY);
+		while(count($rws)<3){
+			$rws[] = 'index';
 		}
-
+		
 		list($this->get['proj'],$this->get['ctrl'],$this->get['method'])=$rws;
 
 		for ($rw_i=3;$rw_i<count($rws);$rw_i=$rw_i+2) {

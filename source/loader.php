@@ -104,8 +104,8 @@ function loader() {
 	defined('CTRL_DIR') or define('CTRL_DIR', SRC_DIR . 'projects' . DIR_SEP . IN_PROJ . DIR_SEP);
 	is_dir(CTRL_DIR) or exit(IS_DEBUG ? 'Project <b>' . IN_PROJ . '</b> not exists.' : 0);
 
-	$ctrl = GET('ctrl') ? GET('ctrl') : 'index';
-	$method = GET('method') ? GET('method') : 'index';
+	$ctrl = GET('ctrl') ?: 'index';
+	$method = GET('method') ?: 'index';
 
 	define('IN_CTRL', strtolower($ctrl));
 	define('IN_METHOD', strtolower($method));

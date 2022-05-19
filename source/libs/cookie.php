@@ -6,13 +6,15 @@ class LibCookie{
 	function get($key){
 		if(empty($key))
 			return;
-		return decodestr($_COOKIE[md5(CFG()->cookiePre.$key)]);
+		$cfg = CFG();
+		return decodestr($_COOKIE[$cfg->isServiceMode ? md5($cfg->cookiePre.$key) : $cfg->cookiePre.$key]);
 	}
-	function set($key,$value,$life=30){
+	function set($key, $value, $life=30) {
 		if(empty($key))
 			return;
 		$cfg=CFG();
-		setcookie(md5($cfg->cookiePre.$key),
+		setcookie(
+			$cfg->isServiceMode ? md5($cfg->cookiePre.$key) : $cfg->cookiePre.$key,
 			empty($value)?null:encodestr($value),
 			$life?(TIMESTAMP+$life*60):0,
 			$cfg->cookiePath,

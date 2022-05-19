@@ -1,0 +1,11 @@
+cache
+install/cache
+install/install.lock
+resource/ad
+resource/article
+resource/partner
+resource/picture/
+resource/thumb
+resource/uploads
+resource/user_picture
+source/config.php
