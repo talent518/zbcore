@@ -92,7 +92,7 @@ $.imagePreview.init=function(){
 			this.filters[0].play();
 			$.imagePreview.data.load=true;
 		}else{
-			$(this).hide().css('visibility','visible').fadeTo(0,1).fadeIn(1000,function(){
+			$(this).hide().css('visibility','visible').fadeTo(0,1).fadeIn(200,function(){
 				$.imagePreview.data.load=true;
 				$('#imagePreview-image>img').css('visibility','visible');
 			});
@@ -113,7 +113,16 @@ $.imagePreview.init=function(){
 	});
 };
 //加载图片
-$.imagePreview.load=function(options){
+$.imagePreview.load=function(){
+	const list = $.imagePreview.list[$.imagePreview.data.list];
+	const options = list[$.imagePreview.data.index];
+
+	if($.imagePreview.data.index == 0) $('#imagePreview-tool-previous').addClass('down');
+	else $('#imagePreview-tool-previous').removeClass('down');
+
+	if(list.length == $.imagePreview.data.index + 1) $('#imagePreview-tool-next').addClass('down');
+	else $('#imagePreview-tool-next').removeClass('down');
+
 	$('#imagePreview-status-bps').text('加载…');
 	$.imagePreview.data.load=false;
 	$('#imagePreview-title').text(options.title).attr('target','_blank').attr('href',options.url);
@@ -123,7 +132,7 @@ $.imagePreview.load=function(options){
 		$('#imagePreview-image>img').css('filter','progid:DXImageTransform.Microsoft.RevealTrans(duration=1,transition='+parseInt(Math.random()*22)+')');
 		$('#imagePreview-image>img').show().css('visibility','hidden').css({width:'auto',height:'auto'}).attr('src',options.url);
 	}else{
-		$('#imagePreview-image>img').stop().fadeOut(1000,function(){
+		$('#imagePreview-image>img').stop().fadeOut(200,function(){
 			$.imagePreview.data.bTime=new Date().getTime();
 			$('#imagePreview-image>img').show().css('display','block').css('visibility','hidden').css({width:'auto',height:'auto'}).attr('src',options.url);
 		});
@@ -136,17 +145,13 @@ $.imagePreview.tool=function(type){
 	switch(type){
 		case('previous'):
 			$.imagePreview.data.index=($.imagePreview.list[$.imagePreview.data.list].length+$.imagePreview.data.index-1)%$.imagePreview.list[$.imagePreview.data.list].length;
-			$.imagePreview.load($.imagePreview.list[$.imagePreview.data.list][$.imagePreview.data.index]);
 			$.imagePreview.data.step=type;
-			$('#imagePreview-tool-previous').addClass('down');
-			$('#imagePreview-tool-next').removeClass('down');
+			$.imagePreview.load();
 			break;
 		case('next'):
 			$.imagePreview.data.index=($.imagePreview.data.index+1)%$.imagePreview.list[$.imagePreview.data.list].length;
-			$.imagePreview.load($.imagePreview.list[$.imagePreview.data.list][$.imagePreview.data.index]);
 			$.imagePreview.data.step=type;
-			$('#imagePreview-tool-previous').removeClass('down');
-			$('#imagePreview-tool-next').addClass('down');
+			$.imagePreview.load();
 			break;
 		case('suit'):
 			var w=$.imagePreview.data.width,h=$.imagePreview.data.height;
@@ -255,7 +260,8 @@ $.fn.imagePreview=function(){
 		$.imagePreview.open();
 		$.imagePreview.data.list=$(this).data('list');
 		$.imagePreview.data.index=$(this).data('index');
-		$.imagePreview.load($.imagePreview.list[$.imagePreview.data.list][$.imagePreview.data.index]);
+		$.imagePreview.data.step='next';
+		$.imagePreview.load();
 		if($.imagePreview.list[$.imagePreview.data.list].length>1)
 			$('#imagePreview-tool-previous,#imagePreview-tool-next').show();
 		else

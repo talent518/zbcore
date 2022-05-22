@@ -25,6 +25,8 @@
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-staged.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-global.js"></script>
 	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-window.js"></script>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-mousewheel.js"></script>
+	<script type="text/javascript" src="{RES_SCRIPT_URL}jquery-imagepreview.js"></script>
 </head>
 <body>
 <div id="wpl">

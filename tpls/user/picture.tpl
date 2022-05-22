@@ -17,7 +17,7 @@
 		{loop $list $k $r}
 			<tr>
 				<td>
-					<img src="{RES_UPLOAD_URL}{$r.url}" onload="$(this).data('url','{$r.url}')" height="30"/>
+					<img src="{RES_UPLOAD_URL}{$r.url}" onload="$(this).data('url','{$r.url}')" height="30" class="thumb"/>
 				</td>
 				<td class="l">
 					<input name="remarkes[{$k}]" type="text" value="{$r.remark}" size="40"/>
@@ -71,6 +71,7 @@ $("#jqFileUpload").uploadifive({
 		file.queueItem.remove();
 	},
 	onQueueComplete: function(){
+		$('#jqFileUploadResp img.thumb').imagePreview();
 	}
 });
 $('#jqFileUploadResp a').click(function(){
@@ -82,4 +83,5 @@ $('#jqFileUploadResp a').click(function(){
 	});
 	return false;
 });
+$('#jqFileUploadResp img.thumb').imagePreview();
 </script>

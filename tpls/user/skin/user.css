@@ -5,6 +5,7 @@
 @import url(jquery-window.css);
 @import url(jquery-validate.css);
 @import url(jquery-uploadifive.css);
+@import url(jquery-imagepreview.css);
 
 html,body{overflow:hidden;}
 
