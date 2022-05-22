@@ -41,6 +41,7 @@ $.imagePreview.init=function(){
 		if($('#imagePreview-mask').is(':visible')){
 			$('#imagePreview').float('center');
 			$('#imagePreview-mask').css({width:$(window).width(),height:$(window).height()});
+			$.imagePreview.open(true);
 		}
 	});
 	$('#imagePreview-image').unbind('mousemove').bind('mousemove',function(e){
@@ -213,17 +214,25 @@ $.imagePreview.tool=function(type){
 	}
 };
 //打开图片预览器
-$.imagePreview.open=function(){
+$.imagePreview.open=function(noneAnim) {
+	const isAnim = !noneAnim;
+	
 	$.scroll(false);
-	$('#imagePreview-mask').width($(window).width()).height($(window).height()).show().fadeTo(0,0).fadeTo(200,0.5);
-	$('#imagePreview').show().height($(window).height()-60).width($('#imagePreview').height()*4/3).float('center');
+	$('#imagePreview-mask').width($(window).width()).height($(window).height());
+	$('#imagePreview').show().height($(window).height()-60).width($(window).width()-60).float('center');
 	$('#imagePreview-image').width($('#imagePreview').width()).height($('#imagePreview').height()-10-$('#imagePreview-header').height()-$('#imagePreview-toolBar').height()-$('#imagePreview-statusBar').height());
 	var loc={};
 	loc.left=$('#imagePreview').css('left');
 	loc.top=$('#imagePreview').css('top');
 	loc.width=$('#imagePreview').width();
 	loc.height=$('#imagePreview').height();
-	$('#imagePreview').css({left:$(window).width()/2,top:$(window).height()/2,width:0,height:0}).animate(loc,200);
+	if(isAnim) {
+		$('#imagePreview-mask').show().fadeTo(0,0).fadeTo(200,0.5);
+		$('#imagePreview').css({left:$(window).width()/2,top:$(window).height()/2,width:0,height:0}).animate(loc,200);
+	} else {
+		$('#imagePreview').css(loc);
+		// $('#imagePreview-image>img').float('center',$('#imagePreview-image'));
+	}
 };
 //关闭图片预览器
 $.imagePreview.close=function(){
@@ -261,6 +270,7 @@ $.fn.imagePreview=function(){
 		$.imagePreview.data.list=$(this).data('list');
 		$.imagePreview.data.index=$(this).data('index');
 		$.imagePreview.data.step='next';
+		$.imagePreview.data.display = 'suit';
 		$.imagePreview.load();
 		if($.imagePreview.list[$.imagePreview.data.list].length>1)
 			$('#imagePreview-tool-previous,#imagePreview-tool-next').show();
